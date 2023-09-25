@@ -1,0 +1,85 @@
+.analytic_card {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+.analytics_page_wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.analytic_card_name p {
+  color: #333;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px; /* 112.5% */
+  margin-bottom: 8px;
+}
+
+.analytic_card_cost p {
+  color: #333;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 125% */
+}
+
+.analytic_card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.analytic_card_position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.analytic_card_right {
+  width: 100px;
+}
+.analytic_card_position p {
+  color: #333;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 112.5% */
+  margin-right: 4px;
+}
+
+.site_pofit .analytic_card_name p {
+  color: #333;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.site_pofit {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.site_pofit_numbers p {
+  color: #333;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 100% */
+}
+
+.site_pofit_time p {
+  overflow: hidden;
+  color: #48ac98;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 128.571% */
+  letter-spacing: 0.14px;
+  margin-top: 5px;
+}

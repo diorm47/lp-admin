@@ -1,0 +1,7 @@
+.nav_wrapper {
+  width: 100%;
+  padding: 10px 30px;
+  background: var(--white-100, #fff);
+  box-shadow: 0px -0.5px 0px 0px #e1e1e1 inset,
+    0px 5px 15px 0px rgba(0, 0, 0, 0.05);
+}

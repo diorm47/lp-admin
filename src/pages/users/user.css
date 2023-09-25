@@ -1,0 +1,127 @@
+.users_search {
+  width: 170px;
+  height: 40px;
+  border-radius: 6px;
+  background: #ebebeb;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.users_search svg {
+  margin-right: 8px;
+}
+.users_search input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: "Nunito", sans-serif;
+  color: rgba(28, 28, 28, 0.8);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 111.111% */
+}
+
+.users_table {
+  width: 100%;
+}
+
+.users_table thead th {
+  color: rgba(3, 2, 41, 0.5);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 111.111% */
+  padding: 12px 0;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.table_user_id_title,
+.table_user_name_title,
+.table_user_email_title,
+.table_user_balance_title,
+.table_user_deposite_title,
+.table_user_winrate_title {
+  text-align: left;
+}
+tbody tr {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+tbody td {
+  color: #030229;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  height: 56px;
+}
+
+.table_user_avatar_row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table_user_avatar_row img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+table {
+  border-collapse: collapse;
+}
+
+.table_user_id_row,
+.table_user_id_title {
+  width: 3%;
+}
+
+.table_user_name_row,
+.table_user_name_title {
+  width: 16%;
+}
+.table_user_balance_row,
+.table_user_balance_title {
+  width: 12%;
+}
+.table_user_deposite_row,
+.table_user_deposite_title {
+  width: 12%;
+}
+.table_user_winrate_row,
+.table_user_winrate_title {
+  width: 12%;
+}
+.table_user_email_row,
+.table_user_email_title {
+  width: 14%;
+}
+.table_user_settings_row,
+.table_user_settings {
+  width: 18%;
+}
+
+.user_settings_icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #000;
+  position: absolute;
+  top: -40px;
+  cursor: pointer;
+}
+
+.table_user_settings_row {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
