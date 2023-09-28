@@ -94,6 +94,15 @@ function UserPage() {
                     <Yandex />
                   </div>
                 </div>
+                <div className="personal_information_block">
+                  <p>Дата регистрации пользователя</p>
+                  <input
+                    type="text"
+                    placeholder="-"
+                    value="17.07.2023 17:34"
+                    readOnly
+                  />
+                </div>
               </div>
             </div>
           </div>

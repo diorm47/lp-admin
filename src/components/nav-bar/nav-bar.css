@@ -1,7 +1,41 @@
 .nav_wrapper {
   width: 100%;
-  padding: 10px 30px;
-  background: var(--white-100, #fff);
+  padding: 15px 30px;
+  background: #1d1d1d;
   box-shadow: 0px -0.5px 0px 0px #e1e1e1 inset,
     0px 5px 15px 0px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav {
+  height: 86px;
+}
+
+.nav_profile div {
+  display: flex;
+  align-items: center;
+}
+.nav_profile div p {
+  color: var(--White, #fff);
+  text-align: right;
+  margin-right: 8px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.profile_email {
+  color: var(--White, #fff);
+
+  font-size: 12.003px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.3% */
+}
+
+.nav_profile {
+  cursor: pointer;
 }

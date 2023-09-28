@@ -5,6 +5,8 @@ import NavBar from "./components/nav-bar/nav-bar";
 import SideBar from "./components/side-bar/side-bar";
 import Users from "./pages/users/users";
 import UserPage from "./pages/user-page/user-page";
+import Employees from "./pages/employees/employees";
+import AddEmploye from "./pages/add-employe/add-employe";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/user/:user" element={<UserPage />} />
+                <Route path="/employees" element={<Employees />} />
+                <Route path="/add-employee" element={<AddEmploye />} />
               </Routes>
             </Suspense>
           </div>

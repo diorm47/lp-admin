@@ -1,9 +1,14 @@
 .sidebar_wrapper {
   width: 280px;
   min-height: 91vh;
-  background: var(--white-100, #fff);
+  background: #1d1d1d;
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
   padding-top: 22px;
+  position: fixed;
+}
+.side_bar {
+  width: 280px;
+  min-height: 91vh;
 }
 
 .sidebar_menu {
@@ -13,7 +18,7 @@
 
 .sidebar_menu_item {
   width: 100%;
-  padding: 8px 28px;
+  padding: 14px 28px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -21,37 +26,41 @@
 }
 .sidenar_menu_icon {
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar_menu_item p {
-  color: #333;
+  color: var(--grey-40, #adadad);
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 20px; /* 111.111% */
 }
 
 .sidebar_menu_item:hover {
   transition: all 0.4s ease;
-  background: #eaeaeb;
+  background: var(--grey-100, #333);
 }
 
 .sidebar_menu .active p {
-  color: #3f72f4;
+  color: #fff;
+}
+.sidebar_menu .active {
+  border-left: 3px solid var(--White, #fff);
+  background: var(--grey-100, #333);
 }
 
-.sidenar_menu_icon {
+/* .sidenar_menu_icon {
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 40px;
-}
+} */
 
-.sidebar_menu .active .sidenar_menu_icon {
-  background: #e8eeff;
-}
+
 .sidebar_menu .active .sidenar_menu_icon svg * {
-  fill: #3F72F4;
+  fill: #fff;
 }
