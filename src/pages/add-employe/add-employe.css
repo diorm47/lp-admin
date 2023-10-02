@@ -69,7 +69,8 @@
   font-size: 16px;
   color: #358ed7;
 }
-.add_employe_input input[type="text"] {
+.add_employe_input input[type="text"],
+.add_employe_input select {
   width: 100%;
   font-feature-settings: "calt" off;
   color: var(--unnamed, #121212);
@@ -85,8 +86,21 @@
   background: var(--unnamed, #fff);
   padding: 14px 16px;
 }
-.add_employe_input input[type="text"]:focus {
+.add_employe_input input[type="text"]:focus,
+.add_employe_input select:focus {
   outline: none;
+}
+.add_employe_input select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+.add_employe_input select {
+  background-image: url("../../assets/icons/select-arrow.png");
+  background-repeat: no-repeat;
+  background-position: right center;
 }
 
 .add_employe_input div {
@@ -117,5 +131,63 @@
   border: none;
   outline: none;
   cursor: pointer;
+}
+.admin_actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.admin_create_actions {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 
+.admin_actions button {
+  border-radius: 3px;
+  padding: 14px 32px;
+  cursor: pointer;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+  border: none;
+}
+.create_admin_btn {
+  color: #fff;
+  background: var(--normal, #39b54a);
+}
+
+.undo_create {
+  background: #fff;
+  color: var(--normal, #358ed7);
+  border: 1px solid var(--normal, #358ed7) !important;
+}
+
+.admin_permission {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.admin_permission p {
+  color: #000;
+  font-feature-settings: "calt" off;
+
+  /* Body Text / Regular */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+.admin_permission input {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.admin_permisions_btns {
+  margin-top: 40px;
 }

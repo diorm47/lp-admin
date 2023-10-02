@@ -5,6 +5,7 @@
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
   padding-top: 22px;
   position: fixed;
+  z-index: 111;
 }
 .side_bar {
   width: 280px;

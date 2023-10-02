@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Analytics from "./pages/analytics/analytics";
 import NavBar from "./components/nav-bar/nav-bar";
@@ -7,8 +7,26 @@ import Users from "./pages/users/users";
 import UserPage from "./pages/user-page/user-page";
 import Employees from "./pages/employees/employees";
 import AddEmploye from "./pages/add-employe/add-employe";
+import { useDispatch } from "react-redux";
+import { mainApi } from "./components/utils/main-api";
+import { loginUserAction } from "./redux/user-reducer";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      mainApi
+        .reEnter()
+        .then((res) => {
+          dispatch(loginUserAction(res));
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, [localStorage.getItem("token")]);
+
   return (
     <>
       <div className="site_content">
