@@ -1,13 +1,8 @@
 const LOGIN_USER = "LOGIN_USER";
 
 const initialState = {
-  admin: {
-    username: "",
-    password: "",
+  user: {
     is_logged: false,
-    email: "",
-    picture: "",
-    email_verified: "",
   },
 };
 

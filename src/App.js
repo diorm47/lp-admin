@@ -10,6 +10,7 @@ import AddEmploye from "./pages/add-employe/add-employe";
 import { useDispatch } from "react-redux";
 import { mainApi } from "./components/utils/main-api";
 import { loginUserAction } from "./redux/user-reducer";
+import LoginPage from "./pages/login/login";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/user/:user" element={<UserPage />} />
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/add-employee" element={<AddEmploye />} />
+                <Route path="/login" element={<LoginPage />} />
               </Routes>
             </Suspense>
           </div>

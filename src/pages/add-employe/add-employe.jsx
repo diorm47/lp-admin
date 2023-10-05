@@ -3,6 +3,7 @@ import "./add-employe.css";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 import { NavLink } from "react-router-dom";
+import { InputWithLabel, SelectWithLabel } from "../../components/utils/utils";
 
 function AddEmploye() {
   const permissions = [
@@ -160,75 +161,3 @@ function AddEmploye() {
 }
 
 export default AddEmploye;
-
-function InputWithLabel({ id, label }) {
-  const [isActive, setIsActive] = useState(false);
-  const [isActiveInput, setIsActiveInput] = useState(false);
-
-  const handleFocus = () => {
-    setIsActive(true);
-    setIsActiveInput(true);
-  };
-
-  const handleBlur = (e) => {
-    if (!e.target.value) {
-      setIsActive(false);
-      setIsActiveInput(false);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor={id} className={isActive ? "active" : ""}>
-        {label}
-      </label>
-      <input
-        id={id}
-        className={isActiveInput ? "active_input" : ""}
-        type="text"
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
-    </div>
-  );
-}
-
-function SelectWithLabel({ id, label, options }) {
-  const [isActive, setIsActive] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
-
-  const handleFocus = () => {
-    setIsActive(true);
-  };
-
-  const handleChange = (e) => {
-    setSelectedValue(e.target.value);
-    if (e.target.value) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  };
-
-  return (
-    <div>
-      <label htmlFor={id} className={isActive ? "active" : ""}>
-        {label}
-      </label>
-      <select
-        id={id}
-        value={selectedValue}
-        className={isActive ? "active_input" : ""}
-        onFocus={handleFocus}
-        onChange={handleChange}
-      >
-        <option value="" disabled hidden></option>
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}

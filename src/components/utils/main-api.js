@@ -39,60 +39,10 @@ class MainApi {
     return this._checkResponseStatus(res);
   }
 
-  // Sign actions list
-  async authorizationAction(userData) {
-    return this._sendRequest({
-      endpoint: `/auth/legadrop`,
-      method: "POST",
-      body: userData,
-    });
-  }
+  // Login
   async loginAction(userData) {
     return this._sendRequest({
       endpoint: `/login/legadrop`,
-      method: "POST",
-      body: userData,
-    });
-  }
-
-  // Socials auth/login
-  async authGoogleAction(userData) {
-    return this._sendRequest({
-      endpoint: `/auth/google`,
-      method: "POST",
-      body: userData,
-    });
-  }
-  async authVKAction(userData) {
-    return this._sendRequest({
-      endpoint: `/auth/vk`,
-      method: "POST",
-      body: userData,
-    });
-  }
-  async getTokenVK(userData) {
-    return this._sendRequest({
-      endpoint: `/auth/vk/token/?access_token=${userData}`,
-      method: "POST",
-    });
-  }
-  async authTGAction(userData) {
-    return this._sendRequest({
-      endpoint: "/auth/telegram",
-      method: "POST",
-      body: userData,
-    });
-  }
-  async authMailruAction(userData) {
-    return this._sendRequest({
-      endpoint: `/auth/mailru`,
-      method: "POST",
-      body: userData,
-    });
-  }
-  async authYandexAction(userData) {
-    return this._sendRequest({
-      endpoint: `/auth/yandex`,
       method: "POST",
       body: userData,
     });
@@ -102,33 +52,6 @@ class MainApi {
   async reEnter() {
     return this._sendRequest({
       endpoint: "/user/me",
-      requiresToken: true,
-    });
-  }
-
-  // update user data
-
-  async updateUserName(userData) {
-    return this._sendRequest({
-      endpoint: `/username`,
-      method: "PUT",
-      body: userData,
-      requiresToken: true,
-    });
-  }
-  async updateUserEmail(userData) {
-    return this._sendRequest({
-      endpoint: `/email`,
-      method: "PUT",
-      body: userData,
-      requiresToken: true,
-    });
-  }
-  async updateUserPassword(userData) {
-    return this._sendRequest({
-      endpoint: `/password`,
-      method: "PUT",
-      body: userData,
       requiresToken: true,
     });
   }
