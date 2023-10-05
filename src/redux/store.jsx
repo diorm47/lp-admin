@@ -4,9 +4,11 @@ import thunkMiddleware from "redux-thunk";
 import userReducer from "./user-reducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import employeeReducer from "./employees-reducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  employees: employeeReducer,
 });
 
 const persistConfig = {

@@ -2,30 +2,44 @@ import React, { useState } from "react";
 import { InputWithLabel } from "../../components/utils/utils";
 import "./login.css";
 
-import { ReactComponent as Logo } from "../../assets/logo-dark.svg";
-import { ReactComponent as Error } from "../../assets/icons/error-icon.svg";
-import { mainApi } from "../../components/utils/main-api";
 import { useDispatch } from "react-redux";
+import { ReactComponent as Error } from "../../assets/icons/error-icon.svg";
+import { ReactComponent as Logo } from "../../assets/logo-dark.svg";
 import { loginUserAction } from "../../redux/user-reducer";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
-  const handleLogin = () => {
-    const data = {
-      username: login,
-      password: password,
+  const handleLogin = async () => {
+    let headersList = {
+      Accept: "*/*",
+      "Content-Type": "application/x-www-form-urlencoded",
     };
-    mainApi
-      .loginAction(data)
-      .then((res) => {
-        dispatch(loginUserAction(res));
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+
+    let bodyContent = `username=${login}&password=${password}`;
+
+    let response = await fetch("http://192.168.1.8:8000/admin/sign-in", {
+      method: "POST",
+      body: bodyContent,
+      headers: headersList,
+    });
+
+    let data = await response.json();
+    if (data.access_token) {
+      let is_logged = {
+        is_logged: true,
+      };
+      dispatch(loginUserAction(is_logged));
+      localStorage.setItem("token", data.access_token);
+      navigate("/");
+    } else {
+      setError(true);
+    }
   };
 
   return (
@@ -48,7 +62,7 @@ function LoginPage() {
             event={setPassword}
           />
         </div>
-        <div className="login_error is_error">
+        <div className={error ? "login_error" : "login_error is_error"}>
           <Error />
           <p>Неверный логин или пароль</p>
         </div>

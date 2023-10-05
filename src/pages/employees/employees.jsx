@@ -1,11 +1,24 @@
-import React from "react";
-import "./employees.css";
-import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
-import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
+import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
+import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
+import { mainApi } from "../../components/utils/main-api";
+import "./employees.css";
 
 function Employees() {
+  const [employees, setEmployees] = useState([]);
+  useEffect(() => {
+    mainApi
+      .getEmployeesAction()
+      .then((res) => {
+        setEmployees(res.employees);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
+
   return (
     <div className="template_page employees_page">
       <div className="template_page_title">
@@ -43,30 +56,24 @@ function Employees() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>AlinaFontaine</td>
-                <td>9884888008</td>
-                <td>Администратор</td>
-                <td>alinafontaine@yandex.ru</td>
-                <td className="employer_list_actions">
-                  <div className="employer_action_btns">
-                    <EditIcon />
-                    <DeleteIcon />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>AlinaFontaine</td>
-                <td>9884888008</td>
-                <td>Администратор</td>
-                <td>alinafontaine@yandex.ru</td>
-                <td className="employer_list_actions">
-                  <div className="employer_action_btns">
-                    <EditIcon />
-                    <DeleteIcon />
-                  </div>
-                </td>
-              </tr>
+              {employees && employees[0] ? (
+                employees.map((employee) => (
+                  <tr key={employee.id}>
+                    <td>{employee.first_name}</td>
+                    <td>{employee.username}</td>
+                    <td>Администратор</td>
+                    <td>{employee.email}</td>
+                    <td className="employer_list_actions">
+                      <div className="employer_action_btns">
+                        <EditIcon />
+                        <DeleteIcon />
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr></tr>
+              )}
             </tbody>
           </table>
         </div>

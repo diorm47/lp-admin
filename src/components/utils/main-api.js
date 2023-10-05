@@ -1,6 +1,6 @@
 const mainApiOptions = {
-  baseUrl: "https://legadrop.org",
-  // baseUrl: "http://192.168.1.4:8000",
+  // baseUrl: "https://legadrop.org",
+  baseUrl: "http://192.168.1.8:8000",
 
   headers: {
     Accept: "*/*",
@@ -42,16 +42,65 @@ class MainApi {
   // Login
   async loginAction(userData) {
     return this._sendRequest({
-      endpoint: `/login/legadrop`,
+      endpoint: `/admin/sign-in`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // Get employees list
+  async getEmployeesAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/employees`,
+      method: "GET",
+      body: userData,
+    });
+  }
+
+  // Create employee
+  async createEmployeeAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/employee`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // set role
+  async setRoleAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/employee/role`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // get roles
+  async getRolesAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/roles`,
+      method: "GET",
+      body: userData,
+    });
+  }
+  // set permissions
+  async setPermissionAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/employee/permissions/`,
       method: "POST",
       body: userData,
     });
   }
 
+  // Passoword generator
+  async createPasswordAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/spec/generator_password`,
+      method: "POST",
+      body: userData,
+    });
+  }
   // User me
   async reEnter() {
     return this._sendRequest({
-      endpoint: "/user/me",
+      endpoint: "/admin/me",
       requiresToken: true,
     });
   }

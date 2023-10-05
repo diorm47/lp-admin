@@ -52,7 +52,7 @@ export function InputWithLabel({ id, label, value, event }) {
 }
 
 // Select with label
-export function SelectWithLabel({ id, label, options }) {
+export function SelectWithLabel({ id, label, options, event }) {
   const [isActive, setIsActive] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
@@ -62,6 +62,7 @@ export function SelectWithLabel({ id, label, options }) {
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
+    event(e.target.value)
     if (e.target.value) {
       setIsActive(true);
     } else {
