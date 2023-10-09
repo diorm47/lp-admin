@@ -47,11 +47,12 @@
 .table_user_winrate_title {
   text-align: left;
 }
-tbody tr {
+.users_table tbody tr {
   border-bottom: 1px solid #d9d9d9;
+
 }
 
-tbody td {
+.users_table tbody td {
   color: #030229;
   font-size: 18px;
   font-style: normal;
@@ -113,7 +114,7 @@ table {
   border-radius: 4px;
   background: #000;
   position: absolute;
-  top: -40px;
+  top: 13px;
   cursor: pointer;
 }
 

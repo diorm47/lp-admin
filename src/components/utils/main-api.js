@@ -64,6 +64,14 @@ class MainApi {
       body: userData,
     });
   }
+  // delete employee
+  async deleteEmployeeAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/delete`,
+      method: "DELETE",
+      body: userData,
+    });
+  }
   // set role
   async setRoleAction(userData) {
     return this._sendRequest({

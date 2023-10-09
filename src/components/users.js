@@ -9,7 +9,7 @@ export const users = [
   },
   {
     id: 345,
-    name: "КискаМаленькая",
+    name: "Маленькая",
     email: "56765admin@mail.ru",
     balance: 2333,
     deposite: 656,
@@ -35,7 +35,7 @@ export const users = [
   {
     id: 2344,
 
-    name: "КискаМаленькая",
+    name: "Маленькая",
     email: "admi6466n@mail.ru",
     balance: 234,
     deposite: 34223,

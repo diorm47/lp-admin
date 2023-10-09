@@ -1,0 +1,12 @@
+.save_cat_btn {
+  background: green;
+  padding: 10px 30px;
+  margin-top: 30px;
+}
+
+.add_category_input {
+  width: 500px;
+}
+.category_page .back_btn{
+  margin-bottom: 30px;
+}

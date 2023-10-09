@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
-import "./cases.css";
+import "../cases/cases.css";
 import { NavLink } from "react-router-dom";
 
-function Cases() {
+function Items() {
   const casesItems = [
     {
       id: 13232,
@@ -558,30 +558,15 @@ function Cases() {
     setItemOffset(newOffset);
   };
 
-  // const [categoryModal, setCategoryModal] = useState(false);
-  // const closeModal = () => {
-  //   setCategoryModal(false);
-  // };
-
   return (
     <>
-      {/* {categoryModal ? (
-        <div className="modal_overlay" onClick={closeModal}></div>
-      ) : (
-        ""
-      )} */}
-
       <div className="template_page employees_page">
         <div className="template_page_title">
-          <h1>Кейсы</h1>
+          <h1>Предметы</h1>
           <div className="top_cases_actions">
-            <button className="main_btn">
-              <p>Поднять цены</p>
-              <TopIcon />
-            </button>
-            <NavLink to="/create-case">
+            <NavLink to="/items">
               <button className="main_btn add_case_btn">
-                <p>Добавить кейс</p>
+                <p>Добавить предмет</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -596,65 +581,33 @@ function Cases() {
                 </svg>
               </button>
             </NavLink>
-            <NavLink to="/cases-category">
-              <button className="main_btn add_categories_btn">
-                <p>Добавить категорию</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
-            </NavLink>
-            <button className="main_btn">
-              <p>Создать бекап кейсов</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M11.0003 0.666664H3.00033C2.26699 0.666664 1.66699 1.26666 1.66699 2V11.3333H3.00033V2H11.0003V0.666664ZM13.0003 3.33333H5.66699C4.93366 3.33333 4.33366 3.93333 4.33366 4.66666V14C4.33366 14.7333 4.93366 15.3333 5.66699 15.3333H13.0003C13.7337 15.3333 14.3337 14.7333 14.3337 14V4.66666C14.3337 3.93333 13.7337 3.33333 13.0003 3.33333ZM13.0003 14H5.66699V4.66666H13.0003V14Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
           </div>
         </div>
         <div className="template_page_content">
           <div className="cases_wrapper">
             <div className="cases_top_togglers">
               <button className="main_btn">
-                <p>Все кейсы</p>
+                <p>Все предметы</p>
               </button>
               <button className="main_btn">
-                <p>Рандомчики</p>
+                <p>Осколки (половинка предмета)</p>
               </button>
               <button className="main_btn">
-                <p>Кейсы от блогеров</p>
+                <p>Кристаллы сотворения</p>
               </button>
               <button className="main_btn">
-                <p>Примогемы</p>
+                <p>Луны</p>
               </button>
               <button className="main_btn">
-                <p>Придуманные категории</p>
+                <p>Крутки</p>
               </button>
               <button className="main_btn">
-                <p>Кейсы Honkai Star Rail</p>
+                <p>Скины</p>
               </button>
             </div>
             <div className="cases_top_actions">
               <button className="main_btn">
-                <p>Действие над товаром</p>
+                <p>Действие над предметом</p>
               </button>
               <div className="users_search">
                 <SearchIcon />
@@ -670,8 +623,8 @@ function Cases() {
                   <td>Название</td>
                   <td>Категория</td>
                   <td className="tac">Цена (руб)</td>
-                  <td className="tac">Цена ($)</td>
-                  <td className="tac">Открытий</td>
+                  <td className="tac">Цена в кр.</td>
+                  <td className="tac"> API предмета</td>
                   <td className="tac">Дата создания</td>
                   <td>
                     <div className="select_all">
@@ -844,4 +797,4 @@ function Cases() {
   );
 }
 
-export default Cases;
+export default Items;

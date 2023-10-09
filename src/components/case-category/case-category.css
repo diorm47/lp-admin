@@ -1,0 +1,38 @@
+.modal_template {
+  padding: 20px;
+  border-radius: 10px;
+  position: fixed;
+  z-index: 115;
+  top: 27%;
+  left: 50%;
+  margin-left: -250px;
+  width: 500px;
+  height: auto;
+  background: #f2f5ff;
+}
+
+.modal_template_title p {
+  font-size: 20px;
+}
+.modal_template_exit {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal_template_exit svg {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.modal_template_content {
+  margin-top: 40px;
+}
+
+.modal_btn {
+  background: green;
+  margin: 0 auto;
+  padding: 10px 30px;
+  margin-top: 30px;
+}

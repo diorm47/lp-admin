@@ -19,6 +19,17 @@ function Employees() {
       });
   }, []);
 
+  const handleEmployeeDelete = () => {
+    mainApi
+      .deleteEmployeeAction()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   return (
     <div className="template_page employees_page">
       <div className="template_page_title">
@@ -45,37 +56,41 @@ function Employees() {
               </div>
             </NavLink>
           </div>
-          <table className="employes_table">
-            <thead>
-              <tr>
-                <th>Имя</th>
-                <th>Логин</th>
-                <th>должность</th>
-                <th>электронная почта</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees && employees[0] ? (
-                employees.map((employee) => (
-                  <tr key={employee.id}>
-                    <td>{employee.first_name}</td>
-                    <td>{employee.username}</td>
-                    <td>Администратор</td>
-                    <td>{employee.email}</td>
-                    <td className="employer_list_actions">
-                      <div className="employer_action_btns">
-                        <EditIcon />
-                        <DeleteIcon />
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr></tr>
-              )}
-            </tbody>
-          </table>
+          {employees && employees[0] ? (
+            <table className="employes_table">
+              <thead>
+                <tr>
+                  <th>Имя</th>
+                  <th>Логин</th>
+                  <th>должность</th>
+                  <th>электронная почта</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {employees && employees[0] ? (
+                  employees.map((employee) => (
+                    <tr key={employee.id}>
+                      <td>{employee.first_name}</td>
+                      <td>{employee.username}</td>
+                      <td>Администратор</td>
+                      <td>{employee.email}</td>
+                      <td className="employer_list_actions">
+                        <div className="employer_action_btns">
+                          <EditIcon />
+                          <DeleteIcon onClick={() => handleEmployeeDelete()} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr></tr>
+                )}
+              </tbody>
+            </table>
+          ) : (
+            <p className="empty_error">Сотрудники отсутствуют</p>
+          )}
         </div>
       </div>
     </div>
