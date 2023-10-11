@@ -7,6 +7,54 @@
 .add_category_input {
   width: 500px;
 }
-.category_page .back_btn{
+.category_page .back_btn {
   margin-bottom: 30px;
+}
+
+.categories_page {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+.categories_list,
+.add_category_block {
+  width: 40%;
+}
+
+.categories_list_item {
+  padding: 15px 10px;
+  border: 1px solid grey;
+  width: 550px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete_category_btn {
+  top: 0;
+}
+.edit_category_btn {
+  top: 30px;
+}
+.categories_list_item_buttons {
+  display: flex;
+  align-items: center;
+}
+.categories_list_item button {
+  border: none;
+
+  transition: all 0.3s ease;
+}
+
+.categories_list_item button:hover {
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+.active_cat_item {
+  border-color: #358ed7;
 }

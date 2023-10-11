@@ -31,7 +31,7 @@ select {
   width: 100%;
 }
 .template_page_title {
-  margin-bottom: 32px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -49,13 +49,11 @@ select {
   border: none;
   padding: 8px 15px;
   color: #fff;
-
-  /* Small text / Semi Bold */
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 20px; /* 142.857% */
+  line-height: 140%;
   width: auto;
   height: auto;
   border-radius: 3px;
@@ -76,7 +74,6 @@ select {
   z-index: 112;
   background: #00000099;
 }
-
 
 .empty_error {
   text-align: center;

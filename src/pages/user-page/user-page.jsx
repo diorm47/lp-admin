@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./user-page.css";
 import { useParams } from "react-router-dom";
-import { users } from "../../components/users";
+import { usersData } from "../../components/users";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as Google } from "../../assets/icons/socials/google.svg";
 import { ReactComponent as Vk } from "../../assets/icons/socials/vk.svg";
@@ -19,7 +19,7 @@ function UserPage() {
   //   }, []);
 
   const params = useParams();
-  const item = users.find((u) => u.id == params.user);
+  const item = usersData.find((u) => u.id == params.user);
 
   return (
     <div className="template_page user_page">

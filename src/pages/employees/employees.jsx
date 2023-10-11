@@ -8,27 +8,32 @@ import "./employees.css";
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
-  useEffect(() => {
+  const getEmployees = () => {
     mainApi
       .getEmployeesAction()
       .then((res) => {
-        setEmployees(res.employees);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  }, []);
-
-  const handleEmployeeDelete = () => {
-    mainApi
-      .deleteEmployeeAction()
-      .then((res) => {
-        console.log(res);
+        setEmployees(res);
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
+  useEffect(() => {
+    getEmployees();
+  }, []);
+
+  const handleEmployeeDelete = (admin_id) => {
+    mainApi
+      .deleteEmployeeAction({ admin_id: admin_id })
+      .then((res) => {
+        getEmployees();
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  console.log(employees);
 
   return (
     <div className="template_page employees_page">
@@ -62,7 +67,7 @@ function Employees() {
                 <tr>
                   <th>Имя</th>
                   <th>Логин</th>
-                  <th>должность</th>
+                  <th>РОЛЬ</th>
                   <th>электронная почта</th>
                   <th></th>
                 </tr>
@@ -70,15 +75,26 @@ function Employees() {
               <tbody>
                 {employees && employees[0] ? (
                   employees.map((employee) => (
-                    <tr key={employee.id}>
-                      <td>{employee.first_name}</td>
-                      <td>{employee.username}</td>
-                      <td>Администратор</td>
-                      <td>{employee.email}</td>
+                    <tr key={employee.employee.id}>
+                      <td>{employee.employee.first_name}</td>
+                      <td>{employee.employee.username}</td>
+                      <td>
+                        {(employee.role &&
+                          employee.role[0] &&
+                          employee.role[0].name &&
+                          employee.role[0].name) ||
+                          ""}
+                      </td>
+                      <td>{employee.employee.email}</td>
                       <td className="employer_list_actions">
                         <div className="employer_action_btns">
-                          <EditIcon />
-                          <DeleteIcon onClick={() => handleEmployeeDelete()} />
+                          <EditIcon title="Редактировать" />
+                          <DeleteIcon
+                            title="Удалить"
+                            onClick={() =>
+                              handleEmployeeDelete(employee.employee.admin_id)
+                            }
+                          />
                         </div>
                       </td>
                     </tr>

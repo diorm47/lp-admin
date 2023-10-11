@@ -126,3 +126,7 @@ table {
   justify-content: flex-end;
   position: relative;
 }
+
+.users_top_actions {
+  margin-bottom: 18px;
+}

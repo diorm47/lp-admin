@@ -1,0 +1,113 @@
+.create_item_wrapper {
+  border-radius: 0px 3px 3px 3px;
+  border: 1px solid var(--unnamed, #cfd3de);
+  background: var(--unnamed, #fff);
+  margin-top: 40px;
+  width: 1000px;
+  padding: 40px 24px;
+  margin-bottom: 40px;
+}
+
+.create_item_wrapper h2 {
+  color: var(--unnamed, var(--unnamed, #121212));
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+  letter-spacing: -0.2px;
+  margin-bottom: 24px;
+}
+
+.case_input_temp span {
+  color: var(--unnamed, #737373);
+  padding-left: 16px;
+  font-size: 12.003px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.3% */
+}
+
+.item_color_wrapper {
+  width: 460px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item_color_wrapper .item_color_btn {
+  width: 33.3333333333333333%;
+}
+.item_color_btn div {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.item_color_btn:nth-child(1) div {
+  background: #3400f9;
+}
+.item_color_btn:nth-child(2) div {
+  background: #eb0910;
+}
+.item_color_btn:nth-child(3) div {
+  background: #f5ab30;
+}
+
+.item_color_btn {
+  display: flex;
+  align-items: center;
+  border: 1px solid #5da5df;
+  height: 100%;
+  border-left: none;
+  padding-left: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.item_color_btn:first-child {
+  border-left: 1.7px solid #5da5df;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.item_color_btn:last-child {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.item_color_btn p {
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+  color: var(--unnamed, var(--unnamed, #121212));
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.item_color_btn:hover {
+  transition: all 0.3s ease;
+  background: #358ed7;
+  color: #fff;
+}
+.item_color_btn:hover p {
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.item_image {
+  max-width: 400px;
+}
+.item_image span {
+  color: var(--unnamed, var(--unnamed, #a6a6a6));
+  font-size: 12.003px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.3% */
+}
+
+.item_color_btn_active {
+  background: #358ed7;
+}
+.item_color_btn_active p {
+  color: #fff;
+}

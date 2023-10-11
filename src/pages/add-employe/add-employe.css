@@ -165,9 +165,10 @@
 }
 
 .admin_permission {
+  height: 60px;
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 0 !important;
 }
 .admin_permission p {
   color: #000;
@@ -185,6 +186,11 @@
   height: 24px;
   border-radius: 3px;
   cursor: pointer;
+  margin-right: 12px;
+}
+.admin_permission div {
+  width: 24px;
+  height: 24px;
   margin-right: 12px;
 }
 

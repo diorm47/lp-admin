@@ -1,0 +1,21 @@
+.case_items_modal {
+  width: 70% !important;
+  margin-left: 0 !important;
+  left: auto !important;
+}
+
+.case_item {
+  width: 200px;
+  cursor: pointer;
+}
+.case_item img {
+  width: 100%;
+}
+.case_item p {
+  text-align: center;
+}
+.case_items_content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}

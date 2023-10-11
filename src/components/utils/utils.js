@@ -62,7 +62,8 @@ export function SelectWithLabel({ id, label, options, event }) {
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
-    event(e.target.value)
+    event(e.target.value);
+
     if (e.target.value) {
       setIsActive(true);
     } else {
@@ -84,8 +85,8 @@ export function SelectWithLabel({ id, label, options, event }) {
       >
         <option value="" disabled hidden></option>
         {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
+          <option key={index} value={option.name}>
+            {option.name}
           </option>
         ))}
       </select>

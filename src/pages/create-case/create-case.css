@@ -98,7 +98,7 @@
 
 .case_tab_content_inputs {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;

@@ -3,7 +3,6 @@
   border: 1px solid var(--unnamed, #cfd3de);
   opacity: 0.9;
   background: var(--White, #fff);
-  border-bottom: 0;
 }
 .employe_search_add {
   display: flex;
@@ -93,6 +92,7 @@
   font-weight: 400;
   line-height: 20px; /* 142.857% */
   width: 20%;
+  padding: 20px 0;
 }
 
 .employer_list_actions {

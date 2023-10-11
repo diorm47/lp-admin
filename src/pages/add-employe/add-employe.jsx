@@ -13,7 +13,7 @@ function AddEmploye() {
     mainApi
       .getRolesAction()
       .then((res) => {
-        setRolesList(res.roles);
+        setRolesList(res);
       })
       .catch((error) => {
         console.log("error", error);
@@ -31,86 +31,6 @@ function AddEmploye() {
 
   const [userRole, setRole] = useState("");
 
-  const permissions = [
-    "Создание сотрудников",
-    "Просмотр сотрудников",
-    "Редактирование сотрудников",
-    "Блокировка и разблокировка сотрудников",
-    "Сброс паролей сотрудников",
-    "Управление ролями сотрудников",
-    "Управление правами сотрудников",
-    "Просмотр журнала активности",
-    "Доступ к настройкам и конфигурации системы",
-    "Резервное копирование и восстановление данных",
-    "Обновление и обслуживание системы",
-    "Настройка интеграции с внешними системами",
-    "Просмотр аналитики по вкладам",
-    "Просмотр общей аналитики расходов",
-    "Просмотр аналитики покупок MooGold",
-    "Просмотр аналитики вывода товаров",
-    "Просмотр аналитики по коэффициентам выигрыша и проигрыша",
-    "Просмотр аналитики онлайн пользователей",
-    "Просмотр аналитики зарегистрированных пользователей",
-    "Экспорт аналитики",
-    "Просмотр тикетов",
-    "Ответ на тикеты",
-    "Обновление статуса тикетов",
-    "Перенаправление тикетов",
-    "Добавление отзывов",
-    "Просмотр отзывов",
-    "Редактирование отзывов",
-    "Ответ на отзывы",
-    "Просмотр платежей",
-    "Обновление статуса платежей",
-    "Подтверждение и отклонение платежей",
-    "Просмотр запросов на вывод",
-    "Обновление статуса запросов на вывод",
-    "Подтверждение и отклонение запросов на вывод",
-    "Создание пользователей",
-    "Просмотр пользователей",
-    "Редактирование пользователей",
-    "Блокировка и разблокировка пользователей",
-    "Сброс паролей пользователей",
-    "Создание кейсов",
-    "Создание категорий кейсов",
-    "Просмотр кейсов",
-    "Просмотр категорий кейсов",
-    "Редактирование кейсов",
-    "Редактирование категорий кейсов",
-    "Удаление кейсов",
-    "Удаление категорий кейсов",
-    "Создание настроек кейсов",
-    "Просмотр настроек кейсов",
-    "Редактирование настроек кейсов",
-    "Удаление настроек предметов",
-    "Добавление предметов",
-    "Просмотр предметов",
-    "Редактирование предметов",
-    "Удаление предметов",
-    "Создание конкурсов",
-    "Просмотр конкурсов",
-    "Редактирование конкурсов",
-    "Удаление конкурсов",
-    "Создание промокодов",
-    "Просмотр промокодов",
-    "Редактирование промокодов",
-    "Удаление промокодов",
-    "Создание реферальных кодов",
-    "Просмотр реферальных кодов",
-    "Редактирование реферальных кодов",
-    "Удаление реферальных кодов",
-  ];
-  const [selectedPermissions, setSelectedPermissions] = useState([]);
-  const handleCheckboxChange = (permission) => {
-    if (selectedPermissions.includes(permission)) {
-      setSelectedPermissions((prev) =>
-        prev.filter((perm) => perm !== permission)
-      );
-    } else {
-      setSelectedPermissions((prev) => [...prev, permission]);
-    }
-  };
-
   const createEmployee = () => {
     const employee = {
       username: userName,
@@ -122,7 +42,7 @@ function AddEmploye() {
     mainApi
       .createEmployeeAction(employee)
       .then((res) => {
-        setCurrentAdminId(res.admin_id);
+        setCurrentAdminId(res.username);
         setCurrentActionNumber(2);
       })
       .catch((error) => {
@@ -147,28 +67,13 @@ function AddEmploye() {
 
   const handleSetRole = () => {
     const data = {
-      admin_id: currentAdminId,
+      username: currentAdminId,
       role: userRole,
     };
     mainApi
       .setRoleAction(data)
       .then((res) => {
         setCurrentActionNumber(3);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-
-  const handleSetPermissions = () => {
-    const data = {
-      admin_id: currentAdminId,
-      permissions: selectedPermissions,
-    };
-    mainApi
-      .setPermissionAction(data)
-      .then((res) => {
-        console.log(res);
       })
       .catch((error) => {
         console.log("error", error);
@@ -247,42 +152,13 @@ function AddEmploye() {
                 <SelectWithLabel
                   id="employee_role_select"
                   label="Должность"
-                  options={rolesList}
+                  options={rolesList || []}
                   event={setRole}
                 />
               </div>
               <div className="admin_actions admin_create_actions">
                 <button className="create_admin_btn" onClick={handleSetRole}>
                   Назначить
-                </button>
-                <button className="undo_create">Отменить</button>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-
-          {currentActionNumber === 3 ? (
-            <div className="admin_permissions">
-              <h3>Права сотрудника</h3>
-              <div className="admin_permissions_list">
-                {permissions.map((permission) => (
-                  <div className="admin_permission" key={permission}>
-                    <input
-                      type="checkbox"
-                      checked={selectedPermissions.includes(permission)}
-                      onChange={() => handleCheckboxChange(permission)}
-                    />
-                    {permission}
-                  </div>
-                ))}
-              </div>
-              <div className="admin_actions admin_permisions_btns">
-                <button
-                  className="create_admin_btn"
-                  onClick={handleSetPermissions}
-                >
-                  Сохранить
                 </button>
                 <button className="undo_create">Отменить</button>
               </div>

@@ -107,6 +107,14 @@ function SideBar() {
               <p>Сотрудники</p>
             </div>
           </NavLink>
+          <NavLink to="/positions">
+            <div className="sidebar_menu_item">
+              <div className="sidenar_menu_icon">
+                <Icon11 />
+              </div>
+              <p>Должности</p>
+            </div>
+          </NavLink>
           <NavLink to="/settings">
             <div className="sidebar_menu_item">
               <div className="sidenar_menu_icon">

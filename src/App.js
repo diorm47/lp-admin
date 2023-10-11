@@ -23,6 +23,8 @@ import Reviews from "./pages/reviews/reviews";
 import Support from "./pages/support/support";
 import Conclusions from "./pages/conclusions/conclusions";
 import Promocodes from "./pages/promocodes/promocodes";
+import Positions from "./pages/positions/positions";
+import CreateItem from "./pages/create-items/create-item";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,6 +68,8 @@ function App() {
                 <Route path="/cases" element={<Cases />} />
                 <Route path="/payments" element={<Payments />} />
                 <Route path="/reviews" element={<Reviews />} />
+                <Route path="/positions" element={<Positions />} />
+                <Route path="/create-item" element={<CreateItem />} />
                 <Route path="/support" element={<Support />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/conclusions" element={<Conclusions />} />

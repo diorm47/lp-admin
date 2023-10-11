@@ -15,7 +15,34 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
-  const handleLogin = async () => {
+  // const handleLogin = async () => {
+  //   let headersList = {
+  //     Accept: "*/*",
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   };
+
+  //   let bodyContent = `username=${login}&password=${password}`;
+
+  //   let response = await fetch("http://192.168.1.8:8000/admin/sign-in", {
+  //     method: "POST",
+  //     body: bodyContent,
+  //     headers: headersList,
+  //   });
+
+  //   let data = await response.json();
+  //   if (data.access_token) {
+  //     let is_logged = {
+  //       is_logged: true,
+  //     };
+  //     dispatch(loginUserAction(is_logged));
+  //     localStorage.setItem("token", data.access_token);
+  //     navigate("/");
+  //   } else {
+  //     setError(true);
+  //   }
+  // };
+ 
+  const handleLogin = () => {
     let headersList = {
       Accept: "*/*",
       "Content-Type": "application/x-www-form-urlencoded",
@@ -23,23 +50,27 @@ function LoginPage() {
 
     let bodyContent = `username=${login}&password=${password}`;
 
-    let response = await fetch("http://192.168.1.8:8000/admin/sign-in", {
+    fetch("http://192.168.1.8:8000/admin/sign-in", {
       method: "POST",
       body: bodyContent,
       headers: headersList,
-    });
-
-    let data = await response.json();
-    if (data.access_token) {
-      let is_logged = {
-        is_logged: true,
-      };
-      dispatch(loginUserAction(is_logged));
-      localStorage.setItem("token", data.access_token);
-      navigate("/");
-    } else {
-      setError(true);
-    }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.access_token) {
+          let is_logged = {
+            is_logged: true,
+          };
+          dispatch(loginUserAction(is_logged));
+          localStorage.setItem("token", data.access_token);
+          navigate("/");
+        } else {
+          setError(true);
+        }
+      })
+      .catch((error) => {
+        setError(true);
+      });
   };
 
   return (

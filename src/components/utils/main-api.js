@@ -55,7 +55,6 @@ class MainApi {
       body: userData,
     });
   }
-
   // Create employee
   async createEmployeeAction(userData) {
     return this._sendRequest({
@@ -67,7 +66,7 @@ class MainApi {
   // delete employee
   async deleteEmployeeAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/delete`,
+      endpoint: `/admin/employee`,
       method: "DELETE",
       body: userData,
     });
@@ -75,7 +74,7 @@ class MainApi {
   // set role
   async setRoleAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/employee/role`,
+      endpoint: `/admin/assign/role`,
       method: "POST",
       body: userData,
     });
@@ -91,20 +90,114 @@ class MainApi {
   // set permissions
   async setPermissionAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/employee/permissions/`,
+      endpoint: `/admin/assign/permission`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // get permissions
+  async getPermissionAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/permissions`,
+      method: "GET",
+      body: userData,
+    });
+  }
+  // get role permissions
+  async getRolePermissionAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/role/permissions/?role_name=${userData}`,
+      method: "GET",
+    });
+  }
+  // set case category
+  async setCaseCategoryAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/category`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // get case category
+  async getCaseCategoryAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/categories`,
+      method: "GET",
+      body: userData,
+    });
+  }
+  // delete case category
+  async deleteCaseCategoryAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/category`,
+      method: "DELETE",
+      body: userData,
+    });
+  }
+  // update case category
+  async updateCaseCategoryAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/category`,
+      method: "PUT",
+      body: userData,
+    });
+  }
+  // create case
+  async createCase(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // get case
+  async getCase(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/cases`,
+      method: "GET",
+      body: userData,
+    });
+  }
+  // get items
+  async getItems(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/items`,
+      method: "GET",
+      body: userData,
+    });
+  }
+  // get case items
+  async getCaseItems(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case/${userData}/items`,
+      method: "GET",
+    });
+  }
+  // create case item
+  async createCaseItem(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case/item`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // Passoword generator
+  async createPasswordAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/spec/generator/password`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  // create positions
+  async createPositionAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/role`,
       method: "POST",
       body: userData,
     });
   }
 
-  // Passoword generator
-  async createPasswordAction(userData) {
-    return this._sendRequest({
-      endpoint: `/admin/spec/generator_password`,
-      method: "POST",
-      body: userData,
-    });
-  }
   // User me
   async reEnter() {
     return this._sendRequest({
