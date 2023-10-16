@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
-import "./positions.css";
+import React, { useEffect, useState } from "react";
+import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 import CreatePosition from "../../components/create-position/create-position";
-import { useEffect } from "react";
+import "./positions.css";
+
+import { NavLink } from "react-router-dom";
 import { mainApi } from "../../components/utils/main-api";
+import { InputWithLabel } from "../../components/utils/utils";
 
 function Positions() {
   const [categoryModal, setCategoryModal] = useState(false);
   const [rolesList, setRolesList] = useState([]);
-
+  const [value, setValue] = useState("");
   const [permissions, setPermissions] = useState([]);
 
   const [selectedPermissions, setSelectedPermissions] = useState([]);
@@ -76,6 +78,21 @@ function Positions() {
       });
   };
 
+  // createPositionAction
+  const savePositions = () => {
+    mainApi
+      .createPositionAction({
+        role: value,
+      })
+      .then((res) => {
+        console.log(res);
+        setCategoryModal(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {categoryModal ? (
@@ -92,64 +109,100 @@ function Positions() {
 
       <div className="template_page analytics_page">
         <div className="template_page_title">
-          <h1>Должности</h1>
-          <button
-            className="main_btn create_position_btn"
-            onClick={() => setCategoryModal(true)}
-          >
-            Создать должность
-          </button>
-          <div className="users_search">
-            <SearchIcon />
-            <input type="text" placeholder="Поиск" />
-          </div>
+          <h1>Добавить роль</h1>
         </div>
         <div className="user_line"></div>
-        <div className="positions_content">
-          <div className="position_roles">
-            {rolesList.map((permission) => (
-              <div
-                className={
-                  selectedRole && selectedRole.id === permission.id
-                    ? "active_sel_permission"
-                    : ""
-                }
-                key={permission.id}
-                onClick={() => selectRole(permission)}
-              >
-                <p>{permission.name}</p>
-              </div>
-            ))}
+        <NavLink to="/employees">
+          <div className="back_btn">
+            <ArrowBackIcon /> <p>Назад</p>
           </div>
-          {selectedRole ? (
-            <div className="admin_permissions">
-              <h3>Права {selectedRole.name}</h3>
-              <div className="admin_permissions_list">
-                {permissions.map((permission) => (
-                  <div className="admin_permission" key={permission.id}>
-                    <div>
-                      <input
-                        type="checkbox"
-                        checked={selectedPermissions.includes(permission.name)}
-                        onChange={() => handleCheckboxChange(permission)}
-                      />
-                    </div>
-                    <p> {permission.name}</p>
-                  </div>
-                ))}
+        </NavLink>
+
+        <div className="add_employee_wrapper">
+          <h3>Создание новой роли</h3>
+          <div className="add_role_form">
+            <div className="add_role_block">
+              <div className="add_employe_input">
+                <InputWithLabel
+                  id="employer_last_name"
+                  label="Название *"
+                  value={value}
+                  event={setValue}
+                />
               </div>
-              <div className="admin_actions admin_permisions_btns">
-                <button
-                  className="create_admin_btn"
-                  onClick={handleSetPermissions}
+              <div className="warning">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
                 >
-                  Сохранить
-                </button>
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z"
+                    fill="#A6A6A6"
+                  />
+                </svg>
+                <p>
+                  Новая роль будет сохранена для дальнейшего <br /> применения с
+                  выбранными правами
+                </p>
               </div>
             </div>
-          ) : (
-            ""
-          )}
+
+            <div className="position_roles">
+              {rolesList.map((permission) => (
+                <div
+                  className={
+                    selectedRole && selectedRole.id === permission.id
+                      ? "active_sel_permission"
+                      : ""
+                  }
+                  key={permission.id}
+                  onClick={() => selectRole(permission)}
+                >
+                  <p>{permission.name}</p>
+                </div>
+              ))}
+            </div>
+            {selectedRole ? (
+              <div className="admin_permissions">
+                <h3>Права {selectedRole.name}</h3>
+                <div className="admin_permissions_list">
+                  {permissions.map((permission) => (
+                    <div className="admin_permission" key={permission.id}>
+                      <div>
+                        <input
+                          type="checkbox"
+                          checked={selectedPermissions.includes(
+                            permission.name
+                          )}
+                          onChange={() => handleCheckboxChange(permission)}
+                        />
+                      </div>
+                      <p> {permission.name}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="admin_actions admin_permisions_btns">
+                  <button
+                    className="create_admin_btn"
+                    onClick={handleSetPermissions}
+                  >
+                    Сохранить
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+            <div className="admin_actions ">
+              <button className="create_admin_btn" onClick={savePositions}>
+                Создать
+              </button>
+              <button className="undo_create">Отменить</button>
+            </div>
+          </div>
         </div>
       </div>
     </>

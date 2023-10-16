@@ -228,7 +228,7 @@ function Items() {
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <g clip-path="url(#clip0_280_5736)">
+                                <g clipPath="url(#clip0_280_5736)">
                                   <rect
                                     x="0.5"
                                     y="0.5"

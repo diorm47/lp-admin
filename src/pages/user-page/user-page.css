@@ -207,3 +207,39 @@
   align-items: center;
   justify-content: center;
 }
+
+.delete_user_btn {
+  background: var(--grey-20, #d6d6d6) !important;
+}
+
+.user_top_actions_btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user_action_btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.user_action_btns .main_btn:first-child {
+  border-radius: 6px;
+  background: var(--red-100, #dc0000);
+}
+.user_action_btns .main_btn:last-child {
+  border-radius: 6px;
+  background: #48ac98;
+}
+.personal_information_block {
+  position: relative;
+}
+
+.copy_icon {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  cursor: pointer;
+}
+.winrate_edit .copy_icon {
+  top: 45px;
+}

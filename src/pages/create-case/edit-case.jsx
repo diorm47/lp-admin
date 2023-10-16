@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { mainApi } from "../../components/utils/main-api";
 import CaseItems from "../../components/case-items/case-items";
 
-function CreateCase() {
+function EditCase() {
   const [modal, setModal] = useState(false);
   const [caseImage, setCaseImage] = useState();
   const [caseImageU, setCaseImageU] = useState();
@@ -94,7 +94,7 @@ function CreateCase() {
     <>
       <div className="template_page category_page">
         <div className="template_page_title">
-          <h1>Добавить кейс</h1>
+          <h1>Редактировать кейс</h1>
         </div>
         <div className="user_line"></div>
         <NavLink to="/cases">
@@ -197,7 +197,6 @@ function CreateCase() {
                   ></textarea>
                 </div>
                 <span>Максимальное количество символов - 300</span>
-
                 <div class="admin_actions case_actions">
                   <button class="create_admin_btn" onClick={saveCase}>
                  
@@ -288,4 +287,4 @@ function CreateCase() {
   );
 }
 
-export default CreateCase;
+export default EditCase;

@@ -183,7 +183,6 @@
   width: 100%;
 }
 
-.case_save_btn {
-    margin-top: 20px;
-    background: green;
+.case_actions {
+  margin-top: 20px;
 }

@@ -11,7 +11,9 @@ function Pagination({ allData, paginationData }) {
 
   const pageCount = Math.ceil(allData.length / itemsPerPage);
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % allData.length;
+    // const newOffset = (event.selected * itemsPerPage) % allData.length;
+    const newOffset = event.selected * itemsPerPage;
+
     setItemOffset(newOffset);
   };
   useEffect(() => {

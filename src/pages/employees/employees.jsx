@@ -33,15 +33,32 @@ function Employees() {
       });
   };
 
-  console.log(employees);
-
   return (
     <div className="template_page employees_page">
       <div className="template_page_title">
         <h1>Сотрудники</h1>
-        <div className="users_search">
-          <SearchIcon />
-          <input type="text" placeholder="Поиск" />
+        <div className="employees_top_btns">
+          <NavLink to="/positions">
+            <button className="main_btn add_role_ref">
+              <p>Добавить роль</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+          </NavLink>
+          <div className="users_search">
+            <SearchIcon />
+            <input type="text" placeholder="Поиск" />
+          </div>
         </div>
       </div>
       <div className="template_page_content">

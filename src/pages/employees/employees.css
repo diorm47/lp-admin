@@ -116,3 +116,13 @@
 tbody tr:hover .employer_action_btns {
     display: flex;
 }
+
+.employees_top_btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.add_role_ref {
+  border-radius: 3px;
+  background: var(--normal, #358ED7);
+}

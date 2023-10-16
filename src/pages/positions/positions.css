@@ -45,5 +45,32 @@
 }
 
 .active_sel_permission {
-    opacity: 0.6;
+  opacity: 0.6;
+}
+
+.add_role_block {
+  display: flex;
+  align-items: start;
+}
+
+.warning {
+  display: flex;
+  align-items: start;
+  padding: 4px;
+  gap: 8px;
+  border-radius: 3px;
+  border: 1px solid var(--unnamed, #cfd3de);
+}
+.warning p {
+  color: var(--unnamed, #737373);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+.add_role_block
+.add_employe_input {
+ width: 750px;
+ margin-right: 32px;
 }

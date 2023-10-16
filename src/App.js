@@ -25,30 +25,31 @@ import Conclusions from "./pages/conclusions/conclusions";
 import Promocodes from "./pages/promocodes/promocodes";
 import Positions from "./pages/positions/positions";
 import CreateItem from "./pages/create-items/create-item";
+import EditCase from "./pages/create-case/edit-case";
 
 function App() {
   const dispatch = useDispatch();
   const isLogged = useSelector((user) => user.user.user.is_logged);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      mainApi
-        .reEnter()
-        .then((res) => {
-          dispatch(loginUserAction(res));
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }
-  }, [localStorage.getItem("token")]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     mainApi
+  //       .reEnter()
+  //       .then((res) => {
+  //         dispatch(loginUserAction(res));
+  //       })
+  //       .catch((error) => {
+  //         console.log("error", error);
+  //       });
+  //   }
+  // }, [localStorage.getItem("token")]);
 
-  useEffect(() => {
-    if (!localStorage.getItem("token") && !isLogged) {
-      navigate("/login");
-    }
-  }, [isLogged, navigate, localStorage.getItem("token")]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token") && !isLogged) {
+  //     navigate("/login");
+  //   }
+  // }, [isLogged, navigate, localStorage.getItem("token")]);
 
   return (
     <>
@@ -80,6 +81,8 @@ function App() {
                 <Route path="/update-employee" element={<UpdateEmploye />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-case" element={<CreateCase />} />
+                <Route path="/edit-case" element={<EditCase />} />
+                {/* <Route path="/edit-case/:case" element={<EditCase />} /> */}
                 <Route path="/cases-category" element={<CaseCategory />} />
               </Routes>
             </Suspense>

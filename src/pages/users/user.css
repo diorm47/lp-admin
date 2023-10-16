@@ -1,5 +1,5 @@
 .users_search {
-  width: 170px;
+  width: 220px;
   height: 40px;
   border-radius: 6px;
   background: #ebebeb;
@@ -129,4 +129,11 @@ table {
 
 .users_top_actions {
   margin-bottom: 18px;
+}
+.users_select {
+  padding: 12px 0;
+  border-bottom: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
