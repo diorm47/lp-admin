@@ -22,7 +22,7 @@ function Promocodes() {
         <div className="template_page_title">
           <h1>Промокоды</h1>
           <div className="top_cases_actions">
-            <NavLink to="/">
+            <NavLink to="/create-promocode">
               <button className="main_btn add_case_btn">
                 <p>Добавить промокод</p>
                 <svg

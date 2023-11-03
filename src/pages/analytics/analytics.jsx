@@ -7,7 +7,7 @@ import { ReactComponent as DownIcon } from "../../assets/icons/down-icon.svg";
 import { ReactComponent as DownDiagram } from "../../assets/icons/down-diagram.svg";
 
 function Analytics() {
-  return (
+  return ( 
     <div className="template_page analytics_page">
       <div className="template_page_title">
         <h1>Аналитика</h1>

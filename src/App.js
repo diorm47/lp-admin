@@ -26,6 +26,7 @@ import Promocodes from "./pages/promocodes/promocodes";
 import Positions from "./pages/positions/positions";
 import CreateItem from "./pages/create-items/create-item";
 import EditCase from "./pages/create-case/edit-case";
+import CreatePromocode from "./pages/create-promocode/create-promoode";
 
 function App() {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/conclusions" element={<Conclusions />} />
                 <Route path="/promocodes" element={<Promocodes />} />
+                <Route path="/create-promocode" element={<CreatePromocode />} />
                 <Route path="/items" element={<Items />} />
                 <Route path="/add-employee" element={<AddEmploye />} />
                 <Route path="/competitons" element={<Competitions />} />

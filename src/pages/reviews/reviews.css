@@ -1,0 +1,20 @@
+.review_text p {
+  width: 257px;
+  height: 74px;
+  padding: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--unnamed, #cfd3de);
+  background: var(--unnamed, #fff);
+  margin: 12px 0 8px;
+}
+
+.rev_status p {
+    color: #fff;
+  padding: 8px 16px;
+  border-radius: 3px;
+  background: var(--mane-blue, #358ed7);
+}
+
+.reviews_table {
+    margin-top: 50px;
+}
