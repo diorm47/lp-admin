@@ -1,24 +1,224 @@
 import React, { useState } from "react";
-import ReactPaginate from "react-paginate";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
-import "../cases/cases.css";
+import Pagination from "../../components/pagionation/pagination";
+
+import "./promocodes.css";
 
 function Promocodes() {
-  const [itemOffset, setItemOffset] = useState(0);
-  const [casesItems, setCasesItems] = useState("");
-  const itemsPerPage = 10;
-  const endOffset = itemOffset + itemsPerPage;
-  const items = casesItems.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(casesItems.length / itemsPerPage);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % casesItems.length;
-    setItemOffset(newOffset);
+  const promocodesData = [
+    {
+      promocode_id: 12344,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 34555,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 34566,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 23444,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 456546,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 2344455,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 45777,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 345566,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 2345555,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+
+    {
+      promocode_id: 567889,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 23455,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 6666667,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 2345,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 67886,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 34677,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 234234,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+
+    {
+      promocode_id: 657768,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 456546,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 23456,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+    {
+      promocode_id: 456787,
+      name: "Кристаллик",
+      category: "Бонус ₽ к депозиту",
+      bonus: "100",
+      activations: "234",
+      deposits: "345555",
+      time_send: "Одноразовый",
+      date: "2023-09-01 22:34:23",
+    },
+  ];
+  const [promocodes, setPromocodes] = useState();
+  const navigate = useNavigate();
+  const editPromocode = (id) => {
+    navigate(`/edit-promocode`);
   };
 
   return (
     <>
-      <div className="template_page employees_page">
+      <div className="template_page promocode_page">
         <div className="template_page_title">
           <h1>Промокоды</h1>
           <div className="top_cases_actions">
@@ -50,7 +250,6 @@ function Promocodes() {
               <button className="main_btn">
                 <p>Бонус ₽ к пополнению</p>
               </button>
-          
             </div>
             <div className="cases_top_actions">
               <button className="main_btn">
@@ -61,9 +260,8 @@ function Promocodes() {
                 <input type="text" placeholder="Поиск промокода" />
               </div>
             </div>
-            <div className="user_line"></div>
 
-            <table className="cases_table">
+            <table className="cases_table ">
               <thead>
                 <tr>
                   <td>ID</td>
@@ -72,7 +270,7 @@ function Promocodes() {
                   <td className="tac">Бонус</td>
                   <td className="tac">Кол-во активаций</td>
                   <td className="tac">Сумма депов</td>
-                  <td>Время действия</td>
+                  <td className="tac">Время действия</td>
                   <td className="tac">Дата создания</td>
                   <td>
                     <div className="select_all">
@@ -82,40 +280,29 @@ function Promocodes() {
                 </tr>
               </thead>
               <tbody>
-                {items && items.length
-                  ? items.map((item) => (
-                      <tr>
-                        <td>{item.id}</td>
-                        <td>{item.name}</td>
-                        <td>{item.category || "-"}</td>
-                        <td className="tac">{item.cost} ₽</td>
-                        <td className="tac">{item.gem_cost}</td>
-                        <td className="tac">{item.opens || 0} </td>
+                {promocodes && promocodes.length
+                  ? promocodes.map((promocode) => (
+                      <tr key={promocode.promocode_id}>
+                        <td>{promocode.promocode_id}</td>
+                        <td>{promocode.name}</td>
+                        <td>{promocode.category || "-"}</td>
+                        <td className="tac">+ {promocode.bonus} ₽</td>
+                        <td className="tac">{promocode.activations}</td>
+                        <td className="tac">{promocode.deposits} ₽</td>
+                        <td className="tac">{promocode.time_send}</td>
+
                         <td className="tac">
-                          {item.created_at.split("T")[0]}
+                          {promocode.date.split(" ")[0]}
                           <br />
-                          {item.created_at.split("T")[1]}
+                          {promocode.date.split(" ")[1]}
                         </td>
                         <td>
                           <div className="cases_table_actions">
                             <div className="cases_table_actions_list">
-                              <div title="поиск" className="cases_table_search">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M15.7549 14.255H14.9649L14.6849 13.985C15.6649 12.845 16.2549 11.365 16.2549 9.755C16.2549 6.165 13.3449 3.255 9.75488 3.255C6.16488 3.255 3.25488 6.165 3.25488 9.755C3.25488 13.345 6.16488 16.255 9.75488 16.255C11.3649 16.255 12.8449 15.665 13.9849 14.685L14.2549 14.965V15.755L19.2549 20.745L20.7449 19.255L15.7549 14.255ZM9.75488 14.255C7.26488 14.255 5.25488 12.245 5.25488 9.755C5.25488 7.26501 7.26488 5.255 9.75488 5.255C12.2449 5.255 14.2549 7.26501 14.2549 9.755C14.2549 12.245 12.2449 14.255 9.75488 14.255Z"
-                                    fill="black"
-                                  />
-                                </svg>
-                              </div>
                               <div
                                 title="редактировать"
                                 className="cases_table_edit"
+                                onClick={() => editPromocode()}
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -130,23 +317,7 @@ function Promocodes() {
                                   />
                                 </svg>
                               </div>
-                              <div
-                                title="скопировать"
-                                className="cases_table_copy"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M16.5 1H4.5C3.4 1 2.5 1.9 2.5 3V17H4.5V3H16.5V1ZM15.5 5L21.5 11V21C21.5 22.1 20.6 23 19.5 23H8.49C7.39 23 6.5 22.1 6.5 21L6.51 7C6.51 5.9 7.4 5 8.5 5H15.5ZM14.5 12H20L14.5 6.5V12Z"
-                                    fill="black"
-                                  />
-                                </svg>
-                              </div>
+
                               <div title="скрыть" className="cases_table_hide">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +367,7 @@ function Promocodes() {
                                 </svg>
                               </div>
                             </div>
-                            <div className="is_selected">
+                            <div className="is_selected ml_55px">
                               <svg
                                 width="24"
                                 height="24"
@@ -239,15 +410,14 @@ function Promocodes() {
               </tbody>
             </table>
             <div className="cases_paginations">
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel="Следующая"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="Предыдущая"
-                renderOnZeroPageCount={null}
-              />
+              {promocodesData ? (
+                <Pagination
+                  allData={promocodesData}
+                  paginationData={setPromocodes}
+                />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

@@ -30,6 +30,7 @@ import CreatePromocode from "./pages/create-promocode/create-promoode";
 import ReviewPage from "./pages/review-page/review-page";
 import ConclusionPage from "./pages/conclusion-page/conclusion-page";
 import PaymentPage from "./pages/payment-page/payment-page";
+import EditPromocode from "./pages/create-promocode/edit-promocode";
 
 function App() {
   const dispatch = useDispatch();
@@ -88,6 +89,7 @@ function App() {
 
                 <Route path="/promocodes" element={<Promocodes />} />
                 <Route path="/create-promocode" element={<CreatePromocode />} />
+                <Route path="/edit-promocode" element={<EditPromocode />} />
                 <Route path="/items" element={<Items />} />
                 <Route path="/add-employee" element={<AddEmploye />} />
                 <Route path="/competitons" element={<Competitions />} />

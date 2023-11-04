@@ -1,0 +1,37 @@
+.case_input_temp_title {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.case_input_temp_title p {
+  margin-bottom: 0;
+}
+.case_input_temp_title svg {
+  cursor: pointer;
+}
+
+.promocode_category .item_color_btn {
+  width: 50%;
+}
+
+.promocode_category .item_color_btn_active svg * {
+  fill: #ffffff;
+  transition: all 0.4s ease;
+}
+.promocode_category svg {
+  margin-right: 8px;
+  margin-left: -6px;
+}
+.promocodes_time .item_color_btn {
+  width: auto;
+  padding: 14px 20px;
+}
+
+.promocodes_time {
+  width: 700px !important;
+}
+
+.promocodes_time .item_color_wrapper {
+  width: 100%;
+}

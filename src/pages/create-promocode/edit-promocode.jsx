@@ -5,19 +5,19 @@ import "react-tabs/style/react-tabs.css";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 import "./create-promocode.css";
 
-function CreatePromocode() {
-  const [promoName, setPromoName] = useState("");
+function EditPromocode() {
+  const [promoName, setPromoName] = useState("Кристаллик");
   const [promoCategory, setPromoCategory] = useState("percent");
-  const [depositPercent, setDepositPercent] = useState("");
-  const [workingAmount, setWorkingAmount] = useState("");
+  const [depositPercent, setDepositPercent] = useState("40");
+  const [workingAmount, setWorkingAmount] = useState("100");
   const [promoTime, setPromoTime] = useState("1");
-  const [activationsAmount, setActivationsAmount] = useState("");
+  const [activationsAmount, setActivationsAmount] = useState("200");
 
   return (
     <>
       <div className="template_page promocode_page_crud">
         <div className="template_page_title">
-          <h1>Создать промокод</h1>
+          <h1>Редактировать промокод</h1>
         </div>
         <div className="user_line"></div>
         <NavLink to="/promocodes">
@@ -307,4 +307,4 @@ function CreatePromocode() {
   );
 }
 
-export default CreatePromocode;
+export default EditPromocode;
