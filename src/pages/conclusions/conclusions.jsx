@@ -1,9 +1,9 @@
-
 import React from "react";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { useState } from "react";
 import "./conclusions.css";
 import Pagination from "../../components/pagionation/pagination";
+import { useNavigate } from "react-router-dom";
 
 function Conclusions() {
   const paymentsData = [
@@ -180,6 +180,11 @@ function Conclusions() {
   ];
   const [payments, setUsers] = useState([]);
 
+  const navigate = useNavigate();
+  const aboutConclusion = (id) => {
+    navigate(`/conclusion/${id}`);
+  };
+
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
@@ -201,15 +206,11 @@ function Conclusions() {
               <th className="tal">ID вывода</th>
               <th className="tal">ID юзера</th>
               <th className="tal">Уникальный код</th>
-              <th className="tal">
-              Сумма вывода
-              </th>
+              <th className="tal">Сумма вывода</th>
               <th className="tal">Предмет вывода</th>
-              <th className="tal">
-              UID победителя
-              </th>
+              <th className="tal">UID победителя</th>
               <th className="tac">Дата вывода</th>
-              <th className="tac">Статус системы</th>
+              <th className="tal">Статус системы</th>
               <td className="users_select">
                 <div className="select_all">
                   <input type="checkbox" /> Выделить все
@@ -234,15 +235,18 @@ function Conclusions() {
                       <p>{payment.payment_amount}</p>
                     </td>
                     <td className="">
-                      <p>{payment.bonus}</p>
+                      <p>Благославение <br /> полой Луны</p>
                     </td>
                     <td className="">
-                      <p>{payment.payment_type}</p>
+                      <p>21223490</p>
                     </td>
+
                     <td className="tac">
-                      <p>{payment.payment_date}</p>
+                      {payment && payment.payment_date.split(" ")[0]}
+                      <br />
+                      {payment && payment.payment_date.split(" ")[1]}
                     </td>
-                    <td className="tac">
+                    <td className="tal">
                       <p>{payment.payment_status}</p>
                     </td>
 
@@ -266,6 +270,7 @@ function Conclusions() {
                           <div
                             title="редактировать"
                             className="cases_table_edit"
+                            onClick={() => aboutConclusion(payment.payment_id)}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -295,7 +300,7 @@ function Conclusions() {
                             </svg>
                           </div>
                         </div>
-                        <div className="is_selected">
+                        <div className="is_selected ml_70px">
                           <svg
                             width="24"
                             height="24"

@@ -3,6 +3,7 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg
 import { useState } from "react";
 import "./payments.css";
 import Pagination from "../../components/pagionation/pagination";
+import { useNavigate } from "react-router-dom";
 
 function Payments() {
   const paymentsData = [
@@ -179,6 +180,11 @@ function Payments() {
   ];
   const [payments, setUsers] = useState([]);
 
+  const navigate = useNavigate();
+  const aboutPayment = (id) => {
+    navigate(`/payment/${id}`);
+  };
+
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
@@ -219,7 +225,7 @@ function Payments() {
           <tbody>
             {payments
               ? payments.map((payment) => (
-                  <tr key={payment.payment_id}>
+                  <tr className="review_raw" key={payment.payment_id}>
                     <td className="">
                       <p>{payment.payment_id}</p>
                     </td>
@@ -238,8 +244,11 @@ function Payments() {
                     <td className="">
                       <p>{payment.payment_type}</p>
                     </td>
+
                     <td className="tac">
-                      <p>{payment.payment_date}</p>
+                      {payment && payment.payment_date.split(" ")[0]}
+                      <br />
+                      {payment && payment.payment_date.split(" ")[1]}
                     </td>
                     <td className="tac">
                       <p>{payment.payment_status}</p>
@@ -265,6 +274,7 @@ function Payments() {
                           <div
                             title="редактировать"
                             className="cases_table_edit"
+                            onClick={() => aboutPayment(payment.payment_id)}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +304,7 @@ function Payments() {
                             </svg>
                           </div>
                         </div>
-                        <div className="is_selected">
+                        <div className="is_selected ml_70px">
                           <svg
                             width="24"
                             height="24"

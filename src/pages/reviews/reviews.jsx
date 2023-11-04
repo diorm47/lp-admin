@@ -1,9 +1,10 @@
 import React from "react";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { useState } from "react";
-import "./reviews.css"
+import "./reviews.css";
 
 import Pagination from "../../components/pagionation/pagination";
+import { useNavigate } from "react-router-dom";
 
 function Reviews() {
   const reviewData = [
@@ -109,6 +110,11 @@ function Reviews() {
   ];
   const [reviews, setReviews] = useState([]);
 
+  const navigate = useNavigate();
+  const aboutReview = (id) => {
+    navigate(`/review/${id}`);
+  };
+
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
@@ -145,7 +151,7 @@ function Reviews() {
           <tbody>
             {reviews
               ? reviews.map((review) => (
-                  <tr key={review.review_num}>
+                  <tr className="review_raw" key={review.review_num}>
                     <td className="">
                       <p># {review.review_num}</p>
                     </td>
@@ -161,8 +167,11 @@ function Reviews() {
                     <td className="">
                       <p>{review.rev_grade}</p>
                     </td>
+
                     <td className="">
-                      <p>{review.rev_date}</p>
+                      {review && review.rev_date.split(" ")[0]}
+                      <br />
+                      {review && review.rev_date.split(" ")[1]}
                     </td>
                     <td className="tac rev_status">
                       <p>{review.rev_status}</p>
@@ -188,6 +197,7 @@ function Reviews() {
                           <div
                             title="редактировать"
                             className="cases_table_edit"
+                            onClick={() => aboutReview(review.review_num)}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +227,7 @@ function Reviews() {
                             </svg>
                           </div>
                         </div>
-                        <div className="is_selected">
+                        <div className="is_selected ml_70px">
                           <svg
                             width="24"
                             height="24"

@@ -27,6 +27,9 @@ import Positions from "./pages/positions/positions";
 import CreateItem from "./pages/create-items/create-item";
 import EditCase from "./pages/create-case/edit-case";
 import CreatePromocode from "./pages/create-promocode/create-promoode";
+import ReviewPage from "./pages/review-page/review-page";
+import ConclusionPage from "./pages/conclusion-page/conclusion-page";
+import PaymentPage from "./pages/payment-page/payment-page";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,12 +72,20 @@ function App() {
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/cases" element={<Cases />} />
                 <Route path="/payments" element={<Payments />} />
+                <Route path="/payment/:payment" element={<PaymentPage />} />
+
                 <Route path="/reviews" element={<Reviews />} />
+                <Route path="/review/:review" element={<ReviewPage />} />
                 <Route path="/positions" element={<Positions />} />
                 <Route path="/create-item" element={<CreateItem />} />
                 <Route path="/support" element={<Support />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/conclusions" element={<Conclusions />} />
+                <Route
+                  path="/conclusion/:conclusion"
+                  element={<ConclusionPage />}
+                />
+
                 <Route path="/promocodes" element={<Promocodes />} />
                 <Route path="/create-promocode" element={<CreatePromocode />} />
                 <Route path="/items" element={<Items />} />

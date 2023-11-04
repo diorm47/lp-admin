@@ -9,12 +9,19 @@
 }
 
 .rev_status p {
-    color: #fff;
+  color: #fff;
   padding: 8px 16px;
   border-radius: 3px;
   background: var(--mane-blue, #358ed7);
 }
 
 .reviews_table {
-    margin-top: 50px;
+  margin-top: 50px;
+}
+.review_raw {
+  transition: all 0.4s ease;
+}
+.review_raw:hover {
+  transition: all 0.4s ease;
+  background: #cfd3de4e;
 }
