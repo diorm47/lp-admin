@@ -53,7 +53,7 @@ function CreateItem() {
     bodyContent.append("gem_cost", itemPriceCrystals);
     bodyContent.append("picture", itemImagesS);
 
-    fetch("http://192.168.1.8:8000/admin/item", {
+    fetch("https://legadrop.org/admin/item", {
       method: "POST",
       body: bodyContent,
       headers: headersList,

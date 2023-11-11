@@ -68,7 +68,7 @@ function EditCase() {
     bodyContent.append("name", caseName);
     bodyContent.append("picture", caseImageU);
 
-    fetch("http://192.168.1.8:8000/admin/case", {
+    fetch("https://legadrop.org/admin/case", {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -242,7 +242,7 @@ function EditCase() {
                       ? caseItems.map((item) => (
                           <div className="case_img_item">
                             <img
-                              src={`http://192.168.1.8:8000/${item.picture}`}
+                              src={`https://legadrop.org/${item.picture}`}
                               alt=""
                             />
                             <p>{item.name}</p>

@@ -23,7 +23,7 @@ function LoginPage() {
 
   //   let bodyContent = `username=${login}&password=${password}`;
 
-  //   let response = await fetch("http://192.168.1.8:8000/admin/sign-in", {
+  //   let response = await fetch("https://legadrop.org/admin/sign-in", {
   //     method: "POST",
   //     body: bodyContent,
   //     headers: headersList,
@@ -50,7 +50,7 @@ function LoginPage() {
 
     let bodyContent = `username=${login}&password=${password}`;
 
-    fetch("http://192.168.1.8:8000/admin/sign-in", {
+    fetch("https://legadrop.org/admin/sign-in", {
       method: "POST",
       body: bodyContent,
       headers: headersList,
