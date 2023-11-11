@@ -74,7 +74,6 @@ function App() {
                 <Route path="/cases" element={<Cases />} />
                 <Route path="/payments" element={<Payments />} />
                 <Route path="/payment/:payment" element={<PaymentPage />} />
-
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/review/:review" element={<ReviewPage />} />
                 <Route path="/positions" element={<Positions />} />
@@ -86,7 +85,6 @@ function App() {
                   path="/conclusion/:conclusion"
                   element={<ConclusionPage />}
                 />
-
                 <Route path="/promocodes" element={<Promocodes />} />
                 <Route path="/create-promocode" element={<CreatePromocode />} />
                 <Route path="/edit-promocode" element={<EditPromocode />} />
