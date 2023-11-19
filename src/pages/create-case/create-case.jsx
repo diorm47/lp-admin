@@ -38,7 +38,6 @@ function CreateCase() {
       mainApi
         .getCaseItems(caseID)
         .then((res) => {
-          console.log(res);
           setCaseItems(res.items);
         })
         .catch((error) => {
@@ -66,7 +65,7 @@ function CreateCase() {
     let bodyContent = new FormData();
     bodyContent.append("category_id", caseCategoryId);
     bodyContent.append("name", caseName);
-    bodyContent.append("picture", caseImageU);
+    bodyContent.append("image", caseImageU);
 
     fetch("https://legadrop.org/admin/case", {
       method: "POST",
@@ -200,8 +199,7 @@ function CreateCase() {
 
                 <div class="admin_actions case_actions">
                   <button class="create_admin_btn" onClick={saveCase}>
-                 
-                    Сохранить 
+                    Сохранить
                   </button>
                   <button class="undo_create">Отменить</button>
                 </div>
@@ -243,10 +241,11 @@ function CreateCase() {
                       ? caseItems.map((item) => (
                           <div className="case_img_item">
                             <img
-                              src={`https://legadrop.org/${item.picture}`}
+                              src={`https://legadrop.org/${item.image}`}
                               alt=""
                             />
-                            <p>{item.name}</p>
+                            <p>{item.name} кр.</p>
+                            <p>{item.cost} $</p>
                           </div>
                         ))
                       : ""}

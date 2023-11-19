@@ -198,6 +198,23 @@ class MainApi {
     });
   }
 
+  // Get Case 
+
+  async getCaseAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case`,
+      method: "POST",
+      body: userData,
+    });
+  }
+  async deleteItemAction(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/item`,
+      method: "DELETE",
+      body: userData,
+    });
+  }
+
   // User me
   async reEnter() {
     return this._sendRequest({

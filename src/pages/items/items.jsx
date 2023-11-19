@@ -19,7 +19,7 @@ function Items() {
     setItemOffset(newOffset);
   };
 
-  useEffect(() => {
+  const getItems = () => {
     mainApi
       .getItems()
       .then((res) => {
@@ -28,7 +28,24 @@ function Items() {
       .catch((error) => {
         console.log("error", error);
       });
+  };
+  useEffect(() => {
+    getItems();
   }, []);
+
+  const deleteItem = (id) => {
+    mainApi
+      .deleteItemAction({
+        item_id: id,
+      })
+      .then((res) => {
+        console.log(res);
+        getItems();
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
   return (
     <>
@@ -195,6 +212,7 @@ function Items() {
                                 <div
                                   title="удалить"
                                   className="cases_table_delete"
+                                  onClick={() => deleteItem(item.item_id)}
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"

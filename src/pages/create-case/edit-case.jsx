@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 import "./create-case.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -21,6 +21,8 @@ function EditCase() {
   const [caseItems, setCaseItems] = useState();
 
   const [categories, setCategories] = useState([]);
+  const params = useParams();
+  console.log(params.case);
 
   useEffect(() => {
     mainApi
@@ -199,8 +201,7 @@ function EditCase() {
                 <span>Максимальное количество символов - 300</span>
                 <div class="admin_actions case_actions">
                   <button class="create_admin_btn" onClick={saveCase}>
-                 
-                    Сохранить 
+                    Сохранить
                   </button>
                   <button class="undo_create">Отменить</button>
                 </div>

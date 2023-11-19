@@ -94,8 +94,8 @@ function App() {
                 <Route path="/update-employee" element={<UpdateEmploye />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-case" element={<CreateCase />} />
-                <Route path="/edit-case" element={<EditCase />} />
-                {/* <Route path="/edit-case/:case" element={<EditCase />} /> */}
+
+                <Route path="/edit-case/:case" element={<EditCase />} />
                 <Route path="/cases-category" element={<CaseCategory />} />
               </Routes>
             </Suspense>

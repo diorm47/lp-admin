@@ -51,7 +51,7 @@ function CreateItem() {
     bodyContent.append("cost", itemPrice);
     bodyContent.append("color", itemColor);
     bodyContent.append("gem_cost", itemPriceCrystals);
-    bodyContent.append("picture", itemImagesS);
+    bodyContent.append("image", itemImagesS);
 
     fetch("https://legadrop.org/admin/item", {
       method: "POST",

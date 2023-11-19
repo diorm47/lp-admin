@@ -5,7 +5,7 @@
 }
 
 .case_item {
-  width: 200px;
+  width: 100px;
   cursor: pointer;
 }
 .case_item img {
@@ -16,6 +16,12 @@
 }
 .case_items_content {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   grid-gap: 20px;
+}
+
+
+.modal_template_content 
+.case_item img {
+  width: 100px;
 }

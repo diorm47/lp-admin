@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
 import Pagination from "../../components/pagionation/pagination";
@@ -9,6 +9,7 @@ import "./cases.css";
 function Cases() {
   const [casesItems, setCasesItems] = useState();
   const [cases, setCases] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     mainApi
@@ -34,6 +35,11 @@ function Cases() {
       });
   }, []);
 
+  const editCase = (id) => {
+    navigate(`/edit-case/${id}`);
+  };
+
+  // edit-case
   return (
     <>
       <div className="template_page employees_page">
@@ -176,6 +182,7 @@ function Cases() {
                                 <div
                                   title="редактировать"
                                   className="cases_table_edit"
+                                  onClick={() => editCase(cases.case_id)}
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"

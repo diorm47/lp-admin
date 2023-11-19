@@ -60,8 +60,9 @@ function CaseItems({ setModal, case_id }) {
                 key={item.id}
                 onClick={() => handleCreateCaseItem(item.item_id)}
               >
-                <img src={`https://legadrop.org/${item.picture}`} alt="" />
-                <p>{item.name}</p>
+                <img src={`https://legadrop.org/${item.image}`} alt="" />
+                <p>{item.name} кр.</p>
+                <p>{item.cost} $</p>
               </div>
             ))
           : ""}
