@@ -25,3 +25,12 @@
 .case_item img {
   width: 100px;
 }
+
+.case_items_content_wrapper {
+   height: 700px;
+   overflow-y: visible;
+   overflow-x: hidden;
+}
+.case_items_content {
+  height: 100%;
+}

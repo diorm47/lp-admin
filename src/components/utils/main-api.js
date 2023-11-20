@@ -173,10 +173,19 @@ class MainApi {
       method: "GET",
     });
   }
-  // create case item
-  async createCaseItem(userData) {
+  // delete case items
+  async deleteCaseItem(userData) {
     return this._sendRequest({
       endpoint: `/admin/case/item`,
+      method: "DELETE",
+      body: userData,
+    });
+  }
+  // add items to case
+  async addItemsCase(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case/add/items/list`,
+
       method: "POST",
       body: userData,
     });
@@ -198,7 +207,7 @@ class MainApi {
     });
   }
 
-  // Get Case 
+  // Get Case
 
   async getCaseAction(userData) {
     return this._sendRequest({
@@ -211,6 +220,13 @@ class MainApi {
     return this._sendRequest({
       endpoint: `/admin/item`,
       method: "DELETE",
+      body: userData,
+    });
+  }
+  async getCaseId(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case`,
+      method: "GET",
       body: userData,
     });
   }

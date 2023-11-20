@@ -234,9 +234,9 @@ function CreatePromocode() {
                   />
                 </div>
 
-                <div class="admin_actions case_actions">
-                  <button class="create_admin_btn">Сохранить</button>
-                  <button class="undo_create">Отменить</button>
+                <div className="admin_actions case_actions">
+                  <button className="create_admin_btn">Сохранить</button>
+                  <button className="undo_create">Отменить</button>
                 </div>
               </div>
             </TabPanel>
@@ -294,9 +294,9 @@ function CreatePromocode() {
                   <p>Кошелек для выплаты </p>
                   <input type="text" />
                 </div>
-                <div class="admin_actions case_actions">
-                  <button class="create_admin_btn">Сохранить</button>
-                  <button class="undo_create">Отменить</button>
+                <div className="admin_actions case_actions">
+                  <button className="create_admin_btn">Сохранить</button>
+                  <button className="undo_create">Отменить</button>
                 </div>
               </div>
             </TabPanel>

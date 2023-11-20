@@ -248,13 +248,13 @@ function ConclusionPage() {
                 {conclusion && conclusion.payment_date.split(" ")[1]}
               </td>
 
-              <td class="tac rev_status">
+              <td className="tac rev_status">
                 <p>{conclusion.payment_status}</p>
               </td>
 
               <td>
                 <div className="cases_table_actions">
-                  <button class="undo_create">Завершить заказать</button>
+                  <button className="undo_create">Завершить заказать</button>
                 </div>
               </td>
             </tr>
@@ -306,7 +306,7 @@ function ConclusionPage() {
                 </td>
 
                 <td>
-                  <button class="main_btn about_secondary_btn">
+                  <button className="main_btn about_secondary_btn">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"

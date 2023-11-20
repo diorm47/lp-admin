@@ -242,13 +242,13 @@ function PaymentPage() {
                 <br />
                 {payment && payment.payment_date.split(" ")[1]}
               </td>
-              <td class="tac rev_status">
+              <td className="tac rev_status">
                 <p>{payment.payment_status}</p>
               </td>
 
               <td>
                 <div className="cases_table_actions">
-                  <button class="undo_create">Завершить заказать</button>
+                  <button className="undo_create">Завершить заказать</button>
                 </div>
               </td>
             </tr>
@@ -300,7 +300,7 @@ function PaymentPage() {
                 </td>
 
                 <td>
-                  <button class="main_btn about_secondary_btn">
+                  <button className="main_btn about_secondary_btn">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"

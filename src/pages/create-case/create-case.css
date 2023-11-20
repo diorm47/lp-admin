@@ -104,6 +104,7 @@
   width: 100%;
 }
 .case_img_block {
+
   padding: 8px;
   gap: 8px;
   display: flex;
@@ -188,4 +189,22 @@
 
 .case_actions {
   margin-top: 20px;
+}
+
+.case_items_list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 30px;
+}
+.case_items_list_item {
+  margin-bottom: 20px;
+}
+.case_img_block_wrapper
+.case_img_block {
+ margin-bottom: 30px;
+}
+
+.add_item_case_btn {
+  max-width: 140px;
 }

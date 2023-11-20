@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { mainApi } from "../utils/main-api";
 import { useState } from "react";
 
-function CaseItems({ setModal, case_id }) {
+function CaseItems({ setModal, case_id, getCaseItems }) {
   const [casesItems, setCasesItems] = useState("");
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [itemsInCase, setItemsInCase] = useState([]);
 
   useEffect(() => {
     mainApi
@@ -18,19 +20,52 @@ function CaseItems({ setModal, case_id }) {
       });
   }, []);
 
-  const handleCreateCaseItem = (item_id) => {
+  const getCaseItemsInItems = () => {
     mainApi
-      .createCaseItem({
-        case_id: case_id,
-        item_id: item_id,
-      })
+      .getCaseItems(case_id)
       .then((res) => {
-        setCasesItems(res);
-        setModal(false);
+        setSelectedItems(res.items);
+        setItemsInCase(res.items);
       })
       .catch((error) => {
         console.log("error", error);
       });
+  };
+  useEffect(() => {
+    if (case_id) {
+      getCaseItemsInItems();
+    }
+  }, [case_id]);
+
+  const addItemToCase = () => {
+    const itemIds = itemsInCase.map((item) => item.item_id);
+
+    const filteredSelectedItems = selectedItems.filter(
+      (item) => !itemIds.includes(item.item_id)
+    );
+    mainApi
+      .addItemsCase({
+        case_id: case_id,
+        items: filteredSelectedItems,
+      })
+      .then((res) => {
+        setCasesItems(res);
+        setModal(false);
+        getCaseItems();
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  const addDelSelected = (data) => {
+    if (!selectedItems.some((item) => item.item_id === data.item_id)) {
+      setSelectedItems([...selectedItems, data]);
+    } else {
+      setSelectedItems(
+        selectedItems.filter((item) => item.item_id !== data.item_id)
+      );
+    }
   };
 
   return (
@@ -52,20 +87,33 @@ function CaseItems({ setModal, case_id }) {
           ></path>
         </svg>
       </div>
-      <div className="case_items_content">
-        {casesItems && casesItems.length
-          ? casesItems.map((item) => (
-              <div
-                className="case_item"
-                key={item.id}
-                onClick={() => handleCreateCaseItem(item.item_id)}
-              >
-                <img src={`https://legadrop.org/${item.image}`} alt="" />
-                <p>{item.name} кр.</p>
-                <p>{item.cost} $</p>
-              </div>
-            ))
-          : ""}
+      <div className="case_items_content_wrapper">
+        <div className="case_items_content">
+          {casesItems && casesItems.length
+            ? casesItems.map((item) => (
+                <div className="case_item" key={item.id}>
+                  <img src={`https://legadrop.org/${item.image}`} alt="" />
+                  <p>{item.name} кр.</p>
+                  <p>{item.cost} $</p>
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.some(
+                      (data) => data.item_id === item.item_id
+                    )}
+                    onClick={() => addDelSelected(item)}
+                  />
+                </div>
+              ))
+            : ""}
+        </div>
+      </div>
+      <div className="admin_actions case_actions">
+        <button className="create_admin_btn" onClick={addItemToCase}>
+          Добавить
+        </button>
+        <button className="undo_create" onClick={() => setModal(false)}>
+          Отменить
+        </button>
       </div>
     </div>
   );

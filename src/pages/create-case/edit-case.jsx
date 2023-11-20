@@ -18,11 +18,11 @@ function EditCase() {
   const [caseDescriptions, setCaseDescriptions] = useState("");
 
   const [caseID, setCaseID] = useState();
+  const [caseData, setCaseData] = useState();
   const [caseItems, setCaseItems] = useState();
 
   const [categories, setCategories] = useState([]);
   const params = useParams();
-  console.log(params.case);
 
   useEffect(() => {
     mainApi
@@ -34,20 +34,41 @@ function EditCase() {
         console.log("error", error);
       });
   }, []);
+  useEffect(() => {
+    mainApi
+      .getCase()
+      .then((res) => {
+        setCaseData(res.filter((res) => res.case_id == params.case)[0]);
+        setCaseName(res.filter((res) => res.case_id == params.case)[0].name);
+        setCaseCategoryId(res.filter((res) => res.case_id == params.case)[0].category_id)
+        setCaseImage(
+          `https://legadrop.org/${
+            res.filter((res) => res.case_id == params.case)[0].image
+          }`
+        );
+        setCaseID(res.filter((res) => res.case_id == params.case)[0].case_id);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
 
+  const getCaseItems = () => {
+    mainApi
+      .getCaseItems(caseID)
+      .then((res) => {
+        setCaseItems(res.items);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
   useEffect(() => {
     if (caseID) {
-      mainApi
-        .getCaseItems(caseID)
-        .then((res) => {
-          console.log(res);
-          setCaseItems(res.items);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
+      getCaseItems();
     }
   }, [caseID]);
+  
   const saveImage = (e) => {
     const file = e.target.files[0];
     setCaseImageU(file);
@@ -88,8 +109,24 @@ function EditCase() {
         console.log(error);
       });
   };
+
   const closeModal = () => {
     setModal(false);
+  };
+
+  const deleteCaseItem = (id) => {
+    mainApi
+      .deleteCaseItem({
+        case_id: caseID,
+        item_id: id,
+      })
+      .then((res) => {
+        setCaseItems(res.items);
+        getCaseItems()
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   return (
@@ -130,7 +167,7 @@ function EditCase() {
 
                   <div className="case_input_temp">
                     <p>Категория товара</p>
-                    <select onChange={(e) => setCaseCategoryId(e.target.value)}>
+                    <select  onChange={(e) => setCaseCategoryId(e.target.value)}>
                       <option></option>
                       {categories && categories[0]
                         ? categories.map((categories) => (
@@ -199,11 +236,11 @@ function EditCase() {
                   ></textarea>
                 </div>
                 <span>Максимальное количество символов - 300</span>
-                <div class="admin_actions case_actions">
-                  <button class="create_admin_btn" onClick={saveCase}>
+                <div className="admin_actions case_actions">
+                  <button className="create_admin_btn" onClick={saveCase}>
                     Сохранить
                   </button>
-                  <button class="undo_create">Отменить</button>
+                  <button className="undo_create">Отменить</button>
                 </div>
               </div>
             </TabPanel>
@@ -238,19 +275,7 @@ function EditCase() {
                 </div>
 
                 <div className="case_img_block_wrapper">
-                  <div className="case_img_block">
-                    {caseItems && caseItems.length
-                      ? caseItems.map((item) => (
-                          <div className="case_img_item">
-                            <img
-                              src={`https://legadrop.org/${item.picture}`}
-                              alt=""
-                            />
-                            <p>{item.name}</p>
-                          </div>
-                        ))
-                      : ""}
-
+                  <div className="case_img_block add_item_case_btn">
                     <div
                       className="case_img_item case_img_add_block"
                       onClick={() => setModal(true)}
@@ -274,6 +299,27 @@ function EditCase() {
                       <p>Добавить предмет</p>
                     </div>
                   </div>
+                  <div className="case_tab_content_title">
+                    <p>Предметы внутри кейса</p>
+                  </div>
+                  <div className="case_items_list">
+                    {caseItems && caseItems.length
+                      ? caseItems.map((item) => (
+                          <div
+                            className="case_img_item case_items_list_item"
+                            key={caseItems.id}
+                            onClick={() => deleteCaseItem(item.item_id)}
+                          >
+                            <img
+                              src={`https://legadrop.org/${item.image}`}
+                              alt=""
+                            />
+                            <p>{item.name} кр.</p>
+                            <p>{item.cost} $</p>
+                          </div>
+                        ))
+                      : ""}
+                  </div>
                 </div>
               </div>
             </TabPanel>
@@ -283,7 +329,15 @@ function EditCase() {
 
       {modal ? <div className="modal_overlay" onClick={closeModal}></div> : ""}
 
-      {modal ? <CaseItems setModal={setModal} case_id={caseID} /> : ""}
+      {modal ? (
+        <CaseItems
+          setModal={setModal}
+          getCaseItems={getCaseItems}
+          case_id={caseID}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }

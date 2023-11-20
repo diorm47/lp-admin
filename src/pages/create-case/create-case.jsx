@@ -33,16 +33,19 @@ function CreateCase() {
       });
   }, []);
 
+  const getCaseItems = () => {
+    mainApi
+      .getCaseItems(caseID)
+      .then((res) => {
+        setCaseItems(res.items);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
   useEffect(() => {
     if (caseID) {
-      mainApi
-        .getCaseItems(caseID)
-        .then((res) => {
-          setCaseItems(res.items);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
+      getCaseItems();
     }
   }, [caseID]);
   const saveImage = (e) => {
@@ -88,6 +91,22 @@ function CreateCase() {
   const closeModal = () => {
     setModal(false);
   };
+
+  const deleteCaseItem = (id) => {
+    mainApi
+      .deleteCaseItem({
+        case_id: caseID,
+        item_id: id,
+      })
+      .then((res) => {
+        setCaseItems(res.items);
+        getCaseItems()
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
 
   return (
     <>
@@ -197,11 +216,11 @@ function CreateCase() {
                 </div>
                 <span>Максимальное количество символов - 300</span>
 
-                <div class="admin_actions case_actions">
-                  <button class="create_admin_btn" onClick={saveCase}>
+                <div className="admin_actions case_actions">
+                  <button className="create_admin_btn" onClick={saveCase}>
                     Сохранить
                   </button>
-                  <button class="undo_create">Отменить</button>
+                  <button className="undo_create">Отменить</button>
                 </div>
               </div>
             </TabPanel>
@@ -236,20 +255,7 @@ function CreateCase() {
                 </div>
 
                 <div className="case_img_block_wrapper">
-                  <div className="case_img_block">
-                    {caseItems && caseItems.length
-                      ? caseItems.map((item) => (
-                          <div className="case_img_item">
-                            <img
-                              src={`https://legadrop.org/${item.image}`}
-                              alt=""
-                            />
-                            <p>{item.name} кр.</p>
-                            <p>{item.cost} $</p>
-                          </div>
-                        ))
-                      : ""}
-
+                  <div className="case_img_block add_item_case_btn">
                     <div
                       className="case_img_item case_img_add_block"
                       onClick={() => setModal(true)}
@@ -273,6 +279,27 @@ function CreateCase() {
                       <p>Добавить предмет</p>
                     </div>
                   </div>
+                  <div className="case_tab_content_title">
+                    <p>Предметы внутри кейса</p>
+                  </div>
+                  <div className="case_items_list">
+                    {caseItems && caseItems.length
+                      ? caseItems.map((item) => (
+                          <div
+                            className="case_img_item case_items_list_item"
+                            key={caseItems.id}
+                            onClick={() => deleteCaseItem(item.item_id)}
+                          >
+                            <img
+                              src={`https://legadrop.org/${item.image}`}
+                              alt=""
+                            />
+                            <p>{item.name} кр.</p>
+                            <p>{item.cost} $</p>
+                          </div>
+                        ))
+                      : ""}
+                  </div>
                 </div>
               </div>
             </TabPanel>
@@ -282,7 +309,7 @@ function CreateCase() {
 
       {modal ? <div className="modal_overlay" onClick={closeModal}></div> : ""}
 
-      {modal ? <CaseItems setModal={setModal} case_id={caseID} /> : ""}
+      {modal ? <CaseItems getCaseItems={getCaseItems} setModal={setModal} case_id={caseID} /> : ""}
     </>
   );
 }
