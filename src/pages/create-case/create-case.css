@@ -181,7 +181,8 @@
   cursor: pointer;
 }
 .case_img_item img {
-  width: 50px;
+  object-fit: cover;
+  width: 100%;
 }
 .case_img_item p {
   font-size: 12px;
@@ -198,6 +199,7 @@
   margin-top: 30px;
 }
 .case_items_list_item {
+  height: auto;
   margin-bottom: 20px;
 }
 .case_img_block_wrapper
@@ -207,4 +209,8 @@
 
 .add_item_case_btn {
   max-width: 140px;
+}
+
+.case_items_list_item img {
+  width: auto;
 }

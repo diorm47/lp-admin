@@ -1,21 +1,50 @@
 import React, { useEffect } from "react";
 import "./create-item.css";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useState } from "react";
 import { mainApi } from "../../components/utils/main-api";
 
-function CreateItem() {
+function EditItem() {
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemPriceCrystals, setItemPriceCrystals] = useState("");
-
   const [itemCategoryId, setItemCategoryId] = useState("");
   const [itemImagesS, setItemImageS] = useState();
   const [itemImages, setItemImage] = useState();
-  const [itemColor, setItemColor] = useState();
+
   const [rarityList, setRarityList] = useState([]);
   const [selectedRarity, setSelectedRarity] = useState();
+  const params = useParams();
+  const [editingItem, setEditingItem] = useState({});
+
+  useEffect(() => {
+    if (params.item) {
+      mainApi
+        .getItem(params.item)
+        .then((res) => {
+          setEditingItem(res);
+          setItemName(res.name);
+          setItemPrice(res.cost);
+          setItemImage(`https://legadrop.org/${res.image}`);
+          setItemPriceCrystals(res.gem_cost);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, []);
+  useEffect(() => {
+    if (editingItem && rarityList) {
+      const itemRarity = rarityList.find(
+        (rarity) => rarity.ext_id === editingItem.rarity_id
+      );
+
+      if (itemRarity && itemRarity.name) {
+        setSelectedRarity(itemRarity.name);
+      }
+    }
+  }, [editingItem, rarityList]);
   const categories = [
     {
       category_id: "qwes",
@@ -45,30 +74,42 @@ function CreateItem() {
   };
 
   const saveItem = () => {
-    let headersList = {
-      Accept: "*/*",
-    };
-
-    let bodyContent = new FormData();
-    bodyContent.append("name", itemName);
-    bodyContent.append("cost", itemPrice);
-    bodyContent.append("color", itemColor);
-    bodyContent.append("gem_cost", itemPriceCrystals);
-    bodyContent.append("image", itemImagesS);
-    bodyContent.append("rarity_id", selectedRarity);
-
-    fetch("https://legadrop.org/admin/item", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    })
-      .then(() => {})
+    mainApi
+      .updateItem({
+        item_id: editingItem.item_id,
+        name: itemName,
+        image: itemImagesS,
+      })
       .then((res) => {
         console.log(res);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error", error);
       });
+    // let headersList = {
+    //   Accept: "*/*",
+    // };
+
+    // let bodyContent = new FormData();
+    // bodyContent.append("name", itemName);
+    // bodyContent.append("cost", itemPrice);
+    // bodyContent.append("color", itemColor);
+    // bodyContent.append("gem_cost", itemPriceCrystals);
+    // bodyContent.append("image", itemImagesS);
+    // bodyContent.append("rarity_id", selectedRarity);
+
+    // fetch("https://legadrop.org/admin/item", {
+    //   method: "POST",
+    //   body: bodyContent,
+    //   headers: headersList,
+    // })
+    //   .then(() => {})
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
   useEffect(() => {
     mainApi
@@ -84,7 +125,7 @@ function CreateItem() {
   return (
     <div className="template_page create_item_page">
       <div className="template_page_title">
-        <h1>Создать предмет</h1>
+        <h1>Редактировать предмет</h1>
       </div>
       <div className="user_line"></div>
       <NavLink to="/items">
@@ -111,7 +152,7 @@ function CreateItem() {
             <select onChange={(e) => setItemCategoryId(e.target.value)}>
               {categories && categories[0]
                 ? categories.map((categories, index) => (
-                    <option key={index} value={categories.name}>
+                    <option key={index} value={categories.category_id}>
                       {categories.name}
                     </option>
                   ))
@@ -148,9 +189,10 @@ function CreateItem() {
             name=""
             id=""
             onChange={(e) => setSelectedRarity(e.target.value)}
+            value={selectedRarity}
           >
             {rarityList.map((rarity) => (
-              <option key={rarity.category_id} value={rarity.category_id}>
+              <option key={rarity.category_id} value={rarity.name}>
                 {rarity.name}
               </option>
             ))}
@@ -204,4 +246,4 @@ function CreateItem() {
   );
 }
 
-export default CreateItem;
+export default EditItem;

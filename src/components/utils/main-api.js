@@ -230,6 +230,33 @@ class MainApi {
       body: userData,
     });
   }
+  async getRarity() {
+    return this._sendRequest({
+      endpoint: `/admin/group_category`,
+      method: "GET",
+    });
+  }
+  async updateRarity(data) {
+    return this._sendRequest({
+      endpoint: `/admin/group_category/update`,
+      method: "POST",
+      body: data,
+
+    });
+  }
+  async getItem(id) {
+    return this._sendRequest({
+      endpoint: `/admin/items/${id}`,
+      method: "GET",
+    });
+  }
+  async updateItem(data) {
+    return this._sendRequest({
+      endpoint: `/admin/item`,
+      method: "PUT",
+      body: data,
+    });
+  }
 
   // User me
   async reEnter() {

@@ -3,12 +3,14 @@ import ReactPaginate from "react-paginate";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
 import "../cases/cases.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { mainApi } from "../../components/utils/main-api";
 
 function Items() {
   const [itemOffset, setItemOffset] = useState(0);
+  const navigate = useNavigate();
+
   const [casesItems, setCasesItems] = useState("");
   const itemsPerPage = 10;
   const endOffset = itemOffset + itemsPerPage;
@@ -47,12 +49,33 @@ function Items() {
       });
   };
 
+  const editItem = (id) => {
+    navigate(`/edit-item/${id}`);
+  };
+
   return (
     <>
       <div className="template_page employees_page">
         <div className="template_page_title">
           <h1>Предметы</h1>
           <div className="top_cases_actions">
+            <NavLink to="/rarity">
+              <button className="main_btn add_categories_btn">
+                <p>Категории редкости</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+            </NavLink>
             <NavLink to="/create-item">
               <button className="main_btn add_case_btn">
                 <p>Добавить предмет</p>
@@ -161,6 +184,7 @@ function Items() {
                                 <div
                                   title="редактировать"
                                   className="cases_table_edit"
+                                  onClick={() => editItem(item.item_id)}
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"

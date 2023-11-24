@@ -31,6 +31,9 @@ import ReviewPage from "./pages/review-page/review-page";
 import ConclusionPage from "./pages/conclusion-page/conclusion-page";
 import PaymentPage from "./pages/payment-page/payment-page";
 import EditPromocode from "./pages/create-promocode/edit-promocode";
+import EditItem from "./pages/create-items/edit-item";
+import RarityCategory from "./pages/rarity-category/rarity-category";
+import UpdateRarity from "./pages/rarity-category/update-rarity";
 
 function App() {
   const dispatch = useDispatch();
@@ -78,6 +81,10 @@ function App() {
                 <Route path="/review/:review" element={<ReviewPage />} />
                 <Route path="/positions" element={<Positions />} />
                 <Route path="/create-item" element={<CreateItem />} />
+                <Route path="/edit-item/:item" element={<EditItem />} />
+                <Route path="/rarity" element={<RarityCategory />} />
+                <Route path="/update-rarity/:item" element={<UpdateRarity />} />
+
                 <Route path="/support" element={<Support />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/conclusions" element={<Conclusions />} />

@@ -111,3 +111,7 @@
 .item_color_btn_active p {
   color: #fff;
 }
+
+.create_item_page .case_img_block {
+  margin: 0;
+}
