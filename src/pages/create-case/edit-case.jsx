@@ -13,6 +13,8 @@ function EditCase() {
   const [modal, setModal] = useState(false);
   const [caseImage, setCaseImage] = useState();
   const [caseImageU, setCaseImageU] = useState();
+  const [caseImageRecieved, setCaseImageRecieved] = useState();
+
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
   const [caseDescriptions, setCaseDescriptions] = useState("");
@@ -40,11 +42,11 @@ function EditCase() {
       .then((res) => {
         setCaseData(res.filter((res) => res.case_id == params.case)[0]);
         setCaseName(res.filter((res) => res.case_id == params.case)[0].name);
-        setCaseCategoryId(res.filter((res) => res.case_id == params.case)[0].category_id)
-        setCaseImage(
-          `https://legadrop.org/${
-            res.filter((res) => res.case_id == params.case)[0].image
-          }`
+        setCaseCategoryId(
+          res.filter((res) => res.case_id == params.case)[0].category_id
+        );
+        setCaseImageRecieved(
+          res.filter((res) => res.case_id == params.case)[0].image
         );
         setCaseID(res.filter((res) => res.case_id == params.case)[0].case_id);
       })
@@ -68,7 +70,7 @@ function EditCase() {
       getCaseItems();
     }
   }, [caseID]);
-  
+
   const saveImage = (e) => {
     const file = e.target.files[0];
     setCaseImageU(file);
@@ -82,31 +84,18 @@ function EditCase() {
     }
   };
   const saveCase = () => {
-    let headersList = {
-      Accept: "*/*",
-    };
-
-    let bodyContent = new FormData();
-    bodyContent.append("category_id", caseCategoryId);
-    bodyContent.append("name", caseName);
-    bodyContent.append("picture", caseImageU);
-
-    fetch("https://legadrop.org/admin/case", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
+    mainApi
+      .updateCase({
+        case_id: caseID,
+        name: caseName,
+        category_id: caseCategoryId,
+        image: caseImage,
       })
       .then((res) => {
-        setCaseID(res.case_id);
+        console.log(res);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error", error);
       });
   };
 
@@ -122,7 +111,7 @@ function EditCase() {
       })
       .then((res) => {
         setCaseItems(res.items);
-        getCaseItems()
+        getCaseItems();
       })
       .catch((error) => {
         console.log("error", error);
@@ -167,15 +156,18 @@ function EditCase() {
 
                   <div className="case_input_temp">
                     <p>Категория товара</p>
-                    <select  onChange={(e) => setCaseCategoryId(e.target.value)}>
-                      <option></option>
+
+                    <select
+                      onChange={(e) => setCaseCategoryId(e.target.value)}
+                      value={caseCategoryId}
+                    >
                       {categories && categories[0]
-                        ? categories.map((categories) => (
+                        ? categories.map((category) => (
                             <option
-                              key={categories.category_id}
-                              value={categories.category_id}
+                              key={category.category_id}
+                              value={category.category_id}
                             >
-                              {categories.name}
+                              {category.name}
                             </option>
                           ))
                         : ""}
@@ -187,9 +179,12 @@ function EditCase() {
                 </div>
                 <div className="case_img_block_wrapper">
                   <div className="case_img_block">
-                    {caseImage ? (
+                    {caseImage || caseImageRecieved ? (
                       <div className="case_img_item" title="удалить">
-                        <img src={caseImage} alt="" />
+                        <img
+                          src={caseImage ? caseImage : caseImageRecieved}
+                          alt=""
+                        />
                       </div>
                     ) : (
                       ""

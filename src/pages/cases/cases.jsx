@@ -11,7 +11,7 @@ function Cases() {
   const [cases, setCases] = useState();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const handleGetCases = () => {
     mainApi
       .getCase()
       .then((res) => {
@@ -20,8 +20,10 @@ function Cases() {
       .catch((error) => {
         console.log("error", error);
       });
+  };
+  useEffect(() => {
+    handleGetCases();
   }, []);
-
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -37,6 +39,19 @@ function Cases() {
 
   const editCase = (id) => {
     navigate(`/edit-case/${id}`);
+  };
+
+  const handleDeleteCase = (id) => {
+    mainApi
+      .deleteCase({
+        case_id: id,
+      })
+      .then((res) => {
+        handleGetCases();
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   // edit-case
@@ -234,6 +249,9 @@ function Cases() {
                                 <div
                                   title="удалить"
                                   className="cases_table_delete"
+                                  onClick={() =>
+                                    handleDeleteCase(cases.case_id)
+                                  }
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"

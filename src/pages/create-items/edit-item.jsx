@@ -26,7 +26,7 @@ function EditItem() {
           setEditingItem(res);
           setItemName(res.name);
           setItemPrice(res.cost);
-          setItemImage(`https://legadrop.org/${res.image}`);
+          setItemImage(res.image);
           setItemPriceCrystals(res.gem_cost);
         })
         .catch((error) => {
@@ -41,10 +41,11 @@ function EditItem() {
       );
 
       if (itemRarity && itemRarity.name) {
-        setSelectedRarity(itemRarity.name);
+        setSelectedRarity(itemRarity.ext_id); // Set to ext_id for sending data
       }
     }
   }, [editingItem, rarityList]);
+
   const categories = [
     {
       category_id: "qwes",
@@ -78,7 +79,10 @@ function EditItem() {
       .updateItem({
         item_id: editingItem.item_id,
         name: itemName,
-        image: itemImagesS,
+        image: itemImages,
+        cost: itemPrice,
+        gem_cost: Number(itemPriceCrystals),
+        rarity_id: selectedRarity,
       })
       .then((res) => {
         console.log(res);
@@ -86,30 +90,6 @@ function EditItem() {
       .catch((error) => {
         console.log("error", error);
       });
-    // let headersList = {
-    //   Accept: "*/*",
-    // };
-
-    // let bodyContent = new FormData();
-    // bodyContent.append("name", itemName);
-    // bodyContent.append("cost", itemPrice);
-    // bodyContent.append("color", itemColor);
-    // bodyContent.append("gem_cost", itemPriceCrystals);
-    // bodyContent.append("image", itemImagesS);
-    // bodyContent.append("rarity_id", selectedRarity);
-
-    // fetch("https://legadrop.org/admin/item", {
-    //   method: "POST",
-    //   body: bodyContent,
-    //   headers: headersList,
-    // })
-    //   .then(() => {})
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
   useEffect(() => {
     mainApi
@@ -152,7 +132,7 @@ function EditItem() {
             <select onChange={(e) => setItemCategoryId(e.target.value)}>
               {categories && categories[0]
                 ? categories.map((categories, index) => (
-                    <option key={index} value={categories.category_id}>
+                    <option key={index} value={categories.ext_id}>
                       {categories.name}
                     </option>
                   ))
@@ -191,8 +171,9 @@ function EditItem() {
             onChange={(e) => setSelectedRarity(e.target.value)}
             value={selectedRarity}
           >
+            <option value="">Select Rarity</option>
             {rarityList.map((rarity) => (
-              <option key={rarity.category_id} value={rarity.name}>
+              <option key={rarity.category_id} value={rarity.ext_id}>
                 {rarity.name}
               </option>
             ))}

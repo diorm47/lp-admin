@@ -70,6 +70,7 @@ function CreateItem() {
         console.log(error);
       });
   };
+  
   useEffect(() => {
     mainApi
       .getRarity()
@@ -150,7 +151,7 @@ function CreateItem() {
             onChange={(e) => setSelectedRarity(e.target.value)}
           >
             {rarityList.map((rarity) => (
-              <option key={rarity.category_id} value={rarity.category_id}>
+              <option key={rarity.category_id} value={rarity.ext_id}>
                 {rarity.name}
               </option>
             ))}

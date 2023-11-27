@@ -18,7 +18,8 @@ function Pagination({ allData, paginationData }) {
   };
   useEffect(() => {
     paginationData(allData.slice(itemOffset, endOffset));
-  }, [itemOffset, endOffset]);
+  }, [itemOffset, endOffset, paginationData, allData]);
+
   return (
     <ReactPaginate
       breakLabel="..."

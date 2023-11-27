@@ -216,6 +216,21 @@ class MainApi {
       body: userData,
     });
   }
+  async deleteCase(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case`,
+      method: "DELETE",
+      body: userData,
+    });
+  }
+  async updateCase(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/case/update`,
+
+      method: "PUT",
+      body: userData,
+    });
+  }
   async deleteItemAction(userData) {
     return this._sendRequest({
       endpoint: `/admin/item`,
@@ -241,7 +256,6 @@ class MainApi {
       endpoint: `/admin/group_category/update`,
       method: "POST",
       body: data,
-
     });
   }
   async getItem(id) {
