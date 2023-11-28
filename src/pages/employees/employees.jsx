@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
 import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
@@ -31,6 +31,11 @@ function Employees() {
       .catch((error) => {
         console.log("error", error);
       });
+  };
+  const navigate = useNavigate();
+
+  const aboutEmployee = (id) => {
+    navigate(`/edit-employee/${id}`);
   };
 
   return (
@@ -92,9 +97,9 @@ function Employees() {
               <tbody>
                 {employees && employees[0] ? (
                   employees.map((employee) => (
-                    <tr key={employee.employee.id}>
-                      <td>{employee.employee.first_name}</td>
-                      <td>{employee.employee.username}</td>
+                    <tr key={employee.id}>
+                      <td>{employee.first_name}</td>
+                      <td>{employee.username}</td>
                       <td>
                         {(employee.role &&
                           employee.role[0] &&
@@ -102,14 +107,17 @@ function Employees() {
                           employee.role[0].name) ||
                           ""}
                       </td>
-                      <td>{employee.employee.email}</td>
+                      <td>{employee.email}</td>
                       <td className="employer_list_actions">
                         <div className="employer_action_btns">
-                          <EditIcon title="Редактировать" />
+                          <EditIcon
+                            title="Редактировать"
+                            onClick={() => aboutEmployee(employee.admin_id)}
+                          />
                           <DeleteIcon
                             title="Удалить"
                             onClick={() =>
-                              handleEmployeeDelete(employee.employee.admin_id)
+                              handleEmployeeDelete(employee.admin_id)
                             }
                           />
                         </div>

@@ -6,10 +6,20 @@ import "../cases/cases.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { mainApi } from "../../components/utils/main-api";
+import Snacbar from "../../components/snackbar/snackbar";
 
 function Items() {
   const [itemOffset, setItemOffset] = useState(0);
   const navigate = useNavigate();
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
 
   const [casesItems, setCasesItems] = useState("");
   const itemsPerPage = 10;
@@ -41,7 +51,7 @@ function Items() {
         item_id: id,
       })
       .then((res) => {
-        console.log(res);
+        snackbarActions('Предмет удалён!')
         getItems();
       })
       .catch((error) => {
@@ -55,6 +65,11 @@ function Items() {
 
   return (
     <>
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
       <div className="template_page employees_page">
         <div className="template_page_title">
           <h1>Предметы</h1>

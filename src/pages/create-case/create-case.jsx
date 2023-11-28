@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { mainApi } from "../../components/utils/main-api";
 import CaseItems from "../../components/case-items/case-items";
+import Snacbar from "../../components/snackbar/snackbar";
 
 function CreateCase() {
   const [modal, setModal] = useState(false);
@@ -16,11 +17,18 @@ function CreateCase() {
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
   const [caseDescriptions, setCaseDescriptions] = useState("");
-
   const [caseID, setCaseID] = useState();
   const [caseItems, setCaseItems] = useState();
-
   const [categories, setCategories] = useState([]);
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     mainApi
@@ -83,6 +91,7 @@ function CreateCase() {
       })
       .then((res) => {
         setCaseID(res.case_id);
+        snackbarActions('Кейс создан!')
       })
       .catch((error) => {
         console.log(error);
@@ -100,16 +109,20 @@ function CreateCase() {
       })
       .then((res) => {
         setCaseItems(res.items);
-        getCaseItems()
+        getCaseItems();
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
 
-
   return (
     <>
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
       <div className="template_page category_page">
         <div className="template_page_title">
           <h1>Добавить кейс</h1>
@@ -309,7 +322,15 @@ function CreateCase() {
 
       {modal ? <div className="modal_overlay" onClick={closeModal}></div> : ""}
 
-      {modal ? <CaseItems getCaseItems={getCaseItems} setModal={setModal} case_id={caseID} /> : ""}
+      {modal ? (
+        <CaseItems
+          getCaseItems={getCaseItems}
+          setModal={setModal}
+          case_id={caseID}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }

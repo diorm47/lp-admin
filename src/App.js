@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { mainApi } from "./components/utils/main-api";
 import { loginUserAction } from "./redux/user-reducer";
 import LoginPage from "./pages/login/login";
-import UpdateEmploye from "./pages/update-employee/update-employee";
+// import UpdateEmploye from "./pages/update-employee/update-employee";
 import Cases from "./pages/cases/cases";
 import CaseCategory from "./pages/case-categories/case-category";
 import CreateCase from "./pages/create-case/create-case";
@@ -34,6 +34,7 @@ import EditPromocode from "./pages/create-promocode/edit-promocode";
 import EditItem from "./pages/create-items/edit-item";
 import RarityCategory from "./pages/rarity-category/rarity-category";
 import UpdateRarity from "./pages/rarity-category/update-rarity";
+import EditEmployee from "./pages/add-employe/edit-employee";
 
 function App() {
   const dispatch = useDispatch();
@@ -97,8 +98,12 @@ function App() {
                 <Route path="/edit-promocode" element={<EditPromocode />} />
                 <Route path="/items" element={<Items />} />
                 <Route path="/add-employee" element={<AddEmploye />} />
+                <Route
+                  path="/edit-employee/:employee"
+                  element={<EditEmployee />}
+                />
                 <Route path="/competitons" element={<Competitions />} />
-                <Route path="/update-employee" element={<UpdateEmploye />} />
+                {/* <Route path="/update-employee" element={<UpdateEmploye />} /> */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-case" element={<CreateCase />} />
 

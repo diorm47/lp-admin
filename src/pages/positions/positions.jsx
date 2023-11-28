@@ -14,6 +14,7 @@ function Positions() {
   const [permissions, setPermissions] = useState([]);
 
   const [selectedPermissions, setSelectedPermissions] = useState([]);
+  const [selectedPage, setSelectedPage] = useState([]);
   const [selectedRole, setSelectedRole] = useState();
   useEffect(() => {
     mainApi
@@ -50,11 +51,31 @@ function Positions() {
       setSelectedPermissions((prev) => [...prev, permission.name]);
     }
   };
-
+  const handleCheckboxPageChange = (page) => {
+    if (selectedPage.includes(page)) {
+      setSelectedPage((prev) => prev.filter((perm) => perm !== page));
+    } else {
+      setSelectedPage((prev) => [...prev, page]);
+    }
+  };
+  const savePagePerms = () => {
+    mainApi
+      .setPagePerm({
+        role: selectedRole.name,
+        pages: selectedPage,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleSetPermissions = () => {
+    savePagePerms();
     const data = {
-      role_name: selectedRole.name,
-      permissions_names: selectedPermissions,
+      role: selectedRole.name,
+      permissions: selectedPermissions,
     };
     mainApi
       .setPermissionAction(data)
@@ -66,8 +87,19 @@ function Positions() {
       });
   };
 
+  const getRolePages = (data) => {
+    mainApi
+      .getRolePages(data)
+      .then((res) => {
+        setSelectedPage(res.pages);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
   const selectRole = (data) => {
     setSelectedRole(data);
+    getRolePages(data.name);
     mainApi
       .getRolePermissionAction(data.name)
       .then((res) => {
@@ -92,6 +124,32 @@ function Positions() {
         console.log(error);
       });
   };
+
+  const pages = [
+    "Аналитика",
+
+    "Промокоды",
+
+    "Кейсы",
+
+    "Предметы",
+
+    "Конкурсы",
+
+    "Пользователи",
+
+    "Платежи",
+
+    "Выводы",
+
+    "Отзывы",
+
+    "Поддержка",
+
+    "Сотрудники",
+
+    "Настройки",
+  ];
 
   return (
     <>
@@ -167,6 +225,23 @@ function Positions() {
             </div>
             {selectedRole ? (
               <div className="admin_permissions">
+                <div className="admin_page_perms">
+                  <h3>Доступ к страницам для {selectedRole.name}</h3>
+                  <div className="admin_page_perms_list admin_permissions_list">
+                    {pages.map((page, index) => (
+                      <div className="admin_permission" key={index}>
+                        <div>
+                          <input
+                            type="checkbox"
+                            checked={selectedPage.includes(page)}
+                            onChange={() => handleCheckboxPageChange(page)}
+                          />
+                        </div>
+                        <p> {page}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <h3>Права {selectedRole.name}</h3>
                 <div className="admin_permissions_list">
                   {permissions.map((permission) => (

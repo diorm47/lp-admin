@@ -5,11 +5,21 @@ import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
 import Pagination from "../../components/pagionation/pagination";
 import { mainApi } from "../../components/utils/main-api";
 import "./cases.css";
+import Snacbar from "../../components/snackbar/snackbar";
 
 function Cases() {
   const [casesItems, setCasesItems] = useState();
   const [cases, setCases] = useState();
   const navigate = useNavigate();
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
 
   const handleGetCases = () => {
     mainApi
@@ -48,6 +58,7 @@ function Cases() {
       })
       .then((res) => {
         handleGetCases();
+        snackbarActions("Кейс удалён!")
       })
       .catch((error) => {
         console.log("error", error);
@@ -57,6 +68,12 @@ function Cases() {
   // edit-case
   return (
     <>
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
+
       <div className="template_page employees_page">
         <div className="template_page_title">
           <h1>Кейсы</h1>

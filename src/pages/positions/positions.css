@@ -74,3 +74,13 @@
  width: 750px;
  margin-right: 32px;
 }
+
+.admin_page_perms_list {
+  margin-bottom: 30px;
+}
+.admin_permissions {
+  margin-top: 20px;
+}
+.admin_permissions h3 {
+  font-weight: 700;
+}

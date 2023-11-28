@@ -8,23 +8,32 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { mainApi } from "../../components/utils/main-api";
 import CaseItems from "../../components/case-items/case-items";
+import Snacbar from "../../components/snackbar/snackbar";
+
 
 function EditCase() {
   const [modal, setModal] = useState(false);
   const [caseImage, setCaseImage] = useState();
   const [caseImageU, setCaseImageU] = useState();
   const [caseImageRecieved, setCaseImageRecieved] = useState();
-
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
   const [caseDescriptions, setCaseDescriptions] = useState("");
-
   const [caseID, setCaseID] = useState();
   const [caseData, setCaseData] = useState();
   const [caseItems, setCaseItems] = useState();
-
   const [categories, setCategories] = useState([]);
   const params = useParams();
+
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     mainApi
@@ -92,7 +101,7 @@ function EditCase() {
         image: caseImage,
       })
       .then((res) => {
-        console.log(res);
+        snackbarActions('Кейс обновлён!')
       })
       .catch((error) => {
         console.log("error", error);
@@ -120,6 +129,11 @@ function EditCase() {
 
   return (
     <>
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
       <div className="template_page category_page">
         <div className="template_page_title">
           <h1>Редактировать кейс</h1>

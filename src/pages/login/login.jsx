@@ -49,9 +49,11 @@ function LoginPage() {
     };
 
     let bodyContent = `username=${login}&password=${password}`;
-
-    fetch("https://legadrop.org/admin/sign-in", {
+    // https://legadrop.org/admin/sign-in
+    fetch("http://192.168.147.238:8000/admin/sign-in", {
       method: "POST",
+
+      
       body: bodyContent,
       headers: headersList,
     })

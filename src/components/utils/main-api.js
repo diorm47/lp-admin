@@ -1,6 +1,6 @@
 const mainApiOptions = {
-  baseUrl: "https://legadrop.org",
-  // baseUrl: "http://192.168.1.8:8000",
+  // baseUrl: "https://legadrop.org",
+  baseUrl: "http://192.168.147.238:8000",
 
   headers: {
     Accept: "*/*",
@@ -63,6 +63,14 @@ class MainApi {
       body: userData,
     });
   }
+  // Get employee
+  async getEmployee(userData) {
+    return this._sendRequest({
+      endpoint: `/admin/employee/${userData}`,
+      method: "GET",
+      // body: userData,
+    });
+  }
   // delete employee
   async deleteEmployeeAction(userData) {
     return this._sendRequest({
@@ -106,7 +114,7 @@ class MainApi {
   // get role permissions
   async getRolePermissionAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/role/permissions/?role_name=${userData}`,
+      endpoint: `/admin/role/permissions/?role=${userData}`,
       method: "GET",
     });
   }
@@ -272,6 +280,20 @@ class MainApi {
     });
   }
 
+  async setPagePerm(data) {
+    return this._sendRequest({
+      endpoint: `/admin/assign/page`,
+      method: "POST",
+      body: data,
+    });
+  }
+  async getRolePages(data) {
+    return this._sendRequest({
+      endpoint: `/admin/role/pages/?role=${data}`,
+      method: "GET",
+      // body: data,
+    });
+  }
   // User me
   async reEnter() {
     return this._sendRequest({

@@ -35,12 +35,12 @@ export function InputWithLabel({ id, label, value, event }) {
 
   return (
     <div>
-      <label htmlFor={id} className={isActive ? "active" : ""}>
+      <label htmlFor={id} className={isActive || value ? "active" : ""}>
         {label}
       </label>
       <input
         id={id}
-        className={isActiveInput ? "active_input" : ""}
+        className={isActiveInput || value ? "active_input" : ""}
         type="text"
         onFocus={handleFocus}
         onBlur={handleBlur}
