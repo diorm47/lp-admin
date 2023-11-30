@@ -17,7 +17,7 @@ import CaseCategory from "./pages/case-categories/case-category";
 import CreateCase from "./pages/create-case/create-case";
 import Items from "./pages/items/items";
 import Competitions from "./pages/competitions/competitions";
-import Payments from "./pages/payments/payments";
+import Payments from "./pages/payments/payments"; 
 import Settings from "./pages/settings/settings";
 import Reviews from "./pages/reviews/reviews";
 import Support from "./pages/support/support";

@@ -105,7 +105,7 @@ class MainApi {
   }
   // get permissions
   async getPermissionAction(userData) {
-    return this._sendRequest({
+    return this._sendRequest({ 
       endpoint: `/admin/permissions`,
       method: "GET",
       body: userData,

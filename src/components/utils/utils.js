@@ -25,7 +25,7 @@ export function InputWithLabel({ id, label, value, event }) {
     setIsActive(true);
     setIsActiveInput(true);
   };
-
+ 
   const handleBlur = (e) => {
     if (!e.target.value) {
       setIsActive(false);

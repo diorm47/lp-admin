@@ -114,7 +114,7 @@ function EditEmployee() {
             <ArrowBackIcon /> <p>Назад</p>
           </div>
         </NavLink>
-
+ 
         <div className="add_employee_wrapper">
           <h3>Сотрудник</h3>
           <div className="add_employee_form">
