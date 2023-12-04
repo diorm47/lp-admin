@@ -42,7 +42,7 @@ function RarityCategory() {
       <div className="template_page_content">
         <div className="cases_wrapper">
           <div className="cases_top_actions">
-            <button className="main_btn">
+            <button className="main_btn main_btn_template_red">
               <p>Действие над категориями</p>
             </button>
             <div className="users_search">

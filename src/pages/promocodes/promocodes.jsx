@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg
 import Pagination from "../../components/pagionation/pagination";
 
 import "./promocodes.css";
+import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
 
 function Promocodes() {
   const promocodesData = [
@@ -216,6 +217,29 @@ function Promocodes() {
     navigate(`/edit-promocode`);
   };
 
+  const [selected, setSelected] = useState([]);
+
+  const toggleSelected = (data) => {
+    const filteredSelectedItems = selected.some(
+      (selected) => selected.promocode_id === data.promocode_id
+    );
+    if (filteredSelectedItems) {
+      setSelected(
+        selected.filter((item) => item.promocode_id !== data.promocode_id)
+      );
+    } else {
+      setSelected([...selected, data]);
+    }
+  };
+
+  const toggleAllDataSelected = () => {
+    if (selected.length == promocodesData.length) {
+      setSelected([]);
+    } else {
+      setSelected([...promocodesData]);
+    }
+  };
+
   return (
     <>
       <div className="template_page promocode_page">
@@ -223,7 +247,7 @@ function Promocodes() {
           <h1>Промокоды</h1>
           <div className="top_cases_actions">
             <NavLink to="/create-promocode">
-              <button className="main_btn add_case_btn">
+              <button className="main_btn add_case_btn main_btn_template">
                 <p>Добавить промокод</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +276,7 @@ function Promocodes() {
               </button>
             </div>
             <div className="cases_top_actions">
-              <button className="main_btn">
+              <button className="main_btn main_btn_template_red">
                 <p>Действие над промокодом</p>
               </button>
               <div className="users_search">
@@ -274,7 +298,19 @@ function Promocodes() {
                   <td className="tac">Дата создания</td>
                   <td>
                     <div className="select_all">
-                      <input type="checkbox" /> Выделить все
+                      <div className="is_selected ml_55px">
+                        {selected.length == promocodesData.length ? (
+                          <SelectedIcon
+                            onClick={toggleAllDataSelected}
+                          />
+                        ) : (
+                          <div
+                            className="not_selected_item"
+                            onClick={toggleAllDataSelected}
+                          ></div>
+                        )}
+                      </div>{" "}
+                      Выделить все
                     </div>
                   </td>
                 </tr>
@@ -368,39 +404,20 @@ function Promocodes() {
                               </div>
                             </div>
                             <div className="is_selected ml_55px">
-                              <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <g clipPath="url(#clip0_280_5736)">
-                                  <rect
-                                    x="0.5"
-                                    y="0.5"
-                                    width="23"
-                                    height="23"
-                                    rx="2.5"
-                                    fill="#39B54A"
-                                    stroke="#39B54A"
-                                  />
-                                  <path
-                                    d="M9.94286 16.6667L6 12.8673L7.71429 11.2979L9.94286 13.4454L16.2857 7.33334L18 8.98526L9.94286 16.6667Z"
-                                    fill="white"
-                                  />
-                                </g>
-                                <defs>
-                                  <clipPath id="clip0_280_5736">
-                                    <rect
-                                      width="24"
-                                      height="24"
-                                      rx="3"
-                                      fill="white"
-                                    />
-                                  </clipPath>
-                                </defs>
-                              </svg>
+                              {selected.some(
+                                (selected) =>
+                                  selected.promocode_id ===
+                                  promocode.promocode_id
+                              ) ? (
+                                <SelectedIcon
+                                  onClick={() => toggleSelected(promocode)}
+                                />
+                              ) : (
+                                <div
+                                  className="not_selected_item"
+                                  onClick={() => toggleSelected(promocode)}
+                                ></div>
+                              )}
                             </div>
                           </div>
                         </td>

@@ -40,6 +40,7 @@ select {
 .template_page_title h1 {
   color: var(--Text, #030229);
   font-size: 28px;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -84,4 +85,49 @@ select {
 
 .ml_70px {
   margin-left: 70px;
+}
+
+.main_btn_template {
+  transition: all 0.5s ease;
+}
+.main_btn_template:hover {
+  transition: all 0.5s ease;
+  background: #2a72ac !important;
+}
+.main_btn_template_border {
+  transition: all 0.5s ease;
+}
+.main_btn_template_border:hover {
+  transition: all 0.5s ease;
+  background: rgba(93, 165, 223, 0.1) !important;
+}
+.main_btn_template_red {
+  transition: all 0.5s ease;
+}
+.main_btn_template_red:hover {
+  transition: all 0.5s ease;
+  background: #bc070d !important;
+}
+.main_btn_template_orange {
+  transition: all 0.5s ease;
+}
+.main_btn_template_orange:hover {
+  transition: all 0.5s ease;
+  background: #cc8526 !important;
+}
+.main_btn_template_green {
+  transition: all 0.5s ease;
+}
+.main_btn_template_green:hover {
+  transition: all 0.5s ease;
+  background: #2e913b !important;
+}
+
+.not_selected_item {
+  width: var(--24, 24px);
+  cursor: pointer;
+  height: var(--24, 24px);
+  background: #fff;
+  border: 1px solid #a6a6a6;
+  border-radius: 4px;
 }

@@ -8,40 +8,16 @@ import { ReactComponent as Logo } from "../../assets/logo-dark.svg";
 import { loginUserAction } from "../../redux/user-reducer";
 import { useNavigate } from "react-router-dom";
 
+import { ReactComponent as Checked } from "../../assets/icons/remember-icon.svg";
+
 function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
 
-  // const handleLogin = async () => {
-  //   let headersList = {
-  //     Accept: "*/*",
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //   };
-
-  //   let bodyContent = `username=${login}&password=${password}`;
-
-  //   let response = await fetch("https://legadrop.org/admin/sign-in", {
-  //     method: "POST",
-  //     body: bodyContent,
-  //     headers: headersList,
-  //   });
-
-  //   let data = await response.json();
-  //   if (data.access_token) {
-  //     let is_logged = {
-  //       is_logged: true,
-  //     };
-  //     dispatch(loginUserAction(is_logged));
-  //     localStorage.setItem("token", data.access_token);
-  //     navigate("/");
-  //   } else {
-  //     setError(true);
-  //   }
-  // };
- 
   const handleLogin = () => {
     let headersList = {
       Accept: "*/*",
@@ -49,11 +25,10 @@ function LoginPage() {
     };
 
     let bodyContent = `username=${login}&password=${password}`;
-    // https://legadrop.org/admin/sign-in
-    fetch("http://192.168.147.238:8000/admin/sign-in", {
+
+    fetch("https://legadrop.org/admin/sign-in", {
       method: "POST",
 
-      
       body: bodyContent,
       headers: headersList,
     })
@@ -84,13 +59,13 @@ function LoginPage() {
         <div className="logo_form  add_employe_input">
           <InputWithLabel
             id="user_login"
-            label="Логин"
+            label="Логин пользователя"
             value={login}
             event={setLogin}
           />
           <InputWithLabel
             id="user_password"
-            label="Пароль"
+            label="Пароль пользователя"
             value={password}
             event={setPassword}
           />
@@ -101,12 +76,27 @@ function LoginPage() {
         </div>
         <div className="login_btn_block">
           <div>
-            <input type="checkbox" defaultChecked />
+            <div className="remember_me_checkbox">
+              {rememberMe ? (
+                <Checked onClick={() => setRememberMe(!rememberMe)} />
+              ) : (
+                <div
+                  className="remember_me_not_checked"
+                  onClick={() => setRememberMe(!rememberMe)}
+                ></div>
+              )}
+            </div>
+
             <p>Запомнить меня</p>
           </div>
-          <button className="login_btn" onClick={handleLogin}>
+          <button className="login_btn main_btn_template" onClick={handleLogin}>
             Войти
           </button>
+        </div>
+        <div className="password_recovery_btn">
+          <p>
+            Забыли пароль? <span>Восстановить</span>
+          </p>
         </div>
       </div>
     </div>

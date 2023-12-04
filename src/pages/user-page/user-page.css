@@ -228,7 +228,13 @@
 }
 .user_action_btns .main_btn:last-child {
   border-radius: 6px;
+  transition: all 0.4s ease;
+
   background: #48ac98;
+}
+.user_action_btns .main_btn:last-child:hover {
+  transition: all 0.4s ease;
+  background: #388f7e;
 }
 .personal_information_block {
   position: relative;

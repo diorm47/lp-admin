@@ -44,7 +44,7 @@ function Employees() {
         <h1>Сотрудники</h1>
         <div className="employees_top_btns">
           <NavLink to="/positions">
-            <button className="main_btn add_role_ref">
+            <button className="main_btn add_role_ref main_btn_template">
               <p>Добавить роль</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ function Employees() {
               <SearchIcon />
             </div>
             <NavLink to="/add-employee">
-              <div className="employe_add">
+              <div className="employe_add main_btn_template_border">
                 <span>+</span> <p>Добавить пользователя</p>
               </div>
             </NavLink>

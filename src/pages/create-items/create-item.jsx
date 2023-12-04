@@ -197,7 +197,7 @@ function CreateItem() {
           </div>
           <span>Выберите с компьютера или перетащите в эту область</span>
         </div>
-        <button className="main_btn save_cat_btn" onClick={saveItem}>
+        <button className="main_btn save_cat_btn main_btn_template_green" onClick={saveItem}>
           Сохранить предмет
         </button>
       </div>

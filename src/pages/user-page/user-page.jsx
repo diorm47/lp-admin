@@ -44,7 +44,7 @@ function UserPage() {
                 </div>
               </div>
               <div className="user_action_btns">
-                <button className="main_btn">Заблокировать юзера</button>
+                <button className="main_btn main_btn_template_red">Заблокировать юзера</button>
                 <button className="main_btn">Разблокировать</button>
               </div>
             </div>

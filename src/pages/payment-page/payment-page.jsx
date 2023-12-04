@@ -205,7 +205,7 @@ function PaymentPage() {
           <thead>
             <tr>
               <th className="tal">ID платежа</th>
-             
+
               <th className="tal">Уникальный код</th>
               <th className="tal">Сумма пополнения</th>
               <th className="tal">Бонус</th>
@@ -221,7 +221,7 @@ function PaymentPage() {
               <td className="">
                 <p>{payment.payment_id}</p>
               </td>
-           
+
               <td className="">
                 <p>{payment.unical_code}</p>
               </td>
@@ -247,8 +247,10 @@ function PaymentPage() {
               </td>
 
               <td>
-                <div className="cases_table_actions">
-                  <button className="undo_create">Завершить заказать</button>
+                <div className="cases_table_actions ">
+                  <button className="undo_create main_btn_template_border">
+                    Завершить заказать
+                  </button>
                 </div>
               </td>
             </tr>
@@ -300,7 +302,7 @@ function PaymentPage() {
                 </td>
 
                 <td>
-                  <button className="main_btn about_secondary_btn">
+                  <button className="main_btn about_secondary_btn main_btn_template">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -320,7 +322,9 @@ function PaymentPage() {
             </tbody>
           </table>
           <div className="about_page_actions">
-            <button>Посмотреть все платежи юзера </button>
+            <button className="main_btn_template_green">
+              Посмотреть все платежи юзера{" "}
+            </button>
           </div>
         </div>
       </div>

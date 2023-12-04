@@ -75,7 +75,7 @@ function Items() {
           <h1>Предметы</h1>
           <div className="top_cases_actions">
             <NavLink to="/rarity">
-              <button className="main_btn add_categories_btn">
+              <button className="main_btn add_categories_btn main_btn_template_orange">
                 <p>Категории редкости</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ function Items() {
               </button>
             </NavLink>
             <NavLink to="/create-item">
-              <button className="main_btn add_case_btn">
+              <button className="main_btn add_case_btn main_btn_template">
                 <p>Добавить предмет</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +133,7 @@ function Items() {
               </button>
             </div>
             <div className="cases_top_actions">
-              <button className="main_btn">
+              <button className="main_btn main_btn_template_red">
                 <p>Действие над предметом</p>
               </button>
               <div className="users_search">

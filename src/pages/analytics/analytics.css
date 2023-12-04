@@ -1,85 +1,160 @@
-.analytic_card {
-  border-radius: 10px;
+.analytic_date_toggler_btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #fff;
-  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
-  padding: 20px;
+  cursor: pointer;
+}
+.analytic_date_toggler_left {
+  border-radius: var(--4, 4px) 0px 0px var(--4, 4px);
 }
 
-.analytics_page_wrapper {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+.analytic_date_toggler_data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #fff;
 }
 
-.analytic_card_name p {
-  color: #333;
+.analytic_date_toggler_right {
+  border-radius: 0px var(--4, 4px) var(--4, 4px) 0px;
+}
+
+.analytic_date_toggler {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 32px;
+}
+.analytic_date_toggler_data p {
+  color: var(
+    --www-tinkoff-ru-events-account-current-522904620501024-x-1820-default-black-80,
+    rgba(0, 0, 0, 0.8)
+  );
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 160% */
+}
+
+.analytic_card {
+  border-radius: 12px;
+  border: 1px solid var(--grey-20, #d6d6d6);
+  background: #fff;
+  padding: 18px;
+  width: 25%;
+}
+
+.analytic_card_title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  justify-content: space-between;
+}
+.analytic_card_title p {
+  color: var(--grey-100, #333);
+  font-family: Inter;
   font-size: 16px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 18px; /* 112.5% */
-  margin-bottom: 8px;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
 }
 
-.analytic_card_cost p {
-  color: #333;
-  font-size: 32px;
+.analytic_card_title svg {
+  cursor: pointer;
+}
+.analytic_card_left_data {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.analytic_card_left_data p {
+  color: var(--black, #1d1d1d);
+  font-family: Inter;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 40px; /* 125% */
+  font-weight: 800;
+  line-height: 48px; /* 240% */
+}
+.analytic_card_right_data {
+  display: flex;
+  align-items: center;
 }
 
-.analytic_card {
+.analytic_card_right_data p {
+  color: var(--green-normal, #39b54a);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 90% */
+}
+
+.analytic_card_data {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.analytic_card_position {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.analytic_card_right {
-  width: 100px;
-}
-.analytic_card_position p {
-  color: #333;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 18px; /* 112.5% */
-  margin-right: 4px;
-}
-
-.site_pofit .analytic_card_name p {
-  color: #333;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.site_pofit {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-.site_pofit_numbers p {
-  color: #333;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 18px; /* 100% */
-}
-
-.site_pofit_time p {
-  overflow: hidden;
-  color: #48ac98;
-  text-overflow: ellipsis;
+.analytic_descr p {
+  text-align: right;
+  color: var(--grey-80, #5c5c5c);
+  font-family: Inter;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 18px; /* 128.571% */
-  letter-spacing: 0.14px;
-  margin-top: 5px;
+  line-height: 24px; /* 171.429% */
+}
+
+.analytic_cards {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.analytics_bottom_cards {
+  margin-top: 20px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+.analytics_bottom_card {
+  border-radius: 12px;
+  border: 1px solid var(--grey-20, #d6d6d6);
+  background: #fff;
+  padding: 16px 20px;
+  min-height: 460px;
+}
+
+.analytics_bottom_left {
+  width: 74.7%;
+}
+.analytics_bottom_right {
+  width: 24%;
+}
+.analytics_bottom_card_title {
+  color: var(--black, #1d1d1d);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 32px; /* 160% */
+}
+.analytic_card_title div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.analytic_card_title div:hover {
+  background: rgba(128, 128, 128, 0.118);
+  transition: all 0.4s ease;
 }

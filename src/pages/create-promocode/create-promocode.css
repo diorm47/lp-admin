@@ -35,3 +35,8 @@
 .promocodes_time .item_color_wrapper {
   width: 100%;
 }
+
+.promocode_category .item_color_btn:hover svg * {
+  fill: #fff;
+  transition: all 0.4s ease;
+}

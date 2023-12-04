@@ -42,7 +42,7 @@ function UpdateRarity() {
       })
       .then((res) => {
         console.log(res);
-        navigate('/rarity')
+        navigate("/rarity");
       })
       .catch((error) => {
         console.log("error", error);
@@ -87,7 +87,10 @@ function UpdateRarity() {
           </div>
         </div>
 
-        <button className="main_btn save_cat_btn" onClick={updateCategory}>
+        <button
+          className="main_btn save_cat_btn main_btn_template_green"
+          onClick={updateCategory}
+        >
           Сохранить изменений
         </button>
       </div>

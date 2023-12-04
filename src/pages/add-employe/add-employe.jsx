@@ -138,10 +138,10 @@ function AddEmploye() {
               </div>
             </div>
             <div className="admin_actions admin_create_actions">
-              <button className="create_admin_btn" onClick={createEmployee}>
+              <button className="create_admin_btn main_btn_template_green" onClick={createEmployee}>
                 Создать
               </button>
-              <button className="undo_create">Отменить</button>
+              <button className="undo_create main_btn_template_border">Отменить</button>
             </div>
           </div>
           {currentActionNumber >= 2 ? (

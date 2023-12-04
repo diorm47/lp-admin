@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg
 import avatar from "../../assets/images/avatar.png";
 import Pagination from "../../components/pagionation/pagination";
 import "./user.css";
+import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
 
 function Users() {
   const usersData = [
@@ -287,6 +288,26 @@ function Users() {
     navigate(`/user/${id}`);
   };
 
+  const [selected, setSelected] = useState([]);
+
+  const toggleSelected = (data) => {
+    const filteredSelectedItems = selected.some(
+      (selected) => selected.id === data.id
+    );
+    if (filteredSelectedItems) {
+      setSelected(selected.filter((item) => item.id !== data.id));
+    } else {
+      setSelected([...selected, data]);
+    }
+  };
+
+  const toggleAllDataSelected = () => {
+    if (selected.length == usersData.length) {
+      setSelected([]);
+    } else {
+      setSelected([...usersData]);
+    }
+  };
 
   return (
     <div className="template_page users_page">
@@ -294,7 +315,7 @@ function Users() {
         <h1>Пользователи</h1>
         <div className="top_cases_actions">
           <NavLink to="/">
-            <button className="main_btn add_case_btn">
+            <button className="main_btn add_case_btn main_btn_template">
               <p>Добавить категорию пользователей</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -326,8 +347,8 @@ function Users() {
             </button>
           </div>
           <div className="cases_top_actions users_top_actions">
-            <button className="main_btn">
-              <p>Действие над предметом</p>
+            <button className="main_btn main_btn_template_red">
+              <p>Действие над пользователями</p>
             </button>
             <div className="users_search">
               <SearchIcon />
@@ -347,7 +368,17 @@ function Users() {
                 <th className="table_user_winrate_title">Винрейт</th>
                 <td className="users_select">
                   <div className="select_all">
-                    <input type="checkbox" /> Выделить все
+                    <div className="is_selected ml_55px">
+                      {selected.length == usersData.length ? (
+                        <SelectedIcon onClick={toggleAllDataSelected} />
+                      ) : (
+                        <div
+                          className="not_selected_item"
+                          onClick={toggleAllDataSelected}
+                        ></div>
+                      )}
+                    </div>{" "}
+                    Выделить все
                   </div>
                 </td>
               </tr>
@@ -414,40 +445,19 @@ function Users() {
                               </svg>
                             </div>
                           </div>
-                          <div className="is_selected">
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <g clipPath="url(#clip0_280_5736)">
-                                <rect
-                                  x="0.5"
-                                  y="0.5"
-                                  width="23"
-                                  height="23"
-                                  rx="2.5"
-                                  fill="#39B54A"
-                                  stroke="#39B54A"
-                                />
-                                <path
-                                  d="M9.94286 16.6667L6 12.8673L7.71429 11.2979L9.94286 13.4454L16.2857 7.33334L18 8.98526L9.94286 16.6667Z"
-                                  fill="white"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_280_5736">
-                                  <rect
-                                    width="24"
-                                    height="24"
-                                    rx="3"
-                                    fill="white"
-                                  />
-                                </clipPath>
-                              </defs>
-                            </svg>
+                          <div className="is_selected ">
+                            {selected.some(
+                              (selected) => selected.id === user.id
+                            ) ? (
+                              <SelectedIcon
+                                onClick={() => toggleSelected(user)}
+                              />
+                            ) : (
+                              <div
+                                className="not_selected_item"
+                                onClick={() => toggleSelected(user)}
+                              ></div>
+                            )}
                           </div>
                         </div>
                       </td>

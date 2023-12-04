@@ -5,6 +5,7 @@ import "./reviews.css";
 
 import Pagination from "../../components/pagionation/pagination";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
 
 function Reviews() {
   const reviewData = [
@@ -115,13 +116,36 @@ function Reviews() {
     navigate(`/review/${id}`);
   };
 
+  const [selected, setSelected] = useState([]);
+
+  const toggleSelected = (data) => {
+    const filteredSelectedItems = selected.some(
+      (selected) => selected.review_num === data.review_num
+    );
+    if (filteredSelectedItems) {
+      setSelected(
+        selected.filter((item) => item.review_num !== data.review_num)
+      );
+    } else {
+      setSelected([...selected, data]);
+    }
+  };
+
+  const toggleAllDataSelected = () => {
+    if (selected.length == reviewData.length) {
+      setSelected([]);
+    } else {
+      setSelected([...reviewData]);
+    }
+  };
+
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
         <h1>Отзывы</h1>
       </div>
       <div className="cases_top_actions">
-        <button className="main_btn">
+        <button className="main_btn main_btn_template_red">
           <p>Действие над отзывами</p>
         </button>
         <div className="users_search">
@@ -143,7 +167,17 @@ function Reviews() {
               <th className="tal">Статус</th>
               <td className="users_select">
                 <div className="select_all">
-                  <input type="checkbox" /> Выделить все
+                  <div className="is_selected ml_55px">
+                    {selected.length == reviewData.length ? (
+                      <SelectedIcon onClick={toggleAllDataSelected} />
+                    ) : (
+                      <div
+                        className="not_selected_item"
+                        onClick={toggleAllDataSelected}
+                      ></div>
+                    )}
+                  </div>{" "}
+                  Выделить все
                 </div>
               </td>
             </tr>
@@ -227,41 +261,22 @@ function Reviews() {
                             </svg>
                           </div>
                         </div>
-                        <div className="is_selected ml_70px">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g clipPath="url(#clip0_280_5736)">
-                              <rect
-                                x="0.5"
-                                y="0.5"
-                                width="23"
-                                height="23"
-                                rx="2.5"
-                                fill="#39B54A"
-                                stroke="#39B54A"
-                              />
-                              <path
-                                d="M9.94286 16.6667L6 12.8673L7.71429 11.2979L9.94286 13.4454L16.2857 7.33334L18 8.98526L9.94286 16.6667Z"
-                                fill="white"
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_280_5736">
-                                <rect
-                                  width="24"
-                                  height="24"
-                                  rx="3"
-                                  fill="white"
+                        <div className="is_selected ml_55px">
+                              {selected.some(
+                                (selected) =>
+                                  selected.review_num ===
+                                  review.review_num
+                              ) ? (
+                                <SelectedIcon
+                                  onClick={() => toggleSelected(review)}
                                 />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        </div>
+                              ) : (
+                                <div
+                                  className="not_selected_item"
+                                  onClick={() => toggleSelected(review)}
+                                ></div>
+                              )}
+                            </div>
                       </div>
                     </td>
                   </tr>

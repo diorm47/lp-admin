@@ -261,7 +261,7 @@ function Positions() {
                 </div>
                 <div className="admin_actions admin_permisions_btns">
                   <button
-                    className="create_admin_btn"
+                    className="create_admin_btn main_btn_template_green"
                     onClick={handleSetPermissions}
                   >
                     Сохранить
@@ -272,10 +272,10 @@ function Positions() {
               ""
             )}
             <div className="admin_actions ">
-              <button className="create_admin_btn" onClick={savePositions}>
+              <button className="create_admin_btn main_btn_template_green" onClick={savePositions}>
                 Создать
               </button>
-              <button className="undo_create">Отменить</button>
+              <button className="undo_create main_btn_template_border">Отменить</button>
             </div>
           </div>
         </div>

@@ -65,7 +65,7 @@ function Cases() {
       });
   };
 
-  // edit-case
+
   return (
     <>
       {isSnackbarVisible ? (
@@ -78,12 +78,12 @@ function Cases() {
         <div className="template_page_title">
           <h1>Кейсы</h1>
           <div className="top_cases_actions">
-            <button className="main_btn">
+            <button className="main_btn main_btn_template_red">
               <p>Поднять цены</p>
               <TopIcon />
             </button>
             <NavLink to="/create-case">
-              <button className="main_btn add_case_btn">
+              <button className="main_btn add_case_btn main_btn_template">
                 <p>Добавить кейс</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +100,7 @@ function Cases() {
               </button>
             </NavLink>
             <NavLink to="/cases-category">
-              <button className="main_btn add_categories_btn">
+              <button className="main_btn add_categories_btn main_btn_template_orange">
                 <p>Добавить категорию</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ function Cases() {
                 </svg>
               </button>
             </NavLink>
-            <button className="main_btn">
+            <button className="main_btn main_btn_template_green">
               <p>Создать бекап кейсов</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ function Cases() {
                 : ""}
             </div>
             <div className="cases_top_actions">
-              <button className="main_btn">
+              <button className="main_btn main_btn_template_red">
                 <p>Действие над товаром</p>
               </button>
               <div className="users_search">

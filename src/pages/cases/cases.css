@@ -105,6 +105,9 @@
 }
 .is_selected {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cases_table_actions {
   display: flex;

@@ -181,7 +181,7 @@ function ReviewPage() {
 
               <td>
                 <div className="cases_table_actions">
-                  <button className="undo_create">Завершить заказать</button>
+                  <button className="undo_create main_btn_template_border">Завершить заказать</button>
                 </div>
               </td>
             </tr>
@@ -233,7 +233,7 @@ function ReviewPage() {
                 </td>
 
                 <td>
-                  <button className="main_btn about_secondary_btn">
+                  <button className="main_btn about_secondary_btn main_btn_template">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -253,8 +253,8 @@ function ReviewPage() {
             </tbody>
           </table>
           <div className="about_page_actions">
-            <button>Посмотреть все платежи юзера </button>
-            <button onClick={() => aboutUser(345)}>Посмотреть профиль</button>
+            <button className="main_btn_template_green">Посмотреть все платежи юзера </button>
+            <button className="main_btn_template" onClick={() => aboutUser(345)}>Посмотреть профиль</button>
           </div>
         </div>
       </div>

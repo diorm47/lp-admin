@@ -91,7 +91,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-
 }
 .login_error p {
   color: #000;
@@ -108,3 +107,32 @@
   display: none;
 }
 
+.password_recovery_btn {
+  text-align: center;
+  margin-top: 26px;
+}
+.password_recovery_btn p {
+  color: var(--normal, var(--mane-blue, #358ed7));
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.password_recovery_btn span {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.remember_me_not_checked {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #000;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.remember_me_checkbox svg {
+  cursor: pointer;
+}
