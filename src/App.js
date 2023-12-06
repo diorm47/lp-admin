@@ -1,40 +1,40 @@
 import React, { Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Analytics from "./pages/analytics/analytics";
 import NavBar from "./components/nav-bar/nav-bar";
 import SideBar from "./components/side-bar/side-bar";
-import Users from "./pages/users/users";
-import UserPage from "./pages/user-page/user-page";
-import Employees from "./pages/employees/employees";
-import AddEmploye from "./pages/add-employe/add-employe";
-import { useDispatch, useSelector } from "react-redux";
 import { mainApi } from "./components/utils/main-api";
-import { loginUserAction } from "./redux/user-reducer";
-import LoginPage from "./pages/login/login";
-// import UpdateEmploye from "./pages/update-employee/update-employee";
-import Cases from "./pages/cases/cases";
+import AddEmploye from "./pages/add-employe/add-employe";
+import EditEmployee from "./pages/add-employe/edit-employee";
+import Analytics from "./pages/analytics/analytics";
 import CaseCategory from "./pages/case-categories/case-category";
-import CreateCase from "./pages/create-case/create-case";
-import Items from "./pages/items/items";
+import Cases from "./pages/cases/cases";
 import Competitions from "./pages/competitions/competitions";
-import Payments from "./pages/payments/payments"; 
-import Settings from "./pages/settings/settings";
-import Reviews from "./pages/reviews/reviews";
-import Support from "./pages/support/support";
-import Conclusions from "./pages/conclusions/conclusions";
-import Promocodes from "./pages/promocodes/promocodes";
-import Positions from "./pages/positions/positions";
-import CreateItem from "./pages/create-items/create-item";
-import EditCase from "./pages/create-case/edit-case";
-import CreatePromocode from "./pages/create-promocode/create-promoode";
-import ReviewPage from "./pages/review-page/review-page";
+import CreateCompetitons from "./pages/competitions/create-competitons";
 import ConclusionPage from "./pages/conclusion-page/conclusion-page";
-import PaymentPage from "./pages/payment-page/payment-page";
-import EditPromocode from "./pages/create-promocode/edit-promocode";
+import Conclusions from "./pages/conclusions/conclusions";
+import CreateCase from "./pages/create-case/create-case";
+import EditCase from "./pages/create-case/edit-case";
+import CreateItem from "./pages/create-items/create-item";
 import EditItem from "./pages/create-items/edit-item";
+import CreatePromocode from "./pages/create-promocode/create-promoode";
+import EditPromocode from "./pages/create-promocode/edit-promocode";
+import Employees from "./pages/employees/employees";
+import Items from "./pages/items/items";
+import LoginPage from "./pages/login/login";
+import PaymentPage from "./pages/payment-page/payment-page";
+import Payments from "./pages/payments/payments";
+import Positions from "./pages/positions/positions";
+import Promocodes from "./pages/promocodes/promocodes";
 import RarityCategory from "./pages/rarity-category/rarity-category";
 import UpdateRarity from "./pages/rarity-category/update-rarity";
-import EditEmployee from "./pages/add-employe/edit-employee";
+import ReviewPage from "./pages/review-page/review-page";
+import Reviews from "./pages/reviews/reviews";
+import Settings from "./pages/settings/settings";
+import Support from "./pages/support/support";
+import UserPage from "./pages/user-page/user-page";
+import Users from "./pages/users/users";
+import { loginUserAction } from "./redux/user-reducer";
 
 function App() {
   const dispatch = useDispatch();
@@ -103,7 +103,11 @@ function App() {
                   element={<EditEmployee />}
                 />
                 <Route path="/competitons" element={<Competitions />} />
-                {/* <Route path="/update-employee" element={<UpdateEmploye />} /> */}
+                <Route
+                  path="/create-competiton"
+                  element={<CreateCompetitons />}
+                />
+
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-case" element={<CreateCase />} />
 

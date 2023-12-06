@@ -23,12 +23,9 @@ function LoginPage() {
       Accept: "*/*",
       "Content-Type": "application/x-www-form-urlencoded",
     };
-
     let bodyContent = `username=${login}&password=${password}`;
-
     fetch("https://legadrop.org/admin/sign-in", {
       method: "POST",
-
       body: bodyContent,
       headers: headersList,
     })

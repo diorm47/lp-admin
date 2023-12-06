@@ -1,0 +1,151 @@
+.add_competition {
+  background: #358ed7;
+}
+
+.users_search_competions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.competitions_table {
+  margin-top: 50px;
+}
+.competitions_table .cases_table_actions {
+  gap: 0;
+}
+
+.cases_table_actions_wrapper_comp {
+  width: 230px;
+}
+/* CreateCompetitons */
+
+.create_competition_wrapper h3 {
+  color: var(--unnamed, var(--unnamed, #121212));
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+  letter-spacing: -0.2px;
+  margin-bottom: 12px;
+}
+
+.validated_input_title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.validated_input_title p {
+  margin: 0 !important;
+}
+.comp_item_prize_title {
+  color: var(--unnamed, #121212);
+  margin-bottom: 8px;
+  /* Small text / Regular */
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+.create_competition_wrapper_block_title {
+  color: var(--unnamed, var(--unnamed, #121212));
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+  letter-spacing: -0.2px;
+}
+
+.comp_condition_enable p {
+  color: #000;
+  font-feature-settings: "calt" off;
+
+  /* Body Text / Regular */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+.comp_condition_enable .select_all {
+  justify-content: start;
+  margin-bottom: 12px;
+}
+
+.competition_conditions_block {
+  margin-bottom: 50px;
+}
+
+.mb0 {
+  margin-bottom: 0 !important;
+}
+.calendar_comp_input_block {
+  position: relative;
+}
+.calendar_comp_icon {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  cursor: pointer;
+}
+.calendar_comp_input_block input {
+  cursor: pointer;
+}
+
+.add_item_competition {
+  max-width: 655px !important;
+  min-width: 460px;
+ 
+}
+.add_item_competition .case_img_block {
+  display: grid;
+  align-items: start !important;
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.competition_item {
+  height: auto !important;
+  align-items: start !important;
+}
+.competition_item img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.competition_item p {
+  color: var(--unnamed, var(--unnamed, #a6a6a6));
+  font-family: Inter;
+  font-size: 12.003px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 13px; /* 108.306% */
+  text-align: left;
+}
+
+.comp_calendar {
+  position: absolute;
+  bottom: 50px;
+  right: -76%;
+}
+.comp_calendar .react-calendar {
+  border: none;
+  font-family: "Inter", sans-serif;
+  -webkit-box-shadow: 0px 3px 16px 1px rgba(34, 60, 80, 0.22);
+  -moz-box-shadow: 0px 3px 16px 1px rgba(34, 60, 80, 0.22);
+  box-shadow: 0px 3px 16px 1px rgba(34, 60, 80, 0.22);
+}
+
+.case_input_temp span {
+  color: #000 !important;
+  font-size: 18px !important;
+}
