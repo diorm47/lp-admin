@@ -91,7 +91,7 @@ function CreateCase() {
       })
       .then((res) => {
         setCaseID(res.case_id);
-        snackbarActions('Кейс создан!')
+        snackbarActions("Кейс создан!");
       })
       .catch((error) => {
         console.log(error);
@@ -230,10 +230,15 @@ function CreateCase() {
                 <span>Максимальное количество символов - 300</span>
 
                 <div className="admin_actions case_actions">
-                  <button className="create_admin_btn main_btn_template_green" onClick={saveCase}>
+                  <button
+                    className="create_admin_btn main_btn_template_green"
+                    onClick={saveCase}
+                  >
                     Сохранить
                   </button>
-                  <button className="undo_create main_btn_template_border">Отменить</button>
+                  <button className="undo_create main_btn_template_border">
+                    Отменить
+                  </button>
                 </div>
               </div>
             </TabPanel>

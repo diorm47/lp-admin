@@ -58,13 +58,23 @@ function Cases() {
       })
       .then((res) => {
         handleGetCases();
-        snackbarActions("Кейс удалён!")
+        snackbarActions("Кейс удалён!");
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
 
+  const [activeFilter, setActiveFilter] = useState("");
+  const filterItems = (type) => {
+    setActiveFilter(type);
+    if (type !== "all") {
+      const filtered = casesItems.filter((item) => item.category_id == type);
+      setCases(filtered);
+    } else {
+      setCases(casesItems.slice(0, 10));
+    }
+  };
 
   return (
     <>
@@ -136,12 +146,27 @@ function Cases() {
         <div className="template_page_content">
           <div className="cases_wrapper">
             <div className="cases_top_togglers">
-              <button className="main_btn">
+              <button
+                class={
+                  activeFilter == "all"
+                    ? "main_btn top_active_filter"
+                    : "main_btn"
+                }
+                onClick={() => filterItems("all")}
+              >
                 <p>Все кейсы</p>
               </button>
               {categories && categories[0]
                 ? categories.map((categories) => (
-                    <button className="main_btn" key={categories.name}>
+                    <button
+                      className={
+                        activeFilter == categories.category_id
+                          ? "main_btn top_active_filter"
+                          : "main_btn"
+                      }
+                      key={categories.name}
+                      onClick={() => filterItems(categories.category_id)}
+                    >
                       <p>{categories.name}</p>
                     </button>
                   ))

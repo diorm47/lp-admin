@@ -16,7 +16,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 85558,
@@ -26,7 +26,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 58578,
@@ -46,7 +46,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 85858,
@@ -66,7 +66,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 77444,
@@ -86,7 +86,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 87545,
@@ -106,7 +106,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 96723,
@@ -126,7 +126,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 10032,
@@ -146,7 +146,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 16232,
@@ -166,7 +166,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
     {
       payment_id: 234444,
@@ -176,7 +176,7 @@ function Conclusions() {
       bonus: "100 ₽",
       payment_type: "Qiwi",
       payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
+      payment_status: "В рассмотрении",
     },
   ];
   const [payments, setUsers] = useState([]);
@@ -185,7 +185,6 @@ function Conclusions() {
   const aboutConclusion = (id) => {
     navigate(`/conclusion/${id}`);
   };
-
   const [selected, setSelected] = useState([]);
 
   const toggleSelected = (data) => {
@@ -209,10 +208,52 @@ function Conclusions() {
     }
   };
 
+  const [activeFilter, setActiveFilter] = useState("");
+  const filterItems = (type) => {
+    setActiveFilter(type);
+    if (type !== "all") {
+      const filtered = paymentsData.filter(
+        (item) => item.payment_status == type
+      );
+      setUsers(filtered);
+    } else {
+      setUsers(paymentsData.slice(0, 10));
+    }
+  };
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
         <h1>Выводы</h1>
+      </div>
+      <div class="cases_top_togglers">
+        <button
+          class={
+            activeFilter == "all" ? "main_btn top_active_filter" : "main_btn"
+          }
+          onClick={() => filterItems("all")}
+        >
+          <p>Все выводы</p>
+        </button>
+        <button
+          class={
+            activeFilter == "В рассмотрении"
+              ? "main_btn top_active_filter"
+              : "main_btn"
+          }
+          onClick={() => filterItems("В рассмотрении")}
+        >
+          <p>В рассмотрении</p>
+        </button>
+        <button
+          class={
+            activeFilter == "Успешно"
+              ? "main_btn top_active_filter"
+              : "main_btn"
+          }
+          onClick={() => filterItems("Успешно")}
+        >
+          <p>Успешно</p>
+        </button>
       </div>
       <div className="cases_top_actions">
         <button className="main_btn main_btn_template_red">

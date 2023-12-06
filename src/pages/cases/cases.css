@@ -11,8 +11,8 @@
 .top_cases_actions .add_case_btn {
   background: #358ed7;
 }
-.top_cases_actions .add_categories_btn  {
-  background: #fb8a01 ;
+.top_cases_actions .add_categories_btn {
+  background: #fb8a01;
 }
 .top_cases_actions button:nth-child(4) {
   background: #39b54a;
@@ -34,7 +34,10 @@
   color: #1d1d1d;
   transition: all 0.3s ease;
 }
-
+.top_active_filter {
+  background: #d6d6d6 !important;
+  color: #1d1d1d;
+}
 .cases_top_actions {
   display: flex;
   align-items: center;
@@ -115,4 +118,3 @@
   justify-content: flex-end;
   gap: 20px;
 }
-
