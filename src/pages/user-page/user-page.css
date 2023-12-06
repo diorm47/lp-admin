@@ -141,7 +141,7 @@
 
 .user_operations {
   margin-top: 60px;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
 }
 
 .user_operations_title {
@@ -183,8 +183,6 @@
 .open_status {
   padding: 4px 8px;
   border-radius: 2px;
-
-  width: 91px;
 
   color: var(--white-100, #fff);
   text-align: center;
@@ -248,4 +246,41 @@
 }
 .winrate_edit .copy_icon {
   top: 45px;
+}
+
+.user_stats_block {
+  width: 25%;
+  padding: 20px;
+  height: 136px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
+}
+
+.user_stats_block_title p {
+  text-align: center;
+  color: var(--grey-100, #333);
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 112.5% */
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+.user_stats_blocks {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.user_stats_block_amount p {
+  color: var(--grey-100, #333);
+  font-family: Nunito;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 40px; /* 125% */
+  text-align: center;
 }

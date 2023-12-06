@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./user-page.css";
 import { useParams } from "react-router-dom";
 import { usersData } from "../../components/users";
@@ -9,6 +9,7 @@ import { ReactComponent as TG } from "../../assets/icons/socials/tg.svg";
 import { ReactComponent as Mailru } from "../../assets/icons/socials/mailru.svg";
 import { ReactComponent as Yandex } from "../../assets/icons/socials/yandex.svg";
 import avatar from "../../assets/images/avatar.png";
+import PaginationSecondary from "../../components/pagionation-secondary/pagination-secondary";
 
 function UserPage() {
   useEffect(() => {
@@ -20,6 +21,328 @@ function UserPage() {
 
   const params = useParams();
   const item = usersData.find((u) => u.id == params.user);
+
+  const openingHistoryData = [
+    {
+      id: 24324,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "got_status",
+    },
+    {
+      id: 45645,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "error_status",
+    },
+    {
+      id: 123432,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "selled_status",
+    },
+    {
+      id: 234543,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "got_status",
+    },
+    {
+      id: 678657,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "error_status",
+    },
+    {
+      id: 65756,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "selled_status",
+    },
+    {
+      id: 4565465,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "got_status",
+    },
+    {
+      id: 34123432,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "error_status",
+    },
+    {
+      id: 56756,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "selled_status",
+    },
+    {
+      id: 353466,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "got_status",
+    },
+    {
+      id: 567547,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "error_status",
+    },
+    {
+      id: 123414,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "selled_status",
+    },
+    {
+      id: 34523,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "got_status",
+    },
+    {
+      id: 65785687,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "error_status",
+    },
+    {
+      id: 345365,
+      case_name: "Кейс от Зепикса",
+      recieved_item: "30 кристаллов",
+      date: "2023-12-03 21:34:21",
+      quantity: 12,
+      case_price: 234,
+      win_price: 122,
+      status: "selled_status",
+    },
+  ];
+  const [openingHistory, setOpeningHistory] = useState([]);
+
+  const openingHistoryTopupData = [
+    {
+      id: 23456,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "selled_status",
+    },
+    {
+      id: 345,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "got_status",
+    },
+    {
+      id: 12344,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "error_status",
+    },
+    {
+      id: 345,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "got_status",
+    },
+    {
+      id: 678,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "got_status",
+    },
+    {
+      id: 5676,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "error_status",
+    },
+    {
+      id: 4646,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "selled_status",
+    },
+    {
+      id: 2345,
+      name: "Киви карта",
+      date: "2023-12-03 21:34:21",
+      quantity: 34,
+      price: 34,
+      status: "error_status",
+    },
+  ];
+  const [openingHistoryTopup, setOpeningHistoryTopup] = useState([]);
+
+  const userInventarData = [
+    {
+      id: 234545,
+      item: "Луна ежемесячная",
+      got_type: "Апгрейд",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Доступен",
+    },
+    {
+      id: 456765,
+      item: "Луна ежемесячная",
+      got_type: "Открыл кейс",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Продан",
+    },
+    {
+      id: 45765,
+      item: "Луна ежемесячная",
+      got_type: "Апгрейд",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Доступен",
+    },
+    {
+      id: 4567457,
+      item: "Луна ежемесячная",
+      got_type: "Бесплатный кейс",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Выведен",
+    },
+    {
+      id: 4567,
+      item: "Луна ежемесячная",
+      got_type: "Апгрейд",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Доступен",
+    },
+    {
+      id: 789896,
+      item: "Луна ежемесячная",
+      got_type: "Открыл кейс",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Продан",
+    },
+    {
+      id: 67897689,
+      item: "Луна ежемесячная",
+      got_type: "Апгрейд",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Доступен",
+    },
+    {
+      id: 6789,
+      item: "Луна ежемесячная",
+      got_type: "Бесплатный кейс",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Выведен",
+    },
+    {
+      id: 687678,
+      item: "Луна ежемесячная",
+      got_type: "Апгрейд",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Доступен",
+    },
+    {
+      id: 68678,
+      item: "Луна ежемесячная",
+      got_type: "Открыл кейс",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Продан",
+    },
+    {
+      id: 567653,
+      item: "Луна ежемесячная",
+      got_type: "Апгрейд",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Доступен",
+    },
+    {
+      id: 12434,
+      item: "Луна ежемесячная",
+      got_type: "Бесплатный кейс",
+      date: "2023-12-03 21:34:21",
+      price: "450",
+      status: "Выведен",
+    },
+  ];
+  const [userInventar, setUserInventar] = useState([]);
 
   return (
     <div className="template_page user_page">
@@ -44,7 +367,9 @@ function UserPage() {
                 </div>
               </div>
               <div className="user_action_btns">
-                <button className="main_btn main_btn_template_red">Заблокировать юзера</button>
+                <button className="main_btn main_btn_template_red">
+                  Заблокировать юзера
+                </button>
                 <button className="main_btn">Разблокировать</button>
               </div>
             </div>
@@ -214,7 +539,7 @@ function UserPage() {
                 <p className="user_winrate_title">Высокий процент победы!</p>
                 <div className="user_winrate">
                   <button className="user_winrate_btn">
-                  Настроить подкрутку
+                    Настроить подкрутку
                   </button>
                 </div>
               </div>
@@ -233,87 +558,198 @@ function UserPage() {
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Название предмета</th>
+                    <th>Название кейса</th>
+                    <th>Полученный предмет</th>
                     <th>Дата</th>
                     <th>Кол-во</th>
-                    <th>Цена</th>
+                    <th>Цена кейса</th>
+                    <th>Цена выйгрыша</th>
                     <th>Статус</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>3343</td>
-                    <td>Кейс от Зепикса</td>
-                    <td>2023-12-03 21:34:21</td>
-                    <td>1</td>
-                    <td>450</td>
-                    <td>
-                      <div className="open_status_box">
-                        <div className="open_status status_succes">
-                          <p>Получен</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3343</td>
-                    <td>Кейс от Зепикса</td>
-                    <td>2023-12-03 21:34:21</td>
-                    <td>1</td>
-                    <td>450</td>
-                    <td>
-                      <div className="open_status_box">
-                        <div className="open_status status_selled">
-                          <p>Продан</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3343</td>
-                    <td>Кейс от Зепикса</td>
-                    <td>2023-12-03 21:34:21</td>
-                    <td>1</td>
-                    <td>450</td>
-                    <td>
-                      <div className="open_status_box">
-                        <div className="open_status status_error">
-                          <p>Ошибка</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3343</td>
-                    <td>Кейс от Зепикса</td>
-                    <td>2023-12-03 21:34:21</td>
-                    <td>1</td>
-                    <td>450</td>
-                    <td>
-                      <div className="open_status_box">
-                        <div className="open_status status_succes">
-                          <p>Получен</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3343</td>
-                    <td>Кейс от Зепикса</td>
-                    <td>2023-12-03 21:34:21</td>
-                    <td>1</td>
-                    <td>450</td>
-                    <td>
-                      <div className="open_status_box">
-                        <div className="open_status status_succes">
-                          <p>Получен</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                  {openingHistory
+                    ? openingHistory.map((item) => (
+                        <tr>
+                          <td>{item.id}</td>
+                          <td>{item.case_name}</td>
+                          <td>{item.recieved_item}</td>
+                          <td>{item.date}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.case_price} р.</td>
+                          <td>{item.win_price} р.</td>
+
+                          <td>
+                            <div className="open_status_box">
+                              {item.status === "got_status" ? (
+                                <div className="open_status status_succes">
+                                  <p>Получен</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {item.status === "selled_status" ? (
+                                <div className="open_status status_selled">
+                                  <p>Продан</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {item.status === "error_status" ? (
+                                <div className="open_status status_error">
+                                  <p>Ошибка</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    : ""}
                 </tbody>
               </table>
             </div>
+            <PaginationSecondary
+              allData={openingHistoryData}
+              paginationData={setOpeningHistory}
+              length={6}
+            />
+          </div>
+          <div className="user_operations">
+            <div className="user_operations_title">
+              <p className="user_block_title">История пополнений</p>
+              <div className="users_search">
+                <SearchIcon />
+                <input type="text" placeholder="Поиск" />
+              </div>
+            </div>
+            <div className="user_operations_table">
+              <table className="user_table">
+                <thead>
+                  <tr>
+                    <th>ID пополнения</th>
+                    <th>Способ пополнения</th>
+                    <th>Дата</th>
+                    <th>Кол-во</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {openingHistoryTopup
+                    ? openingHistoryTopup.map((item) => (
+                        <tr>
+                          <td>{item.id}</td>
+                          <td>{item.name}</td>
+                          <td>{item.date}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.price} р.</td>
+                          <td>
+                            <div className="open_status_box">
+                              <div className="open_status status_succes">
+                                <p>Пополнен</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    : ""}
+                </tbody>
+              </table>
+            </div>
+            <PaginationSecondary
+              allData={openingHistoryTopupData}
+              paginationData={setOpeningHistoryTopup}
+              length={6}
+            />
+          </div>
+          <div className="user_operations">
+            <div className="user_operations_title">
+              <p className="user_block_title">Статистика пользователя</p>
+            </div>
+            <div className="user_stats_blocks">
+              <div className="user_stats_block">
+                <div className="user_stats_block_title">
+                  <p>Депозитов за все время</p>
+                </div>
+                <div className="user_stats_block_amount">
+                  <p>250 230 ₽</p>
+                </div>
+              </div>
+              <div className="user_stats_block">
+                <div className="user_stats_block_title">
+                  <p>Выйграл</p>
+                </div>
+                <div className="user_stats_block_amount">
+                  <p>290 230 ₽</p>
+                </div>
+              </div>
+              <div className="user_stats_block">
+                <div className="user_stats_block_title">
+                  <p>Проиграл</p>
+                </div>
+                <div className="user_stats_block_amount">
+                  <p>4 250 230 ₽</p>
+                </div>
+              </div>
+              <div className="user_stats_block">
+                <div className="user_stats_block_title">
+                  <p>Вывел</p>
+                </div>
+                <div className="user_stats_block_amount">
+                  <p>100 050 ₽</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="user_operations">
+            <div className="user_operations_title">
+              <p className="user_block_title">Инвентарь</p>
+              <div className="users_search">
+                <SearchIcon />
+                <input type="text" placeholder="Поиск" />
+              </div>
+            </div>
+            <div className="user_operations_table">
+              <table className="user_table">
+                <thead>
+                  <tr>
+                    <th>ID товара</th>
+                    <th>Товар</th>
+                    <th>Способ получения</th>
+                    <th>Дата</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userInventar
+                    ? userInventar.map((item) => (
+                        <tr>
+                          <td>{item.id}</td>
+                          <td>{item.item}</td>
+                          <td>{item.got_type}</td>
+                          <td>{item.date}</td>
+                          <td>{item.price} р.</td>
+                          <td>
+                            <div className="open_status_box">
+                              <div className="open_status status_succes">
+                                <p>{item.status}</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    : ""}
+                </tbody>
+              </table>
+            </div>
+            <PaginationSecondary
+              allData={userInventarData}
+              paginationData={setUserInventar}
+              length={6}
+            />
           </div>
         </div>
       </div>
