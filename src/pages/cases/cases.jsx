@@ -147,7 +147,7 @@ function Cases() {
           <div className="cases_wrapper">
             <div className="cases_top_togglers">
               <button
-                class={
+                className={
                   activeFilter == "all"
                     ? "main_btn top_active_filter"
                     : "main_btn"

@@ -1,182 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./conclusion-page.css";
 import avatar from "../../assets/images/avatar.png";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
+import { mainApi } from "../../components/utils/main-api";
 
 function ConclusionPage() {
-  const paymentsData = [
-    {
-      payment_id: 13232,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 85558,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 58578,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 88888,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 85858,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 58855,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 77444,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 36447,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 87545,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 42555,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 96723,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 52415,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 10032,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 13562,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 16232,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 13532,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 234444,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-  ];
   const user = {
     id: 345,
     name: "Дуров",
@@ -186,15 +15,45 @@ function ConclusionPage() {
     winrate: 47,
   };
 
+  const [conclusion, setConclusion] = useState({});
+  const [conclusionItem, setConclusionItem] = useState({});
   const params = useParams();
-  const conclusion = paymentsData.find(
-    (u) => u.payment_id == params.conclusion
-  );
+
+  useEffect(() => {
+    mainApi
+      .getConclusion(params.conclusion)
+      .then((res) => {
+        setConclusion(res);
+        getItemName(res.item_id || "");
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [params.conclusion]);
 
   const navigate = useNavigate();
   const aboutUser = (id) => {
     navigate(`/user/${id}`);
   };
+
+  const getItemName = async (id) => {
+    let headersList = {
+      Accept: "*/*",
+    };
+    let response = await fetch(`https://legadrop.org/admin/items/${id}`, {
+      method: "GET",
+      headers: headersList,
+    });
+    let data = await response.json();
+
+    setConclusionItem(data);
+  };
+  useEffect(() => {
+    if (conclusion && conclusion.item_id) {
+      getItemName(conclusion.item_id);
+    }
+  }, [conclusion]);
+
   return (
     <div className="template_page ">
       <div className="template_page_title">
@@ -222,42 +81,51 @@ function ConclusionPage() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="">
-                <p>{conclusion.payment_id}</p>
-              </td>
-              <td className="">
-                <p>{conclusion.user_id}</p>
-              </td>
-              <td className="">
-                <p>{conclusion.unical_code}</p>
-              </td>
-              <td className="">
-                <p>{conclusion.payment_amount}</p>
-              </td>
-              <td className="">
-                <p>Благославение <br /> полой Луны</p>
-              </td>
-              <td className="">
-                <p>21223490</p>
-              </td>
+            {conclusion && conclusion.itemfs_id ? (
+              <tr>
+                <td className="">
+                  <p>{conclusion.itemfs_id || ""}</p>
+                </td>
+                <td className="">
+                  <p>{conclusion.user_id || ""}</p>
+                </td>
+                <td className="">
+                  <p>{conclusion.itemfs_id || ""}</p>
+                </td>
+                <td className="">
+                  <p>{conclusion.payment_amount || "-"}</p>
+                </td>
+                <td className="">
+                  <p>{conclusionItem ? conclusionItem.name : ""}</p>
+                </td>
+                <td className="">
+                  <p>21223490</p>
+                </td>
 
-              <td className="tac">
-                {conclusion && conclusion.payment_date.split(" ")[0]}
+                <td className="tac">
+                  {/* {conclusion && conclusion.payment_date.split(" ")[0]}
                 <br />
-                {conclusion && conclusion.payment_date.split(" ")[1]}
-              </td>
+                {conclusion && conclusion.payment_date.split(" ")[1]} */}
+                  -
+                </td>
 
-              <td className="tac rev_status">
-                <p>{conclusion.payment_status}</p>
-              </td>
+                <td className="tac rev_status">
+                  <p>
+                    {conclusion.status == "EXPECT" ? "Ожидание" : "Успешно"}
+                  </p>
+                </td>
 
-              <td>
-                <div className="cases_table_actions">
-                  <button className="undo_create main_btn_template_border">Завершить заказать</button>
-                </div>
-              </td>
-            </tr>
+                <td>
+                  <div className="cases_table_actions">
+                    <button className="undo_create main_btn_template_border">
+                      Завершить заказать
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              ""
+            )}
           </tbody>
         </table>
         <div className="about_page_secondary_block">
@@ -326,7 +194,9 @@ function ConclusionPage() {
             </tbody>
           </table>
           <div className="about_page_actions">
-            <button className="main_btn_template_green">Посмотреть все платежи юзера </button>
+            <button className="main_btn_template_green">
+              Посмотреть все платежи юзера{" "}
+            </button>
           </div>
         </div>
       </div>

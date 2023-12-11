@@ -105,7 +105,7 @@ class MainApi {
   }
   // get permissions
   async getPermissionAction(userData) {
-    return this._sendRequest({ 
+    return this._sendRequest({
       endpoint: `/admin/permissions`,
       method: "GET",
       body: userData,
@@ -216,7 +216,6 @@ class MainApi {
   }
 
   // Get Case
-
   async getCaseAction(userData) {
     return this._sendRequest({
       endpoint: `/admin/case`,
@@ -279,7 +278,6 @@ class MainApi {
       body: data,
     });
   }
-
   async setPagePerm(data) {
     return this._sendRequest({
       endpoint: `/admin/assign/page`,
@@ -294,6 +292,22 @@ class MainApi {
       // body: data,
     });
   }
+
+  // get conclusions
+  async getConclusions(data) {
+    return this._sendRequest({
+      endpoint: `/api/v1/output`,
+      method: "GET",
+      // body: data,
+    });
+  }
+  async getConclusion(data) {
+    return this._sendRequest({
+      endpoint: `/api/v1/output/${data}`,
+      method: "GET",
+    });
+  }
+
   // User me
   async reEnter() {
     return this._sendRequest({

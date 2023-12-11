@@ -16,7 +16,9 @@ function Pagination({ allData, paginationData, length }) {
   };
   useEffect(() => {
     paginationData(allData.slice(itemOffset, endOffset));
+
   }, [itemOffset, endOffset, paginationData]);
+  
 
   return (
     <ReactPaginate

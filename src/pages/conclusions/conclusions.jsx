@@ -1,185 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { useState } from "react";
 import "./conclusions.css";
 import Pagination from "../../components/pagionation/pagination";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
+import { mainApi } from "../../components/utils/main-api";
 
 function Conclusions() {
-  const paymentsData = [
-    {
-      payment_id: 13232,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 85558,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 58578,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 88888,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 85858,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 58855,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 77444,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 36447,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 87545,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 42555,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 96723,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 52415,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 10032,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 13562,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 16232,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "Успешно",
-    },
-    {
-      payment_id: 13532,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-    {
-      payment_id: 234444,
-      user_id: 450965 - 44,
-      unical_code: "l3123kds4",
-      payment_amount: "690 ₽",
-      bonus: "100 ₽",
-      payment_type: "Qiwi",
-      payment_date: "2023-09-01 22:34:23",
-      payment_status: "В рассмотрении",
-    },
-  ];
-  const [payments, setUsers] = useState([]);
+  const [conclusionsData, setConclusionsData] = useState([]);
+  const [conclusions, setConclusions] = useState([]);
+
+  useEffect(() => {
+    mainApi
+      .getConclusions()
+      .then((res) => {
+        setConclusionsData(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
 
   const navigate = useNavigate();
   const aboutConclusion = (id) => {
@@ -189,22 +30,20 @@ function Conclusions() {
 
   const toggleSelected = (data) => {
     const filteredSelectedItems = selected.some(
-      (selected) => selected.payment_id === data.payment_id
+      (selected) => selected.itemfs_id === data.itemfs_id
     );
     if (filteredSelectedItems) {
-      setSelected(
-        selected.filter((item) => item.payment_id !== data.payment_id)
-      );
+      setSelected(selected.filter((item) => item.itemfs_id !== data.itemfs_id));
     } else {
       setSelected([...selected, data]);
     }
   };
 
   const toggleAllDataSelected = () => {
-    if (selected.length == paymentsData.length) {
+    if (selected.length == conclusionsData.length) {
       setSelected([]);
     } else {
-      setSelected([...paymentsData]);
+      setSelected([...conclusionsData]);
     }
   };
 
@@ -212,22 +51,44 @@ function Conclusions() {
   const filterItems = (type) => {
     setActiveFilter(type);
     if (type !== "all") {
-      const filtered = paymentsData.filter(
+      const filtered = conclusionsData.filter(
         (item) => item.payment_status == type
       );
-      setUsers(filtered);
+      setConclusions(filtered);
     } else {
-      setUsers(paymentsData.slice(0, 10));
+      setConclusions(conclusionsData.slice(0, 10));
     }
   };
+
+  const [itemNames, setItemNames] = useState({});
+
+  const getItemName = async (id) => {
+    let headersList = {
+      Accept: "*/*",
+    };
+    let response = await fetch(`https://legadrop.org/admin/items/${id}`, {
+      method: "GET",
+      headers: headersList,
+    });
+    let data = await response.json();
+    return data.name;
+  };
+
+  useEffect(() => {
+    conclusions.forEach(async (conclusion) => {
+      const name = await getItemName(conclusion.item_id);
+      setItemNames((prev) => ({ ...prev, [conclusion.item_id]: name }));
+    });
+  }, [conclusions]);
+
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
         <h1>Выводы</h1>
       </div>
-      <div class="cases_top_togglers">
+      <div className="cases_top_togglers">
         <button
-          class={
+          className={
             activeFilter == "all" ? "main_btn top_active_filter" : "main_btn"
           }
           onClick={() => filterItems("all")}
@@ -235,7 +96,7 @@ function Conclusions() {
           <p>Все выводы</p>
         </button>
         <button
-          class={
+          className={
             activeFilter == "В рассмотрении"
               ? "main_btn top_active_filter"
               : "main_btn"
@@ -245,7 +106,7 @@ function Conclusions() {
           <p>В рассмотрении</p>
         </button>
         <button
-          class={
+          className={
             activeFilter == "Успешно"
               ? "main_btn top_active_filter"
               : "main_btn"
@@ -279,7 +140,7 @@ function Conclusions() {
               <td className="users_select">
                 <div className="select_all">
                   <div className="is_selected ml_55px">
-                    {selected.length == paymentsData.length ? (
+                    {selected.length == conclusionsData.length ? (
                       <SelectedIcon onClick={toggleAllDataSelected} />
                     ) : (
                       <div
@@ -294,37 +155,41 @@ function Conclusions() {
             </tr>
           </thead>
           <tbody>
-            {payments
-              ? payments.map((payment) => (
-                  <tr key={payment.payment_id}>
+            {conclusions && conclusions.length
+              ? conclusions.map((conclusion) => (
+                  <tr key={conclusion.itemfs_id}>
                     <td className="">
-                      <p>{payment.payment_id}</p>
+                      <p>{conclusion.itemfs_id}</p>
                     </td>
                     <td className="">
-                      <p>{payment.user_id}</p>
+                      <p>{conclusion.user_id}</p>
                     </td>
                     <td className="">
-                      <p>{payment.unical_code}</p>
+                      <p>{conclusion.itemfs_id}</p>
                     </td>
                     <td className="">
-                      <p>{payment.payment_amount}</p>
+                      <p>{conclusion.payment_amount || "-"}</p>
                     </td>
                     <td className="">
-                      <p>
-                        Благославение <br /> полой Луны
-                      </p>
+                      <p>{itemNames[conclusion.item_id] || "..."}</p>
                     </td>
                     <td className="">
                       <p>21223490</p>
                     </td>
 
                     <td className="tac">
-                      {payment && payment.payment_date.split(" ")[0]}
-                      <br />
-                      {payment && payment.payment_date.split(" ")[1]}
+                      {conclusion.payment_date ? (
+                        <>
+                          {conclusion && conclusion.payment_date.split(" ")[0]}
+                          <br />
+                          {conclusion && conclusion.payment_date.split(" ")[1]}
+                        </>
+                      ) : (
+                        "-"
+                      )}
                     </td>
                     <td className="tal">
-                      <p>{payment.payment_status}</p>
+                    {conclusion.status == "EXPECT" ? "Ожидание" : "Успешно"}
                     </td>
 
                     <td>
@@ -347,7 +212,9 @@ function Conclusions() {
                           <div
                             title="редактировать"
                             className="cases_table_edit"
-                            onClick={() => aboutConclusion(payment.payment_id)}
+                            onClick={() =>
+                              aboutConclusion(conclusion.itemfs_id)
+                            }
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -380,15 +247,15 @@ function Conclusions() {
                         <div className="is_selected ml_55px">
                           {selected.some(
                             (selected) =>
-                              selected.payment_id === payment.payment_id
+                              selected.itemfs_id === conclusion.itemfs_id
                           ) ? (
                             <SelectedIcon
-                              onClick={() => toggleSelected(payment)}
+                              onClick={() => toggleSelected(conclusion)}
                             />
                           ) : (
                             <div
                               className="not_selected_item"
-                              onClick={() => toggleSelected(payment)}
+                              onClick={() => toggleSelected(conclusion)}
                             ></div>
                           )}
                         </div>
@@ -400,7 +267,15 @@ function Conclusions() {
           </tbody>
         </table>
         <div className="cases_paginations">
-          <Pagination allData={paymentsData} paginationData={setUsers} />
+          {conclusionsData && conclusionsData.length ? (
+            <Pagination
+              allData={conclusionsData}
+              itemsPerPage={10}
+              paginationData={setConclusions}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

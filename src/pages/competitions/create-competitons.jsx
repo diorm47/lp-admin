@@ -253,11 +253,11 @@ function CreateCompetitons() {
               )}
             </div>
           </div>
-          <div class="admin_actions case_actions">
-            <button class="create_admin_btn main_btn_template_green">
+          <div className="admin_actions case_actions">
+            <button className="create_admin_btn main_btn_template_green">
               Создать
             </button>
-            <button class="undo_create main_btn_template_border">
+            <button className="undo_create main_btn_template_border">
               Отменить
             </button>
           </div>
