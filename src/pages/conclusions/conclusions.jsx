@@ -10,12 +10,24 @@ import { mainApi } from "../../components/utils/main-api";
 function Conclusions() {
   const [conclusionsData, setConclusionsData] = useState([]);
   const [conclusions, setConclusions] = useState([]);
+  const [moogoldBalance, setMoogoldBalance] = useState();
 
   useEffect(() => {
     mainApi
       .getConclusions()
       .then((res) => {
         setConclusionsData(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
+  useEffect(() => {
+    mainApi
+      .getMoogoldBalance()
+      .then((res) => {
+        console.log(res.Body);
+        setMoogoldBalance(res.Body);
       })
       .catch((error) => {
         console.log("error", error);
@@ -125,6 +137,16 @@ function Conclusions() {
           <button className="main_btn main_btn_template_green">
             <p>Одобрить все выводы</p>
           </button>
+          {moogoldBalance ? (
+            <button className="main_btn moogold_balance">
+              <p>
+                Баланс:{" "}{moogoldBalance.balance}{" "}
+                {moogoldBalance.currency}{" "}
+              </p>
+            </button>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="users_search">
