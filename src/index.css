@@ -117,6 +117,7 @@ select {
 }
 .main_btn_template_green {
   transition: all 0.5s ease;
+  background: #39b54a;
 }
 .main_btn_template_green:hover {
   transition: all 0.5s ease;

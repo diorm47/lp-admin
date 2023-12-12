@@ -81,45 +81,52 @@ function Conclusions() {
     });
   }, [conclusions]);
 
+  const handlePurchaseItem = (data) => {
+    mainApi
+      .purcgaseItem({
+        genshin_user_id: data.genshin_user_id,
+        item_id: data.item_id,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  const handlePurchaseItems = (data) => {
+    mainApi
+      .purcgaseItem({
+        genshin_user_id: "string",
+        items: [
+          {
+            item_id: "string",
+          },
+        ],
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
         <h1>Выводы</h1>
       </div>
-      <div className="cases_top_togglers">
-        <button
-          className={
-            activeFilter == "all" ? "main_btn top_active_filter" : "main_btn"
-          }
-          onClick={() => filterItems("all")}
-        >
-          <p>Все выводы</p>
-        </button>
-        <button
-          className={
-            activeFilter == "В рассмотрении"
-              ? "main_btn top_active_filter"
-              : "main_btn"
-          }
-          onClick={() => filterItems("В рассмотрении")}
-        >
-          <p>В рассмотрении</p>
-        </button>
-        <button
-          className={
-            activeFilter == "Успешно"
-              ? "main_btn top_active_filter"
-              : "main_btn"
-          }
-          onClick={() => filterItems("Успешно")}
-        >
-          <p>Успешно</p>
-        </button>
-      </div>
+
       <div className="cases_top_actions">
-        <button className="main_btn main_btn_template_red">
-          <p>Действие над выводом</p>
-        </button>
+        <div className="conc_actions">
+          <button className="main_btn main_btn_template_red">
+            <p>Действие над выводом</p>
+          </button>
+          <button className="main_btn main_btn_template_green">
+            <p>Одобрить все выводы</p>
+          </button>
+        </div>
+
         <div className="users_search">
           <SearchIcon />
           <input type="text" placeholder="Поиск" />
@@ -174,7 +181,7 @@ function Conclusions() {
                       <p>{itemNames[conclusion.item_id] || "..."}</p>
                     </td>
                     <td className="">
-                      <p>21223490</p>
+                      <p>{conclusion.genshin_user_id}</p>
                     </td>
 
                     <td className="tac">
@@ -189,12 +196,18 @@ function Conclusions() {
                       )}
                     </td>
                     <td className="tal">
-                    {conclusion.status == "EXPECT" ? "Ожидание" : "Успешно"}
+                      {conclusion.status == "EXPECT" ? "Ожидание" : "Успешно"}
                     </td>
 
-                    <td>
-                      <div className="cases_table_actions">
+                    <td className="aic_df">
+                      <div className="cases_table_actions conclisions_item_list">
                         <div className="cases_table_actions_list">
+                          <button
+                            className="main_btn main_btn_template_green"
+                            onClick={() => handlePurchaseItem(conclusion)}
+                          >
+                            <p>Одобрить</p>
+                          </button>
                           <div title="поиск" className="cases_table_search">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

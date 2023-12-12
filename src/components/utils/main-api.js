@@ -307,7 +307,15 @@ class MainApi {
       method: "GET",
     });
   }
+  // Moogold
 
+  async purcgaseItem(data) {
+    return this._sendRequest({
+      endpoint: `/api/v1/moogold/purchase/item`,
+      method: "POST",
+      body: data,
+    });
+  }
   // User me
   async reEnter() {
     return this._sendRequest({

@@ -83,22 +83,22 @@ function SideBar() {
               <p>Выводы</p>
             </div>
           </NavLink>
-          <NavLink to="/reviews">
+          {/* <NavLink to="/reviews">
             <div className="sidebar_menu_item">
               <div className="sidenar_menu_icon">
                 <Icon9 />
               </div>
               <p>Отзывы</p>
             </div>
-          </NavLink>
-          <NavLink to="/support">
+          </NavLink> */}
+          {/* <NavLink to="/support">
             <div className="sidebar_menu_item">
               <div className="sidenar_menu_icon">
                 <Icon10 />
               </div>
               <p>Поддержка</p>
             </div>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/employees">
             <div className="sidebar_menu_item">
               <div className="sidenar_menu_icon">
