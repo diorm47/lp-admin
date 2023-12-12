@@ -160,7 +160,7 @@ function Conclusions() {
             <tr>
               <th className="tal">ID вывода</th>
               <th className="tal">ID юзера</th>
-              <th className="tal">Уникальный код</th>
+              
               <th className="tal">Сумма вывода</th>
               <th className="tal">Предмет вывода</th>
               <th className="tal">UID победителя</th>
@@ -193,9 +193,7 @@ function Conclusions() {
                     <td className="">
                       <p>{conclusion.user_id}</p>
                     </td>
-                    <td className="">
-                      <p>{conclusion.itemfs_id}</p>
-                    </td>
+                 
                     <td className="">
                       <p>{conclusion.payment_amount || "-"}</p>
                     </td>
