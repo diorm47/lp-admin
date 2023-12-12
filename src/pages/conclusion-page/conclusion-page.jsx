@@ -72,12 +72,11 @@ function ConclusionPage() {
               <th className="tal">ID вывода</th>
               <th className="tal">ID юзера</th>
               <th className="tal">Уникальный код</th>
-              <th className="tal">Сумма вывода</th>
+              <th className="tal">Стоимость предмета (Moogold)</th>
               <th className="tal">Предмет вывода</th>
               <th className="tal">UID победителя</th>
-              <th className="tac">Дата вывода</th>
+              <th className="tac">Дата заказа вывода</th>
               <th className="tac">Статус системы</th>
-              <th className="tac"></th>
             </tr>
           </thead>
           <tbody>
@@ -113,14 +112,6 @@ function ConclusionPage() {
                   <p>
                     {conclusion.status == "EXPECT" ? "Ожидание" : "Успешно"}
                   </p>
-                </td>
-
-                <td>
-                  <div className="cases_table_actions">
-                    <button className="undo_create main_btn_template_border">
-                      Завершить заказать
-                    </button>
-                  </div>
                 </td>
               </tr>
             ) : (

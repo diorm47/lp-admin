@@ -3,17 +3,8 @@
   align-items: center;
   gap: 10px;
 }
-.conclisions_item_list {
-  width: 300px;
-}
-.aic_df {
-  display: flex;
-  width: 300px;
-  margin-right: -77px;
-  align-items: center;
-  justify-content: flex-end;
-}
+
 .moogold_balance {
-    background: #358ed7;
-    cursor: default;
+  background: #358ed7;
+  cursor: default;
 }
