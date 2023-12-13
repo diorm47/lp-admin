@@ -91,8 +91,7 @@ function Conclusions() {
     } else {
       mainApi
         .purcgaseItem({
-          genshin_user_id: data.genshin_user_id,
-          item_id: data.item_id,
+          itemfs_id: data.itemfs_id,
         })
         .then((res) => {
           console.log(res);
@@ -134,23 +133,6 @@ function Conclusions() {
       });
   };
 
-  const handlePurchaseItems = (data) => {
-    mainApi
-      .purcgaseItem({
-        genshin_user_id: "string",
-        items: [
-          {
-            item_id: "string",
-          },
-        ],
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
   return (
     <>
       {isSnackbarVisible ? (
@@ -308,18 +290,42 @@ function Conclusions() {
                       <td>
                         <div className="cases_table_actions conclisions_item_list">
                           <div className="cases_table_actions_list">
-                            <button
-                              className="main_btn main_btn_template_green"
-                              onClick={() => handlePurchaseItem(conclusion)}
-                            >
-                              <p>Одобрить</p>
-                            </button>
-                            <button
-                              className="main_btn main_btn_template_red"
-                              onClick={() => handleCancelConclusion(conclusion)}
-                            >
-                              <p>Отменить</p>
-                            </button>
+                            {conclusion.status == "SUCCESSFULLY" ||
+                            conclusion.status == "CANCELLED" ? (
+                              <button
+                                className="main_btn main_btn_template_green disabled_action"
+                                disabled
+                              >
+                                <p>Одобрить</p>
+                              </button>
+                            ) : (
+                              <button
+                                className="main_btn main_btn_template_green"
+                                onClick={() => handlePurchaseItem(conclusion)}
+                              >
+                                <p>Одобрить</p>
+                              </button>
+                            )}
+
+                            {conclusion.status == "SUCCESSFULLY" ||
+                            conclusion.status == "CANCELLED" ? (
+                              <button
+                                className="main_btn main_btn_template_red disabled_action"
+                                disabled
+                              >
+                                <p>Отменить</p>
+                              </button>
+                            ) : (
+                              <button
+                                className="main_btn main_btn_template_red"
+                                onClick={() =>
+                                  handleCancelConclusion(conclusion)
+                                }
+                              >
+                                <p>Отменить</p>
+                              </button>
+                            )}
+
                             <div
                               onClick={() =>
                                 aboutConclusion(conclusion.itemfs_id)

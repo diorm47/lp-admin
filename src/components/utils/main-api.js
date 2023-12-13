@@ -311,7 +311,7 @@ class MainApi {
   // Moogold
   async purcgaseItem(data) {
     return this._sendRequest({
-      endpoint: `/api/v1/moogold/purchase/item`,
+      endpoint: `/api/v1/moogold/purchase/outputs/item`,
       method: "POST",
       body: data,
     });
