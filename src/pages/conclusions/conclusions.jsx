@@ -78,39 +78,16 @@ function Conclusions() {
   const filterItems = (type) => {
     setActiveFilter(type);
     if (type !== "all") {
-      const filtered = conclusionsData.filter(
-        (item) => item.status == type
-      );
+      const filtered = conclusionsData.filter((item) => item.status == type);
       setConclusions(filtered);
     } else {
       setConclusions(conclusionsData.slice(0, 10));
     }
   };
 
-  const [itemNames, setItemNames] = useState({});
-
-  const getItemName = async (id) => {
-    let headersList = {
-      Accept: "*/*",
-    };
-    let response = await fetch(`https://legadrop.org/admin/items/${id}`, {
-      method: "GET",
-      headers: headersList,
-    });
-    let data = await response.json();
-    return data.name;
-  };
-
-  useEffect(() => {
-    conclusions.forEach(async (conclusion) => {
-      const name = await getItemName(conclusion.item_id);
-      setItemNames((prev) => ({ ...prev, [conclusion.item_id]: name }));
-    });
-  }, [conclusions]);
-
   const handlePurchaseItem = (data) => {
     if (data.total > Number(moogoldBalance.balance) || data.total == null) {
-      snackbarActions('Недостаточно средств на балансе!')
+      snackbarActions("Недостаточно средств на балансе!");
     } else {
       mainApi
         .purcgaseItem({
@@ -126,7 +103,6 @@ function Conclusions() {
           console.log("error", error);
         });
     }
- 
   };
   const handlePurchaseItems = (data) => {
     mainApi
@@ -225,7 +201,7 @@ function Conclusions() {
           <table className="users_table">
             <thead>
               <tr>
-                <th className="tal">ID юзера</th>
+                <th className="tal">Пользователь</th>
 
                 <th className="tal">Стоимость предмета (Moogold)</th>
                 <th className="tal">Предмет вывода</th>
@@ -254,14 +230,14 @@ function Conclusions() {
                 ? conclusions.map((conclusion) => (
                     <tr key={conclusion.itemfs_id}>
                       <td className="">
-                        <p>{conclusion.user_id}</p>
+                        <p>{conclusion.username}</p>
                       </td>
 
                       <td className="">
                         <p>${conclusion.total ? conclusion.total : "-"}</p>
                       </td>
                       <td className="">
-                        <p>{itemNames[conclusion.item_id] || "..."}</p>
+                        <p>{conclusion.item_name}</p>
                       </td>
                       <td className="">
                         <p>{conclusion.genshin_user_id}</p>
@@ -284,6 +260,8 @@ function Conclusions() {
                         {conclusion.status == "EXPECT" ? "Ожидание" : ""}
                         {conclusion.status == "SUCCESSFULLY" ? "Успешно" : ""}
                         {conclusion.status == "CANCELLED" ? "Отменено" : ""}
+                        {conclusion.status == "MOOGOLD" ? "Ожидание вывода с Moogold" : ""}
+                        
                       </td>
 
                       <td>
