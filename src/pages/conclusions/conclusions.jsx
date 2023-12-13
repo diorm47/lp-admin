@@ -27,6 +27,7 @@ function Conclusions() {
       .getConclusions()
       .then((res) => {
         setConclusionsData(res);
+        filterItems("EXPECT");
       })
       .catch((error) => {
         console.log("error", error);
@@ -74,7 +75,7 @@ function Conclusions() {
     }
   };
 
-  const [activeFilter, setActiveFilter] = useState("");
+  const [activeFilter, setActiveFilter] = useState("EXPECT");
   const filterItems = (type) => {
     setActiveFilter(type);
     if (type !== "all") {
@@ -146,14 +147,14 @@ function Conclusions() {
           <h1>Выводы</h1>
         </div>
         <div className="cases_top_togglers">
-          <button
+          {/* <button
             className={
               activeFilter == "all" ? "main_btn top_active_filter" : "main_btn"
             }
             onClick={() => filterItems("all")}
           >
             <p>Все выводы</p>
-          </button>
+          </button> */}
           <button
             className={
               activeFilter == "EXPECT"
@@ -254,7 +255,6 @@ function Conclusions() {
                       <td className="">
                         <p>{conclusion.username}</p>
                       </td>
-
                       <td className="">
                         <p>${conclusion.total ? conclusion.total : "-"}</p>
                       </td>
@@ -264,7 +264,6 @@ function Conclusions() {
                       <td className="">
                         <p>{conclusion.genshin_user_id}</p>
                       </td>
-
                       <td className="tac">
                         {conclusion.payment_date ? (
                           <>
@@ -291,13 +290,9 @@ function Conclusions() {
                         <div className="cases_table_actions conclisions_item_list">
                           <div className="cases_table_actions_list">
                             {conclusion.status == "SUCCESSFULLY" ||
-                            conclusion.status == "CANCELLED" ? (
-                              <button
-                                className="main_btn main_btn_template_green disabled_action"
-                                disabled
-                              >
-                                <p>Одобрить</p>
-                              </button>
+                            conclusion.status == "CANCELLED" ||
+                            conclusion.status == "MOOGOLD" ? (
+                              ""
                             ) : (
                               <button
                                 className="main_btn main_btn_template_green"
@@ -308,13 +303,9 @@ function Conclusions() {
                             )}
 
                             {conclusion.status == "SUCCESSFULLY" ||
-                            conclusion.status == "CANCELLED" ? (
-                              <button
-                                className="main_btn main_btn_template_red disabled_action"
-                                disabled
-                              >
-                                <p>Отменить</p>
-                              </button>
+                            conclusion.status == "CANCELLED" ||
+                            conclusion.status == "MOOGOLD" ? (
+                              ""
                             ) : (
                               <button
                                 className="main_btn main_btn_template_red"
@@ -374,6 +365,7 @@ function Conclusions() {
               <Pagination
                 allData={conclusionsData}
                 itemsPerPage={10}
+                activeFilter={activeFilter}
                 paginationData={setConclusions}
               />
             ) : (
