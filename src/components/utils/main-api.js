@@ -322,6 +322,12 @@ class MainApi {
       method: "GET",
     });
   }
+  async cancelConclusion(data) {
+    return this._sendRequest({
+      endpoint: `/api/v1/output/${data}/cancelled`,
+      method: "PUT",
+    });
+  }
   // User me
   async reEnter() {
     return this._sendRequest({
