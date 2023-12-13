@@ -98,12 +98,29 @@ function Conclusions() {
           console.log(res);
           refresh();
           getBalance();
+          snackbarActions("Заявка успешно создана!");
         })
         .catch((error) => {
           console.log("error", error);
         });
     }
   };
+
+//   {
+//     "Body": {
+//         "status": true,
+//         "message": "Order has been created successfully",
+//         "account_details": {
+//             "User ID": "741936326",
+//             "Server": "Europe"
+//         },
+//         "order_id": 6102350,
+//         "total": "0.83"
+//     },
+//     "Status": 200,
+//     "Content-type": "application/json; charset=UTF-8"
+// }
+
   const handlePurchaseItems = (data) => {
     mainApi
       .purcgaseItem({
@@ -171,6 +188,16 @@ function Conclusions() {
             onClick={() => filterItems("CANCELLED")}
           >
             <p>Отменена</p>
+          </button>
+          <button
+            className={
+              activeFilter == "MOOGOLD"
+                ? "main_btn top_active_filter"
+                : "main_btn"
+            }
+            onClick={() => filterItems("MOOGOLD")}
+          >
+            <p>Ожидание вывода с Moogold</p>
           </button>
         </div>
         <div className="cases_top_actions">
