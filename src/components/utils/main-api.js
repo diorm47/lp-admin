@@ -328,6 +328,14 @@ class MainApi {
       method: "PUT",
     });
   }
+
+  async getOrderID(data) {
+    return this._sendRequest({
+      endpoint: `/api/v1/moogold/${data}/order/list`,
+      method: "GET",
+    });
+  }
+
   // User me
   async reEnter() {
     return this._sendRequest({

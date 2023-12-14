@@ -1,0 +1,17 @@
+.template_page_title h1 a {
+  color: #030229;
+  transition: all 0.4s ease;
+}
+.template_page_title h1 a:hover {
+  opacity: 0.7;
+  transition: all 0.4s ease;
+}
+
+.conclusion_content .users_table tbody td a {
+  color: #030229;
+  transition: all 0.4s ease;
+}
+.conclusion_content .users_table tbody td a:hover {
+  transition: all 0.4s ease;
+  opacity: 0.7;
+}

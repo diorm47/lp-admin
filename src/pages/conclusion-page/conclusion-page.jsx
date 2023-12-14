@@ -16,6 +16,7 @@ function ConclusionPage() {
   };
 
   const [conclusion, setConclusion] = useState({});
+  const [order, setOrder] = useState({});
   const [conclusionItem, setConclusionItem] = useState({});
   const params = useParams();
 
@@ -54,10 +55,35 @@ function ConclusionPage() {
     }
   }, [conclusion]);
 
+  useEffect(() => {
+    if (conclusion.status == "MOOGOLD") {
+      mainApi
+        .getOrderID(conclusion.itemfs_id)
+        .then((res) => {
+          setOrder(res[0]);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, [conclusion]);
+
   return (
     <div className="template_page ">
       <div className="template_page_title">
-        <h1>Просмотр вывода #{conclusion.payment_id}</h1>
+        <h1>
+          Просмотр вывода{" "}
+          {order && order.order_id ? (
+            <a
+              href={`https://moogold.com/ru/account/view-order/${order.order_id}/`}
+              target="_blank"
+            >
+             #{order.order_id || ""}
+            </a>
+          ) : (
+            ""
+          )}
+        </h1>
       </div>
       <div className="user_line"></div>
       <NavLink to="/conclusions">
@@ -89,16 +115,25 @@ function ConclusionPage() {
                   <p>{conclusion.user_id || ""}</p>
                 </td>
                 <td className="">
-                  <p>{conclusion.itemfs_id || ""}</p>
+                  {order && order.order_id ? (
+                    <a
+                      href={`https://moogold.com/ru/account/view-order/${order.order_id}/`}
+                      target="_blank"
+                    >
+                      <p>{order.order_id || ""}</p>
+                    </a>
+                  ) : (
+                    <p>-</p>
+                  )}
                 </td>
                 <td className="">
-                  <p>{conclusion.payment_amount || "-"}</p>
+                  <p>{conclusion.total || "-"} USD</p>
                 </td>
                 <td className="">
                   <p>{conclusionItem ? conclusionItem.name : ""}</p>
                 </td>
                 <td className="">
-                  <p>21223490</p>
+                  <p>{conclusion.genshin_user_id}</p>
                 </td>
 
                 <td className="tac">
@@ -110,7 +145,12 @@ function ConclusionPage() {
 
                 <td className="tac rev_status">
                   <p>
-                    {conclusion.status == "EXPECT" ? "Ожидание" : "Успешно"}
+                    {conclusion.status == "EXPECT" ? "Ожидание" : ""}
+                    {conclusion.status == "SUCCESSFULLY" ? "Успешно" : ""}
+                    {conclusion.status == "CANCELLED" ? "Отменено" : ""}
+                    {conclusion.status == "MOOGOLD"
+                      ? "Ожидание вывода с Moogold"
+                      : ""}
                   </p>
                 </td>
               </tr>
