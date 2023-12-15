@@ -97,7 +97,7 @@ function ConclusionPage() {
             <tr>
               <th className="tal">ID вывода</th>
               <th className="tal">ID юзера</th>
-              <th className="tal">Уникальный код</th>
+              <th className="tal">Номер заказа</th>
               <th className="tal">Стоимость предмета (Moogold)</th>
               <th className="tal">Предмет вывода</th>
               <th className="tal">UID победителя</th>

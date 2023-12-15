@@ -106,21 +106,6 @@ function Conclusions() {
     }
   };
 
-  //   {
-  //     "Body": {
-  //         "status": true,
-  //         "message": "Order has been created successfully",
-  //         "account_details": {
-  //             "User ID": "741936326",
-  //             "Server": "Europe"
-  //         },
-  //         "order_id": 6102350,
-  //         "total": "0.83"
-  //     },
-  //     "Status": 200,
-  //     "Content-type": "application/json; charset=UTF-8"
-  // }
-
   const handleCancelConclusion = (data) => {
     mainApi
       .cancelConclusion(data.itemfs_id)
