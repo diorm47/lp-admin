@@ -9,6 +9,7 @@ import { loginUserAction } from "../../redux/user-reducer";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Checked } from "../../assets/icons/remember-icon.svg";
+import { mainApi } from "../../components/utils/main-api";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -19,24 +20,18 @@ function LoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
 
   const handleLogin = () => {
-    let headersList = {
-      Accept: "*/*",
-      "Content-Type": "application/x-www-form-urlencoded",
-    };
-    let bodyContent = `username=${login}&password=${password}`;
-    fetch("https://legadrop.org/admin/sign-in", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.access_token) {
+    mainApi
+      .loginAction({
+        username: login,
+        password: password,
+      })
+      .then((res) => {
+        if (res.data.access_token) {
           let is_logged = {
             is_logged: true,
           };
           dispatch(loginUserAction(is_logged));
-          localStorage.setItem("token", data.access_token);
+          localStorage.setItem("token", res.data.access_token);
           navigate("/");
         } else {
           setError(true);

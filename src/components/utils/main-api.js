@@ -1,12 +1,13 @@
 const mainApiOptions = {
   baseUrl: "https://legadrop.org",
-  // baseUrl: "http://192.168.147.238:8000",
+
 
   headers: {
     Accept: "*/*",
     "Content-Type": "application/json",
   },
 };
+const path = '/6383d341-4d14-4868-81ba-3c6382f2128e'
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -42,7 +43,7 @@ class MainApi {
   // Login
   async loginAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/sign-in`,
+      endpoint: `/sign-in`,
       method: "POST",
       body: userData,
     });
@@ -161,7 +162,7 @@ class MainApi {
   // get case
   async getCase(userData) {
     return this._sendRequest({
-      endpoint: `/admin/cases`,
+      endpoint: `/cases`,
       method: "GET",
       body: userData,
     });

@@ -51,7 +51,7 @@ function CreateItem() {
 
     let bodyContent = new FormData();
     bodyContent.append("name", itemName);
-    bodyContent.append("cost", itemPrice);
+    bodyContent.append("price", itemPrice);
     bodyContent.append("color", itemColor);
     bodyContent.append("gem_cost", itemPriceCrystals);
     bodyContent.append("image", itemImagesS);

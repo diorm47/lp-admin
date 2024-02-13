@@ -60,6 +60,7 @@ function App() {
     }
   }, [isLogged, navigate, localStorage.getItem("token")]);
 
+  // localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNDQzMTAxLCJpYXQiOjE3MDc4NTExMDEsImp0aSI6ImFjYjJmNjExYTgyMzQ3ZjBiNWEzZDY1NjA2ZjFiMDcwIiwidXNlcl9pZCI6MX0.NxWtA70UZdD_xpqMgsRMj4ZFd2cg_V68DVLIIl5pDUk')
   return (
     <>
       <div className="site_content">
