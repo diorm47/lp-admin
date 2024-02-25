@@ -35,6 +35,7 @@ function EditCase() {
     }, 2000);
   };
 
+  console.log(params);
   useEffect(() => {
     mainApi
       .getCaseCategoryAction()
@@ -47,17 +48,17 @@ function EditCase() {
   }, []);
   useEffect(() => {
     mainApi
-      .getCase()
+      .getCaseByTranslit(params.case)
       .then((res) => {
-        setCaseData(res.filter((res) => res.case_id == params.case)[0]);
-        setCaseName(res.filter((res) => res.case_id == params.case)[0].name);
+        setCaseData(res);
+        setCaseName(res.name);
         setCaseCategoryId(
-          res.filter((res) => res.case_id == params.case)[0].category_id
+          res.category.category_id
         );
         setCaseImageRecieved(
-          res.filter((res) => res.case_id == params.case)[0].image
+          res.image
         );
-        setCaseID(res.filter((res) => res.case_id == params.case)[0].case_id);
+        setCaseID(res.case_id);
       })
       .catch((error) => {
         console.log("error", error);
@@ -192,7 +193,7 @@ function EditCase() {
                   <p>Картинка товара</p>
                 </div>
                 <div className="case_img_block_wrapper">
-                  <div className="case_img_block">
+                  <div className="case_img_block edit_case_image">
                     {caseImage || caseImageRecieved ? (
                       <div className="case_img_item" title="удалить">
                         <img

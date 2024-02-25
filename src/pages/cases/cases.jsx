@@ -25,7 +25,7 @@ function Cases() {
     mainApi
       .getCase()
       .then((res) => {
-        setCasesItems(res);
+        setCasesItems(res.results);
       })
       .catch((error) => {
         console.log("error", error);
@@ -204,17 +204,17 @@ function Cases() {
                 <tbody>
                   {cases && cases.length
                     ? cases.map((cases) => (
-                        <tr key={cases.id}>
-                          <td>{cases.id || "-"}</td>
+                        <tr key={cases.translit_name}>
+                          <td>{cases.translit_name || "-"}</td>
                           <td>{cases.name || "-"}</td>
                           <td>{cases.category.name || "-"}</td>
                           <td className="tac">{cases.cost_rub || 0} ₽</td>
                           <td className="tac">{cases.cost_usd || 0}$</td>
                           <td className="tac">{cases.opens || 0}</td>
                           <td className="tac">
-                            {(cases && cases.created_at.split("T")[0]) || "-"}
+                            {(cases && cases.created_at && cases.created_at.split("T")[0]) || "-"}
                             <br />
-                            {(cases && cases.created_at.split("T")[1]) || "-"}
+                            {(cases && cases.created_at && cases.created_at.split("T")[1]) || "-"}
                           </td>
                           <td>
                             <div className="cases_table_actions">

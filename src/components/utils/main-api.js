@@ -43,7 +43,7 @@ class MainApi {
   // Login
   async loginAction(userData) {
     return this._sendRequest({
-      endpoint: `/sign-in`,
+      endpoint: `/sign_in`,
       method: "POST",
       body: userData,
     });
@@ -160,11 +160,18 @@ class MainApi {
     });
   }
   // get case
-  async getCase(userData) {
+  async getCase() {
     return this._sendRequest({
-      endpoint: `/cases`,
+      endpoint: `${path}/cases/`,
       method: "GET",
-      body: userData,
+      requiresToken: true
+    });
+  }
+  async getCaseByTranslit(data) {
+    return this._sendRequest({
+      endpoint: `${path}/cases/${data}/`,
+      method: "GET",
+      requiresToken: true
     });
   }
   // get items

@@ -61,6 +61,7 @@ function App() {
   }, [isLogged, navigate, localStorage.getItem("token")]);
 
   // localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNDQzMTAxLCJpYXQiOjE3MDc4NTExMDEsImp0aSI6ImFjYjJmNjExYTgyMzQ3ZjBiNWEzZDY1NjA2ZjFiMDcwIiwidXNlcl9pZCI6MX0.NxWtA70UZdD_xpqMgsRMj4ZFd2cg_V68DVLIIl5pDUk')
+
   return (
     <>
       <div className="site_content">
@@ -72,6 +73,7 @@ function App() {
           <div className="page_content">
             <Suspense fallback={"loading....."}>
               <Routes>
+                <Route path="/" element={<Analytics />} />
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/user/:user" element={<UserPage />} />

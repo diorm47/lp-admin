@@ -26,6 +26,9 @@
   flex-direction: column;
   align-items: start;
 }
+.edit_case_image {
+  margin: 0 !important;
+}
 .react-tabs__tab-list {
   margin-bottom: 1px !important;
   border-bottom: 0 !important       ;

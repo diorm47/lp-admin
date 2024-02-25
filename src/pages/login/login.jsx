@@ -26,12 +26,13 @@ function LoginPage() {
         password: password,
       })
       .then((res) => {
-        if (res.data.access_token) {
+      
+        if (res) {
           let is_logged = {
             is_logged: true,
           };
           dispatch(loginUserAction(is_logged));
-          localStorage.setItem("token", res.data.access_token);
+          localStorage.setItem("token", res);
           navigate("/");
         } else {
           setError(true);
