@@ -10,7 +10,6 @@ import { mainApi } from "../../components/utils/main-api";
 import CaseItems from "../../components/case-items/case-items";
 import Snacbar from "../../components/snackbar/snackbar";
 
-
 function EditCase() {
   const [modal, setModal] = useState(false);
   const [caseImage, setCaseImage] = useState();
@@ -35,12 +34,11 @@ function EditCase() {
     }, 2000);
   };
 
-  console.log(params);
   useEffect(() => {
     mainApi
       .getCaseCategoryAction()
       .then((res) => {
-        setCategories(res.categories);
+        setCategories(res.results);
       })
       .catch((error) => {
         console.log("error", error);
@@ -52,34 +50,15 @@ function EditCase() {
       .then((res) => {
         setCaseData(res);
         setCaseName(res.name);
-        setCaseCategoryId(
-          res.category.category_id
-        );
-        setCaseImageRecieved(
-          res.image
-        );
+        setCaseCategoryId(res.category.category_id);
+        setCaseImageRecieved(res.image);
         setCaseID(res.case_id);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  }, []);
-
-  const getCaseItems = () => {
-    mainApi
-      .getCaseItems(caseID)
-      .then((res) => {
         setCaseItems(res.items);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  };
-  useEffect(() => {
-    if (caseID) {
-      getCaseItems();
-    }
-  }, [caseID]);
+  }, []);
 
   const saveImage = (e) => {
     const file = e.target.files[0];
@@ -96,13 +75,15 @@ function EditCase() {
   const saveCase = () => {
     mainApi
       .updateCase({
-        case_id: caseID,
         name: caseName,
-        category_id: caseCategoryId,
+        active: true,
         image: caseImage,
-      })
+        category_id: caseCategoryId,
+        item_ids: caseItems.map((item) => item.item_id),
+        condition_ids: [],
+      }, params.case)
       .then((res) => {
-        snackbarActions('Кейс обновлён!')
+        snackbarActions("Кейс обновлён!");
       })
       .catch((error) => {
         console.log("error", error);
@@ -111,21 +92,6 @@ function EditCase() {
 
   const closeModal = () => {
     setModal(false);
-  };
-
-  const deleteCaseItem = (id) => {
-    mainApi
-      .deleteCaseItem({
-        case_id: caseID,
-        item_id: id,
-      })
-      .then((res) => {
-        setCaseItems(res.items);
-        getCaseItems();
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
   };
 
   return (
@@ -318,14 +284,10 @@ function EditCase() {
                           <div
                             className="case_img_item case_items_list_item"
                             key={caseItems.id}
-                            onClick={() => deleteCaseItem(item.item_id)}
                           >
-                            <img
-                              src={`https://legadrop.org/${item.image}`}
-                              alt=""
-                            />
+                            <img src={item.image} alt="" />
                             <p>{item.name} кр.</p>
-                            <p>{item.cost} $</p>
+                            <p>{item.price} $</p>
                           </div>
                         ))
                       : ""}
@@ -342,8 +304,9 @@ function EditCase() {
       {modal ? (
         <CaseItems
           setModal={setModal}
-          getCaseItems={getCaseItems}
           case_id={caseID}
+          setCaseItems={setCaseItems}
+          caseItems={caseItems}
         />
       ) : (
         ""

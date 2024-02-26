@@ -40,7 +40,8 @@ function Cases() {
     mainApi
       .getCaseCategoryAction()
       .then((res) => {
-        setCategories(res.categories);
+        setCategories(res.results);
+        
       })
       .catch((error) => {
         console.log("error", error);
@@ -52,10 +53,9 @@ function Cases() {
   };
 
   const handleDeleteCase = (id) => {
+    
     mainApi
-      .deleteCase({
-        case_id: id,
-      })
+      .deleteCase(id)
       .then((res) => {
         handleGetCases();
         snackbarActions("Кейс удалён!");
@@ -63,6 +63,7 @@ function Cases() {
       .catch((error) => {
         console.log("error", error);
       });
+      handleGetCases()
   };
 
   const [activeFilter, setActiveFilter] = useState("");
@@ -75,6 +76,8 @@ function Cases() {
       setCases(casesItems.slice(0, 10));
     }
   };
+
+  console.log(categories);
 
   return (
     <>
@@ -156,7 +159,7 @@ function Cases() {
               >
                 <p>Все кейсы</p>
               </button>
-              {categories && categories[0]
+              {categories && categories.length
                 ? categories.map((categories) => (
                     <button
                       className={
@@ -204,10 +207,10 @@ function Cases() {
                 <tbody>
                   {cases && cases.length
                     ? cases.map((cases) => (
-                        <tr key={cases.translit_name}>
-                          <td>{cases.translit_name || "-"}</td>
+                        <tr key={cases.case_id}>
+                          <td>{cases.case_id || "-"}</td>
                           <td>{cases.name || "-"}</td>
-                          <td>{cases.category.name || "-"}</td>
+                          <td>{cases.category && cases.category.name ? cases.category.name : "-"}</td>
                           <td className="tac">{cases.cost_rub || 0} ₽</td>
                           <td className="tac">{cases.cost_usd || 0}$</td>
                           <td className="tac">{cases.opens || 0}</td>

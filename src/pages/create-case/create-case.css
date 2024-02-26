@@ -107,7 +107,6 @@
   width: 100%;
 }
 .case_img_block {
-
   padding: 8px;
   gap: 8px;
   display: flex;
@@ -189,6 +188,7 @@
 }
 .case_img_item p {
   font-size: 12px;
+  text-align: center;
 }
 
 .case_actions {
@@ -198,16 +198,18 @@
 .case_items_list {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: start;
   margin-top: 30px;
+  width: 100%;
+  gap: 15px;
 }
 .case_items_list_item {
   height: auto;
   margin-bottom: 20px;
+  width: 150px;
 }
-.case_img_block_wrapper
-.case_img_block {
- margin-bottom: 30px;
+.case_img_block_wrapper .case_img_block {
+  margin-bottom: 30px;
 }
 
 .add_item_case_btn {
@@ -215,5 +217,8 @@
 }
 
 .case_items_list_item img {
-  width: auto;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+  object-fit: cover;
 }

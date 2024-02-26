@@ -25,7 +25,7 @@ function EditItem() {
         .then((res) => {
           setEditingItem(res);
           setItemName(res.name);
-          setItemPrice(res.cost);
+          setItemPrice(res.price);
           setItemImage(res.image);
           setItemPriceCrystals(res.gem_cost);
         })

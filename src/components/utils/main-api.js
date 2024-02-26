@@ -1,13 +1,12 @@
 const mainApiOptions = {
   baseUrl: "https://legadrop.org",
 
-
   headers: {
     Accept: "*/*",
     "Content-Type": "application/json",
   },
 };
-const path = '/6383d341-4d14-4868-81ba-3c6382f2128e'
+const path = "/6383d341-4d14-4868-81ba-3c6382f2128e";
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -19,12 +18,7 @@ class MainApi {
       ? response.json()
       : response.json().then((err) => Promise.reject(err.message));
   }
-  async _sendRequest({
-    endpoint,
-    method = "GET",
-    body,
-    requiresToken = false,
-  }) {
+  async _sendRequest({ endpoint, method = "GET", body, requiresToken = true }) {
     const headers = { ...this._headers };
 
     if (requiresToken) {
@@ -46,6 +40,7 @@ class MainApi {
       endpoint: `/sign_in`,
       method: "POST",
       body: userData,
+      requiresToken: false,
     });
   }
   // Get employees list
@@ -122,7 +117,7 @@ class MainApi {
   // set case category
   async setCaseCategoryAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/category`,
+      endpoint: `${path}/category`,
       method: "POST",
       body: userData,
     });
@@ -130,7 +125,7 @@ class MainApi {
   // get case category
   async getCaseCategoryAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/categories`,
+      endpoint: `${path}/category/`,
       method: "GET",
       body: userData,
     });
@@ -152,9 +147,9 @@ class MainApi {
     });
   }
   // create case
-  async createCase(userData) {
+  async createCaseAction(userData) {
     return this._sendRequest({
-      endpoint: `/admin/case`,
+      endpoint: `${path}/cases/`,
       method: "POST",
       body: userData,
     });
@@ -164,20 +159,34 @@ class MainApi {
     return this._sendRequest({
       endpoint: `${path}/cases/`,
       method: "GET",
-      requiresToken: true
+      requiresToken: true,
+    });
+  }
+  async deleteCase(userData) {
+    return this._sendRequest({
+      endpoint: `${path}/cases/${userData}/`,
+      method: "DELETE",
+    });
+  }
+  async updateCase(userData, id) {
+    return this._sendRequest({
+      endpoint: `${path}/cases/${id}/`,
+
+      method: "PUT",
+      body: userData,
     });
   }
   async getCaseByTranslit(data) {
     return this._sendRequest({
       endpoint: `${path}/cases/${data}/`,
       method: "GET",
-      requiresToken: true
+      requiresToken: true,
     });
   }
   // get items
   async getItems(userData) {
     return this._sendRequest({
-      endpoint: `/admin/items`,
+      endpoint: `${path}/items/`,
       method: "GET",
       body: userData,
     });
@@ -231,26 +240,11 @@ class MainApi {
       body: userData,
     });
   }
-  async deleteCase(userData) {
-    return this._sendRequest({
-      endpoint: `/admin/case`,
-      method: "DELETE",
-      body: userData,
-    });
-  }
-  async updateCase(userData) {
-    return this._sendRequest({
-      endpoint: `/admin/case/update`,
 
-      method: "PUT",
-      body: userData,
-    });
-  }
-  async deleteItemAction(userData) {
+  async deleteItemAction(id) {
     return this._sendRequest({
-      endpoint: `/admin/item`,
+      endpoint: `${path}/items/${id}/`,
       method: "DELETE",
-      body: userData,
     });
   }
   async getCaseId(userData) {
@@ -275,15 +269,14 @@ class MainApi {
   }
   async getItem(id) {
     return this._sendRequest({
-      endpoint: `/admin/items/${id}`,
+      endpoint: `${path}/items/${id}/`,
       method: "GET",
     });
   }
-  async updateItem(data) {
+  async updateItem(data, id) {
     return this._sendRequest({
-      endpoint: `/admin/item`,
+      endpoint: `${path}/items/${id}/`,
       method: "PUT",
-      body: data,
     });
   }
   async setPagePerm(data) {

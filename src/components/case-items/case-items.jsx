@@ -4,59 +4,33 @@ import { useEffect } from "react";
 import { mainApi } from "../utils/main-api";
 import { useState } from "react";
 
-function CaseItems({ setModal, case_id, getCaseItems }) {
+function CaseItems({
+  setModal,
+  case_id,
+  getCaseItems,
+  setCaseItems,
+  caseItems,
+}) {
   const [casesItems, setCasesItems] = useState("");
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState(caseItems);
   const [itemsInCase, setItemsInCase] = useState([]);
 
   useEffect(() => {
     mainApi
       .getItems()
       .then((res) => {
-        setCasesItems(res);
+        setCasesItems(res.results);
       })
       .catch((error) => {
         console.log("error", error);
       });
   }, []);
 
-  const getCaseItemsInItems = () => {
-    mainApi
-      .getCaseItems(case_id)
-      .then((res) => {
-        setSelectedItems(res.items);
-        setItemsInCase(res.items);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-  useEffect(() => {
-    if (case_id) {
-      getCaseItemsInItems();
-    }
-  }, [case_id]);
+  const itemIds = itemsInCase.map((item) => item.item_id);
 
-  const addItemToCase = () => {
-    const itemIds = itemsInCase.map((item) => item.item_id);
-
-    const filteredSelectedItems = selectedItems.filter(
-      (item) => !itemIds.includes(item.item_id)
-    );
-    mainApi
-      .addItemsCase({
-        case_id: case_id,
-        items: filteredSelectedItems,
-      })
-      .then((res) => {
-        setCasesItems(res);
-        setModal(false);
-        getCaseItems();
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
+  const filteredSelectedItems = selectedItems.filter(
+    (item) => !itemIds.includes(item.item_id)
+  );
 
   const addDelSelected = (data) => {
     if (!selectedItems.some((item) => item.item_id === data.item_id)) {
@@ -66,6 +40,11 @@ function CaseItems({ setModal, case_id, getCaseItems }) {
         selectedItems.filter((item) => item.item_id !== data.item_id)
       );
     }
+  };
+
+  const saveItems = () => {
+    setCaseItems(filteredSelectedItems);
+    setModal(false);
   };
 
   return (
@@ -91,10 +70,10 @@ function CaseItems({ setModal, case_id, getCaseItems }) {
         <div className="case_items_content">
           {casesItems && casesItems.length
             ? casesItems.map((item) => (
-                <div className="case_item" key={item.id}>
-                  <img src={`https://legadrop.org/${item.image}`} alt="" />
+                <div className="case_item case_item_card" key={item.id}>
+                  <img src={item.image} alt="" />
                   <p>{item.name} кр.</p>
-                  <p>{item.cost} $</p>
+                  <p>{item.price} $</p>
                   <input
                     type="checkbox"
                     checked={selectedItems.some(
@@ -108,7 +87,7 @@ function CaseItems({ setModal, case_id, getCaseItems }) {
         </div>
       </div>
       <div className="admin_actions case_actions">
-        <button className="create_admin_btn" onClick={addItemToCase}>
+        <button className="create_admin_btn" onClick={saveItems}>
           Добавить
         </button>
         <button className="undo_create" onClick={() => setModal(false)}>

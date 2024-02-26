@@ -17,20 +17,35 @@
 .case_items_content {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  padding: 30px 0;
   grid-gap: 20px;
 }
 
-
-.modal_template_content 
-.case_item img {
+.modal_template_content .case_item img {
   width: 100px;
 }
 
 .case_items_content_wrapper {
-   height: 700px;
-   overflow-y: visible;
-   overflow-x: hidden;
+  height: 700px;
+  overflow-y: visible;
+  overflow-x: hidden;
 }
 .case_items_content {
   height: 100%;
+}
+.case_item_card {
+  width: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.case_item_card input {
+  width: 30px;
+  height: 30px;
+}
+.case_item_card img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
 }

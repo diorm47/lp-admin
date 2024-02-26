@@ -14,11 +14,12 @@ function CreateCase() {
   const [modal, setModal] = useState(false);
   const [caseImage, setCaseImage] = useState();
   const [caseImageU, setCaseImageU] = useState();
+ 
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
   const [caseDescriptions, setCaseDescriptions] = useState("");
   const [caseID, setCaseID] = useState();
-  const [caseItems, setCaseItems] = useState();
+  const [caseItems, setCaseItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
@@ -34,28 +35,16 @@ function CreateCase() {
     mainApi
       .getCaseCategoryAction()
       .then((res) => {
-        setCategories(res.categories);
+        setCategories(res.results);
+        setCaseCategoryId(res.results[0].category_id)
       })
       .catch((error) => {
         console.log("error", error);
       });
   }, []);
 
-  const getCaseItems = () => {
-    mainApi
-      .getCaseItems(caseID)
-      .then((res) => {
-        setCaseItems(res.items);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-  useEffect(() => {
-    if (caseID) {
-      getCaseItems();
-    }
-  }, [caseID]);
+
+
   const saveImage = (e) => {
     const file = e.target.files[0];
     setCaseImageU(file);
@@ -69,32 +58,21 @@ function CreateCase() {
     }
   };
   const saveCase = () => {
-    let headersList = {
-      Accept: "*/*",
-    };
-
-    let bodyContent = new FormData();
-    bodyContent.append("category_id", caseCategoryId);
-    bodyContent.append("name", caseName);
-    bodyContent.append("image", caseImageU);
-
-    fetch("https://legadrop.org/admin/case", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
+    mainApi
+      .createCaseAction({
+        name: caseName,
+        active: true,
+        image: caseImage,
+        category_id: caseCategoryId,
+        item_ids: caseItems.map(item => item.item_id),
+        condition_ids: [],
       })
       .then((res) => {
         setCaseID(res.case_id);
         snackbarActions("Кейс создан!");
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error", error);
       });
   };
   const closeModal = () => {
@@ -109,7 +87,7 @@ function CreateCase() {
       })
       .then((res) => {
         setCaseItems(res.items);
-        getCaseItems();
+
       })
       .catch((error) => {
         console.log("error", error);
@@ -329,9 +307,11 @@ function CreateCase() {
 
       {modal ? (
         <CaseItems
-          getCaseItems={getCaseItems}
+       
           setModal={setModal}
           case_id={caseID}
+          setCaseItems={setCaseItems}
+          caseItems={caseItems}
         />
       ) : (
         ""

@@ -35,28 +35,28 @@ function Items() {
     mainApi
       .getItems()
       .then((res) => {
-        setCasesItems(res);
+        setCasesItems(res.results);
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
+
   useEffect(() => {
     getItems();
   }, []);
 
   const deleteItem = (id) => {
     mainApi
-      .deleteItemAction({
-        item_id: id,
-      })
+      .deleteItemAction(id)
       .then((res) => {
-        snackbarActions('Предмет удалён!')
+        snackbarActions("Предмет удалён!");
         getItems();
       })
       .catch((error) => {
         console.log("error", error);
       });
+    getItems();
   };
 
   const editItem = (id) => {
@@ -147,7 +147,7 @@ function Items() {
               <table className="cases_table">
                 <thead>
                   <tr>
-                    <td> ID кейса</td>
+                    <td> ID предмета</td>
                     <td>Название</td>
                     <td>Категория</td>
                     <td className="tac">Цена (руб)</td>
@@ -165,16 +165,17 @@ function Items() {
                   {items && items.length
                     ? items.map((item) => (
                         <tr>
-                          <td>{item.id}</td>
+                          <td>{item.item_id}</td>
                           <td>{item.name}</td>
                           <td>{item.category || "-"}</td>
-                          <td className="tac">{item.cost} ₽</td>
-                          <td className="tac">{item.gem_cost}</td>
+                          <td className="tac">{item.price} ₽</td>
+                          <td className="tac">{item.gem_cost || "-"}</td>
                           <td className="tac">{item.opens || 0} </td>
                           <td className="tac">
-                            {item.created_at.split("T")[0]}
+                            {/* {item.created_at.split("T")[0]}
                             <br />
-                            {item.created_at.split("T")[1]}
+                            {item.created_at.split("T")[1]} */}
+                            -
                           </td>
                           <td>
                             <div className="cases_table_actions">
