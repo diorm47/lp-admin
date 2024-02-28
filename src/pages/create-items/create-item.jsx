@@ -45,37 +45,31 @@ function CreateItem() {
   };
 
   const saveItem = () => {
-    let headersList = {
-      Accept: "*/*",
-    };
-
-    let bodyContent = new FormData();
-    bodyContent.append("name", itemName);
-    bodyContent.append("price", itemPrice);
-    bodyContent.append("color", itemColor);
-    bodyContent.append("gem_cost", itemPriceCrystals);
-    bodyContent.append("image", itemImagesS);
-    bodyContent.append("rarity_id", selectedRarity);
-
-    fetch("https://legadrop.org/admin/item", {
-      method: "POST",
-      body: bodyContent,
-      headers: headersList,
-    })
-      .then(() => {})
+    mainApi
+      .createItem({
+        name: itemName,
+        price: itemPrice,
+        purchase_price: 0,
+        sale_price: itemPriceCrystals,
+        percent_price: 0,
+        sale: true,
+        image: itemImages,
+        step_down_factor: 1,
+        rarity_category_id: selectedRarity,
+      })
       .then((res) => {
-        console.log(res);
+        setRarityList(res.results);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error", error);
       });
   };
-  
+
   useEffect(() => {
     mainApi
       .getRarity()
       .then((res) => {
-        setRarityList(res);
+        setRarityList(res.results);
       })
       .catch((error) => {
         console.log("error", error);
@@ -197,7 +191,10 @@ function CreateItem() {
           </div>
           <span>Выберите с компьютера или перетащите в эту область</span>
         </div>
-        <button className="main_btn save_cat_btn main_btn_template_green" onClick={saveItem}>
+        <button
+          className="main_btn save_cat_btn main_btn_template_green"
+          onClick={saveItem}
+        >
           Сохранить предмет
         </button>
       </div>

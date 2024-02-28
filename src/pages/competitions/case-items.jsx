@@ -10,7 +10,7 @@ function CaseItems({ setModal, setItems }) {
 
   useEffect(() => {
     mainApi
-      .getItems()
+      .getItemsAction()
       .then((res) => {
         setCasesItems(res);
       })

@@ -17,7 +17,7 @@ function CaseItems({
 
   useEffect(() => {
     mainApi
-      .getItems()
+      .getItemsAction()
       .then((res) => {
         setCasesItems(res.results);
       })

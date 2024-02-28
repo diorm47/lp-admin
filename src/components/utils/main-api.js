@@ -184,10 +184,17 @@ class MainApi {
     });
   }
   // get items
-  async getItems(userData) {
+  async getItemsAction(userData) {
     return this._sendRequest({
       endpoint: `${path}/items/`,
       method: "GET",
+      body: userData,
+    });
+  }
+  async createItem(userData) {
+    return this._sendRequest({
+      endpoint: `${path}/items/`,
+      method: "POST",
       body: userData,
     });
   }
@@ -256,7 +263,7 @@ class MainApi {
   }
   async getRarity() {
     return this._sendRequest({
-      endpoint: `/admin/group_category`,
+      endpoint: `${path}/rarity_category/`,
       method: "GET",
     });
   }
@@ -277,6 +284,8 @@ class MainApi {
     return this._sendRequest({
       endpoint: `${path}/items/${id}/`,
       method: "PUT",
+      body: data,
+
     });
   }
   async setPagePerm(data) {

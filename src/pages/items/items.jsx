@@ -33,7 +33,7 @@ function Items() {
 
   const getItems = () => {
     mainApi
-      .getItems()
+      .getItemsAction()
       .then((res) => {
         setCasesItems(res.results);
       })
@@ -56,7 +56,10 @@ function Items() {
       .catch((error) => {
         console.log("error", error);
       });
-    getItems();
+      setTimeout(() => {
+        getItems();
+      }, 1500)
+  
   };
 
   const editItem = (id) => {

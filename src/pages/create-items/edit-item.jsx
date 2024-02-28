@@ -27,7 +27,7 @@ function EditItem() {
           setItemName(res.name);
           setItemPrice(res.price);
           setItemImage(res.image);
-          setItemPriceCrystals(res.gem_cost);
+          setItemPriceCrystals(res.sale_price);
         })
         .catch((error) => {
           console.log("error", error);
@@ -76,14 +76,16 @@ function EditItem() {
 
   const saveItem = () => {
     mainApi
-      .updateItem({
-        item_id: editingItem.item_id,
-        name: itemName,
-        image: itemImages,
-        cost: itemPrice,
-        gem_cost: Number(itemPriceCrystals),
-        rarity_id: selectedRarity,
-      })
+      .updateItem(
+        {
+          name: itemName,
+          image: itemImages,
+          price: itemPrice,
+          sale_price: Number(itemPriceCrystals),
+          rarity_category_id: selectedRarity,
+        },
+        editingItem.item_id
+      )
       .then((res) => {
         console.log(res);
       })
@@ -95,7 +97,7 @@ function EditItem() {
     mainApi
       .getRarity()
       .then((res) => {
-        setRarityList(res);
+        setRarityList(res.results);
       })
       .catch((error) => {
         console.log("error", error);
