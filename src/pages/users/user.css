@@ -7,7 +7,9 @@
   align-items: center;
   padding: 0 12px;
 }
-
+.users_page_wrapper {
+  padding-bottom: 70px;
+}
 .users_search svg {
   margin-right: 8px;
 }
@@ -75,35 +77,6 @@ table {
   border-collapse: collapse;
 }
 
-.table_user_id_row,
-.table_user_id_title {
-  width: 3%;
-}
-
-.table_user_name_row,
-.table_user_name_title {
-  width: 16%;
-}
-.table_user_balance_row,
-.table_user_balance_title {
-  width: 12%;
-}
-.table_user_deposite_row,
-.table_user_deposite_title {
-  width: 12%;
-}
-.table_user_winrate_row,
-.table_user_winrate_title {
-  width: 12%;
-}
-.table_user_email_row,
-.table_user_email_title {
-  width: 14%;
-}
-.table_user_settings_row,
-.table_user_settings {
-  width: 18%;
-}
 
 .user_settings_icon {
   width: 40px;

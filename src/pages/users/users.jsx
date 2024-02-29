@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import avatar from "../../assets/images/avatar.png";
 import Pagination from "../../components/pagionation/pagination";
 import "./user.css";
 import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
+import { mainApi } from "../../components/utils/main-api";
 
 function Users() {
   const usersData = [
@@ -309,6 +310,20 @@ function Users() {
     }
   };
 
+  const getUsers = () => {
+    mainApi
+      .getUsersActions()
+      .then((res) => {
+        setUsers(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <div className="template_page users_page">
       <div className="template_page_title">
@@ -365,6 +380,7 @@ function Users() {
                 <th className="table_user_email_title">Почта</th>
                 <th className="table_user_balance_title">Баланс</th>
                 <th className="table_user_deposite_title">Депозитов</th>
+                <th className="table_user_winrate_title">Выводы</th>
                 <th className="table_user_winrate_title">Винрейт</th>
                 <td className="users_select">
                   <div className="select_all">
@@ -386,27 +402,30 @@ function Users() {
             <tbody>
               {users
                 ? users.map((user) => (
-                    <tr key={user.id}>
+                    <tr key={user.iuser_idd}>
                       <td className="table_user_id_row">
-                        <p>{user.id}</p>
+                        <p>{user.user_id}</p>
                       </td>
                       <td className="table_user_avatar_row">
-                        <img src={avatar} alt="" />
+                        <img src={user.image || avatar} alt="" />
                       </td>
                       <td className="table_user_name_row">
-                        <p>{user.name}</p>
+                        <p>{user.username}</p>
                       </td>
                       <td className="table_user_email_row">
                         <p>{user.email}</p>
                       </td>
                       <td className="table_user_balance_row">
-                        <p>{user.balance} ₽</p>
+                        <p>{user.balance.toFixed(2)} ₽</p>
                       </td>
                       <td className="table_user_deposite_row">
-                        <p>{user.deposite} ₽</p>
+                        <p>{user.all_debit.toFixed(2)} ₽</p>
+                      </td>
+                      <td className="table_user_deposite_row">
+                        <p>{user.all_output.toFixed(2)} ₽</p>
                       </td>
                       <td className="table_user_winrate_row">
-                        <p>{user.winrate}%</p>
+                        <p>{user.winrate.toFixed(2)}%</p>
                       </td>
 
                       <td>
@@ -429,7 +448,7 @@ function Users() {
                             <div
                               title="редактировать"
                               className="cases_table_edit"
-                              onClick={() => aboutUser(user.id)}
+                              onClick={() => aboutUser(user.user_id)}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -467,9 +486,9 @@ function Users() {
             </tbody>
           </table>
 
-          <div className="cases_paginations">
+          {/* <div className="cases_paginations">
             <Pagination allData={usersData} paginationData={setUsers} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

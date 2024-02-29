@@ -58,6 +58,8 @@ function Items() {
       });
       setTimeout(() => {
         getItems();
+        snackbarActions("Предмет удалён!");
+
       }, 1500)
   
   };

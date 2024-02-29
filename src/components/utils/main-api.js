@@ -285,7 +285,6 @@ class MainApi {
       endpoint: `${path}/items/${id}/`,
       method: "PUT",
       body: data,
-
     });
   }
   async setPagePerm(data) {
@@ -351,6 +350,23 @@ class MainApi {
     return this._sendRequest({
       endpoint: "/admin/me",
       requiresToken: true,
+    });
+  }
+
+  // Users
+
+  // Get users
+
+  async getUsersActions() {
+    return this._sendRequest({
+      endpoint: `${path}/users/`,
+      method: "GET",
+    });
+  }
+  async getUserAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/user/${id}/`,
+      method: "GET",
     });
   }
 }

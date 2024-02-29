@@ -41,18 +41,18 @@ function App() {
   const isLogged = useSelector((user) => user.user.user.is_logged);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      mainApi
-        .reEnter()
-        .then((res) => {
-          dispatch(loginUserAction(res));
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }
-  }, [localStorage.getItem("token")]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     mainApi
+  //       .reEnter()
+  //       .then((res) => {
+  //         dispatch(loginUserAction(res));
+  //       })
+  //       .catch((error) => {
+  //         console.log("error", error);
+  //       });
+  //   }
+  // }, [localStorage.getItem("token")]);
 
   useEffect(() => {
     if (!localStorage.getItem("token") && !isLogged) {
