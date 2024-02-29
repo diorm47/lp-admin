@@ -11,7 +11,7 @@ function CreateItem() {
   const [itemPrice, setItemPrice] = useState("");
   const [itemPriceCrystals, setItemPriceCrystals] = useState("");
 
-  const [itemType, setItemType] = useState("");
+  const [itemType, setItemType] = useState("crystal");
 
   const [itemImages, setItemImage] = useState();
   const [rarityList, setRarityList] = useState([]);
@@ -89,11 +89,15 @@ function CreateItem() {
       .getRarity()
       .then((res) => {
         setRarityList(res.results);
+        setSelectedRarity(res.results[0].rarity_id)
+        
       })
       .catch((error) => {
         console.log("error", error);
       });
   }, []);
+
+
 
   return (
     <>
@@ -127,7 +131,7 @@ function CreateItem() {
             </div>
 
             <div className="case_input_temp">
-              <p> Тип предмета</p>
+              <p>Тип предмета</p>
               <select onChange={(e) => setItemType(e.target.value)}>
                 {categories && categories[0]
                   ? categories.map((categories, index) => (
@@ -151,7 +155,7 @@ function CreateItem() {
               />
             </div>
             <div className="case_input_temp">
-              <p>Цена в кристаллах</p>
+              <p>Количество кристаллов</p>
               <input
                 type="text"
                 placeholder="Введите цену в кристаллах"
