@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 import { mainApi } from "../../components/utils/main-api";
-import { useEffect } from "react";
 import Snacbar from "../../components/snackbar/snackbar";
 
-function UpdateRarity() {
+function CreateRarity() {
+  const navigate = useNavigate();
   const [name, setName] = useState();
-
-  const params = useParams();
   const [color, setColor] = useState("#000000");
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
@@ -22,30 +20,18 @@ function UpdateRarity() {
   const handleChange = (event) => {
     setColor(event.target.value);
   };
-
-  useEffect(() => {
+  const saveCategory = () => {
     mainApi
-      .getRarityItem(params.item)
-      .then((res) => {
-        setColor(res.rarity_color);
-        setName(res.name);
+      .saveRarity({
+        name: name,
+        rarity_color: color,
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  }, []);
-
-  const updateCategory = () => {
-    mainApi
-      .updateRarityAction(
-        {
-          name: name,
-          rarity_color: color,
-        },
-        params.item
-      )
       .then((res) => {
-        snackbarActions("Категория обновлена");
+        snackbarActions("Категория создана");
+        setTimeout(() => {
+          navigate('/rarity')
+        }, 1500)
+       
       })
       .catch((error) => {
         console.log("error", error);
@@ -62,7 +48,7 @@ function UpdateRarity() {
 
       <div className="template_page create_item_page">
         <div className="template_page_title">
-          <h1>Обновить категорию</h1>
+          <h1>Создать категорию</h1>
         </div>
         <div className="user_line"></div>
 
@@ -95,9 +81,9 @@ function UpdateRarity() {
 
           <button
             className="main_btn save_cat_btn main_btn_template_green"
-            onClick={updateCategory}
+            onClick={saveCategory}
           >
-            Сохранить изменений
+            Сохранить
           </button>
         </div>
       </div>
@@ -105,4 +91,4 @@ function UpdateRarity() {
   );
 }
 
-export default UpdateRarity;
+export default CreateRarity;

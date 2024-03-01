@@ -266,16 +266,29 @@ class MainApi {
       method: "GET",
     });
   }
+  async getRarityItem(id) {
+    return this._sendRequest({
+      endpoint: `${path}/rarity_category/${id}/`,
+      method: "GET",
+    });
+  }
   async deleteRarity(id) {
     return this._sendRequest({
       endpoint: `${path}/rarity_category/${id}/`,
       method: "DELETE",
     });
   }
-  async updateRarity(data) {
+  async saveRarity(data) {
     return this._sendRequest({
-      endpoint: `/admin/group_category/update`,
+      endpoint: `${path}/rarity_category/`,
       method: "POST",
+      body: data,
+    });
+  }
+  async updateRarityAction(data, id) {
+    return this._sendRequest({
+      endpoint: `${path}/rarity_category/${id}/`,
+      method: "PUT",
       body: data,
     });
   }

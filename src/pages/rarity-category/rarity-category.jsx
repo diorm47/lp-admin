@@ -46,14 +46,14 @@ function RarityCategory() {
       .deleteRarity(id)
       .then((res) => {
         getRarityList();
-        snackbarActions('Категория удалена!')
+        snackbarActions("Категория удалена!");
       })
       .catch((error) => {
         console.log("error", error);
       });
-   
-      snackbarActions('Категория удалена!')
-      getRarityList();
+
+    snackbarActions("Категория удалена!");
+    getRarityList();
   };
   // update-rarity
   const editCategory = (id) => {
@@ -63,8 +63,27 @@ function RarityCategory() {
   return (
     <>
       <div className="template_page rarity_page">
-        <div className="template_page_title">
+        <div class="template_page_title">
           <h1>Категории редкости</h1>
+          <div class="top_cases_actions">
+            <NavLink to="/create-rarity">
+              <button class="main_btn add_case_btn main_btn_template">
+                <p>Добавить категорию</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
+                    fill="white"
+                  ></path>
+                </svg>
+              </button>
+            </NavLink>
+          </div>
         </div>
 
         <div className="template_page_content">
@@ -226,7 +245,6 @@ function RarityCategory() {
           </div>
         </div>
       </div>
-
 
       {isSnackbarVisible ? (
         <Snacbar visible={isSnackbarVisible} text={snackbarText} />

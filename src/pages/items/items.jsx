@@ -236,7 +236,7 @@ function Items() {
                         <tr>
                           <td>{item.item_id}</td>
                           <td>{item.name}</td>
-                          <td>{item.rarity_category.name}</td>
+                          <td>{item.rarity_category && item.rarity_category.name}</td>
                           <td>{getItemType(item.type)}</td>
                           <td className="tac">{item.price} ₽</td>
 

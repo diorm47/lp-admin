@@ -35,6 +35,7 @@ import Support from "./pages/support/support";
 import UserPage from "./pages/user-page/user-page";
 import Users from "./pages/users/users";
 import { loginUserAction } from "./redux/user-reducer";
+import CreateRarity from "./pages/rarity-category/create-rarity";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,8 +60,6 @@ function App() {
       navigate("/login");
     }
   }, [isLogged, navigate, localStorage.getItem("token")]);
-
-  // localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNDQzMTAxLCJpYXQiOjE3MDc4NTExMDEsImp0aSI6ImFjYjJmNjExYTgyMzQ3ZjBiNWEzZDY1NjA2ZjFiMDcwIiwidXNlcl9pZCI6MX0.NxWtA70UZdD_xpqMgsRMj4ZFd2cg_V68DVLIIl5pDUk')
 
   return (
     <>
@@ -116,6 +115,7 @@ function App() {
 
                 <Route path="/edit-case/:case" element={<EditCase />} />
                 <Route path="/cases-category" element={<CaseCategory />} />
+                <Route path="/create-rarity" element={<CreateRarity />} />
               </Routes>
             </Suspense>
           </div>
