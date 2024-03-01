@@ -15,10 +15,9 @@
   text-align: center;
 }
 .case_items_content {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 30px 0;
-  grid-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .modal_template_content .case_item img {
@@ -38,11 +37,11 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 .case_item_card input {
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
 }
 .case_item_card img {
   width: 180px;

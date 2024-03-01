@@ -80,7 +80,6 @@ function CreateItem() {
       .catch((error) => {
         console.log("error", error);
         snackbarActions("Ошибка создания предмета!");
-
       });
   };
 
@@ -89,15 +88,12 @@ function CreateItem() {
       .getRarity()
       .then((res) => {
         setRarityList(res.results);
-        setSelectedRarity(res.results[0].rarity_id)
-        
+        setSelectedRarity(res.results[0].rarity_id);
       })
       .catch((error) => {
         console.log("error", error);
       });
   }, []);
-
-
 
   return (
     <>
@@ -158,7 +154,7 @@ function CreateItem() {
               <p>Количество кристаллов</p>
               <input
                 type="text"
-                placeholder="Введите цену в кристаллах"
+                placeholder="Введите количество  кристаллoв"
                 value={itemPriceCrystals}
                 onChange={(e) => setItemPriceCrystals(e.target.value)}
               />

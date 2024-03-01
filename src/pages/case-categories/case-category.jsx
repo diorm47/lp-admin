@@ -27,7 +27,7 @@ function CaseCategory() {
     mainApi
       .getCaseCategoryAction()
       .then((res) => {
-        setCategories(res.categories);
+        setCategories(res.results);
       })
       .catch((error) => {
         console.log("error", error);
@@ -43,10 +43,10 @@ function CaseCategory() {
         name: value,
       })
       .then((res) => {
-        snackbarActions('Категория сохранена!')
+        snackbarActions("Категория сохранена!");
         setValue("");
         getCategory();
-
+        setUpdatingCategory()
       })
       .catch((error) => {
         console.log("error", error);
@@ -54,26 +54,30 @@ function CaseCategory() {
   };
   const deleteCategory = (id) => {
     mainApi
-      .deleteCaseCategoryAction({
-        category_id: id,
-      })
+      .deleteCaseCategoryAction(id)
       .then((res) => {
         getCategory();
-        snackbarActions('Категория удалена!')
+        snackbarActions("Категория удалена!");
         setUpdatingCategory();
       })
       .catch((error) => {
         console.log("error", error);
       });
+    
+      snackbarActions("Категория удалена!");
+      setUpdatingCategory();
+      getCategory();
   };
   const updateCategory = () => {
     mainApi
-      .updateCaseCategoryAction({
-        category_id: updatingCategory.category_id,
-        name: value,
-      })
+      .updateCaseCategoryAction(
+        {
+          name: value,
+        },
+        updatingCategory.category_id
+      )
       .then((res) => {
-        snackbarActions('Категория изменена!')
+        snackbarActions("Категория изменена!");
         setUpdatingCategory("");
         getCategory();
       })

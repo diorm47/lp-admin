@@ -14,10 +14,11 @@ function CreateCase() {
   const [modal, setModal] = useState(false);
   const [caseImage, setCaseImage] = useState();
   const [caseImageU, setCaseImageU] = useState();
- 
+
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
-  const [caseDescriptions, setCaseDescriptions] = useState("");
+  const [active, setActive] = useState(false);
+ 
   const [caseID, setCaseID] = useState();
   const [caseItems, setCaseItems] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -36,14 +37,12 @@ function CreateCase() {
       .getCaseCategoryAction()
       .then((res) => {
         setCategories(res.results);
-        setCaseCategoryId(res.results[0].category_id)
+        setCaseCategoryId(res.results[0].category_id);
       })
       .catch((error) => {
         console.log("error", error);
       });
   }, []);
-
-
 
   const saveImage = (e) => {
     const file = e.target.files[0];
@@ -61,10 +60,10 @@ function CreateCase() {
     mainApi
       .createCaseAction({
         name: caseName,
-        active: true,
+        active: active,
         image: caseImage,
         category_id: caseCategoryId,
-        item_ids: caseItems.map(item => item.item_id),
+        item_ids: caseItems.map((item) => item.item_id),
         condition_ids: [],
       })
       .then((res) => {
@@ -79,19 +78,8 @@ function CreateCase() {
     setModal(false);
   };
 
-  const deleteCaseItem = (id) => {
-    mainApi
-      .deleteCaseItem({
-        case_id: caseID,
-        item_id: id,
-      })
-      .then((res) => {
-        setCaseItems(res.items);
-
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+  const delSelectedItem = (data) => {
+    setCaseItems(caseItems.filter((item) => item.item_id !== data.item_id));
   };
 
   return (
@@ -115,8 +103,7 @@ function CreateCase() {
           <Tabs>
             <TabList>
               <Tab>Главная</Tab>
-              <Tab>Цены</Tab>
-              <Tab>История покупок</Tab>
+
               <Tab>Предметы</Tab>
             </TabList>
 
@@ -138,7 +125,6 @@ function CreateCase() {
                   <div className="case_input_temp">
                     <p>Категория товара</p>
                     <select onChange={(e) => setCaseCategoryId(e.target.value)}>
-                      <option></option>
                       {categories && categories[0]
                         ? categories.map((categories) => (
                             <option
@@ -151,11 +137,14 @@ function CreateCase() {
                         : ""}
                     </select>
                   </div>
+                  <div className="case_input_temp case_input_temp_checkbox">
+                    <input type="checkbox" checked={active} onClick={() => setActive(!active)} /> <p>Активность</p>
+                  </div>
                 </div>
                 <div className="case_tab_content_title">
                   <p>Картинка товара</p>
                 </div>
-                <div className="case_img_block_wrapper">
+                <div className="case_img_block_wrapper case_img_block_wrapper_case_page">
                   <div className="case_img_block">
                     {caseImage ? (
                       <div className="case_img_item" title="удалить">
@@ -196,16 +185,6 @@ function CreateCase() {
                     Выберите с компьютера или перетащите в эту область
                   </span>
                 </div>
-                <div className="case_tab_content_title">
-                  <p>Описание товара</p>
-                </div>
-                <div className="case_tab_content_text">
-                  <textarea
-                    value={caseDescriptions}
-                    onChange={(e) => setCaseDescriptions(e.target.value)}
-                  ></textarea>
-                </div>
-                <span>Максимальное количество символов - 300</span>
 
                 <div className="admin_actions case_actions">
                   <button
@@ -220,30 +199,7 @@ function CreateCase() {
                 </div>
               </div>
             </TabPanel>
-            <TabPanel>
-              <div className="case_tab_content">
-                <div className="case_tab_content_title">
-                  <p>Цены на кейсы</p>
-                </div>
-                <div className="case_tab_content_inputs">
-                  <div className="case_input_temp">
-                    <p>Закупочная цена</p>
-                    <input type="text" />
-                  </div>
-                  <div className="case_input_temp">
-                    <p>Цена в рублях </p>
-                    <input type="text" />
-                  </div>
-                </div>
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <div className="case_tab_content">
-                <div className="case_tab_content_title">
-                  <p>История покупок</p>
-                </div>
-              </div>
-            </TabPanel>
+
             <TabPanel>
               <div className="case_tab_content">
                 <div className="case_tab_content_title">
@@ -284,14 +240,11 @@ function CreateCase() {
                           <div
                             className="case_img_item case_items_list_item"
                             key={caseItems.id}
-                            onClick={() => deleteCaseItem(item.item_id)}
+                            onClick={() => delSelectedItem(item)}
                           >
-                            <img
-                              src={`https://legadrop.org/${item.image}`}
-                              alt=""
-                            />
-                            <p>{item.name} кр.</p>
-                            <p>{item.cost} $</p>
+                            <img src={item.image} alt="" />
+                            <p>{item.name}</p>
+                            <p>{item.price} р.</p>
                           </div>
                         ))
                       : ""}
@@ -307,7 +260,6 @@ function CreateCase() {
 
       {modal ? (
         <CaseItems
-       
           setModal={setModal}
           case_id={caseID}
           setCaseItems={setCaseItems}

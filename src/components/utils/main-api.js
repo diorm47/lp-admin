@@ -117,7 +117,7 @@ class MainApi {
   // set case category
   async setCaseCategoryAction(userData) {
     return this._sendRequest({
-      endpoint: `${path}/category`,
+      endpoint: `${path}/category/`,
       method: "POST",
       body: userData,
     });
@@ -131,17 +131,16 @@ class MainApi {
     });
   }
   // delete case category
-  async deleteCaseCategoryAction(userData) {
+  async deleteCaseCategoryAction(id) {
     return this._sendRequest({
-      endpoint: `/admin/category`,
+      endpoint: `${path}/category/${id}/`,
       method: "DELETE",
-      body: userData,
     });
   }
   // update case category
-  async updateCaseCategoryAction(userData) {
+  async updateCaseCategoryAction(userData, id) {
     return this._sendRequest({
-      endpoint: `/admin/category`,
+      endpoint: `${path}/category/${id}/`,
       method: "PUT",
       body: userData,
     });
@@ -267,6 +266,12 @@ class MainApi {
       method: "GET",
     });
   }
+  async deleteRarity(id) {
+    return this._sendRequest({
+      endpoint: `${path}/rarity_category/${id}/`,
+      method: "DELETE",
+    });
+  }
   async updateRarity(data) {
     return this._sendRequest({
       endpoint: `/admin/group_category/update`,
@@ -356,7 +361,6 @@ class MainApi {
   // Users
 
   // Get users
-
   async getUsersActions() {
     return this._sendRequest({
       endpoint: `${path}/users/`,
@@ -366,6 +370,16 @@ class MainApi {
   async getUserAction(id) {
     return this._sendRequest({
       endpoint: `${path}/user/${id}/`,
+      method: "GET",
+    });
+  }
+
+  // Rarity
+
+  // Get rarity list
+  async getRarytyListActions() {
+    return this._sendRequest({
+      endpoint: `${path}/rarity_category/`,
       method: "GET",
     });
   }

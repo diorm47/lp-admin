@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
+import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
 import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
 import "../cases/cases.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { mainApi } from "../../components/utils/main-api";
 import Snacbar from "../../components/snackbar/snackbar";
+import Pagination from "../../components/pagionation/pagination";
 
 function Items() {
-  const [itemOffset, setItemOffset] = useState(0);
   const navigate = useNavigate();
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
@@ -22,14 +23,8 @@ function Items() {
   };
 
   const [casesItems, setCasesItems] = useState("");
-  const itemsPerPage = 10;
-  const endOffset = itemOffset + itemsPerPage;
-  const items = casesItems.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(casesItems.length / itemsPerPage);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % casesItems.length;
-    setItemOffset(newOffset);
-  };
+  const [items, setItems] = useState("");
+  const [rarity, setRarity] = useState([]);
 
   const getItems = () => {
     mainApi
@@ -42,8 +37,20 @@ function Items() {
       });
   };
 
+  const getRarityList = () => {
+    mainApi
+      .getRarytyListActions()
+      .then((res) => {
+        setRarity(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   useEffect(() => {
     getItems();
+    getRarityList()
   }, []);
 
   const deleteItem = (id) => {
@@ -56,16 +63,57 @@ function Items() {
       .catch((error) => {
         console.log("error", error);
       });
-      setTimeout(() => {
-        getItems();
-        snackbarActions("Предмет удалён!");
-
-      }, 1500)
-  
+    setTimeout(() => {
+      getItems();
+      snackbarActions("Предмет удалён!");
+    }, 1500);
   };
 
   const editItem = (id) => {
     navigate(`/edit-item/${id}`);
+  };
+
+  const [selected, setSelected] = useState([]);
+  const toggleSelected = (data) => {
+    const filteredSelectedItems = selected.some(
+      (selected) => selected.item_id === data.item_id
+    );
+    if (filteredSelectedItems) {
+      setSelected(selected.filter((item) => item.item_id !== data.item_id));
+    } else {
+      setSelected([...selected, data]);
+    }
+  };
+  const toggleAllDataSelected = () => {
+    if (selected.length == casesItems.length) {
+      setSelected([]);
+    } else {
+      setSelected([...casesItems]);
+    }
+  };
+
+  const categories = {
+    crystal: "Кристалл",
+    blessing: "Благословение",
+    ghost_item: "Призрачный пердмет",
+  };
+
+  const getItemType = (type) => {
+    return categories[type];
+  };
+
+  const [activeFilter, setActiveFilter] = useState("");
+  const filterItems = (type) => {
+    setActiveFilter(type);
+    if (type !== "all") {
+      const filtered = casesItems.filter(
+        (item) => item.rarity_category && item.rarity_category.rarity_id === type
+      );
+
+      setItems(filtered);
+    } else {
+      setItems(casesItems.slice(0, 10));
+    }
   };
 
   return (
@@ -118,24 +166,31 @@ function Items() {
         <div className="template_page_content">
           <div className="cases_wrapper">
             <div className="cases_top_togglers">
-              <button className="main_btn">
-                <p>Все предметы</p>
+              <button
+                className={
+                  activeFilter == "all"
+                    ? "main_btn top_active_filter"
+                    : "main_btn"
+                }
+                onClick={() => filterItems("all")}
+              >
+                <p>Все кейсы</p>
               </button>
-              <button className="main_btn">
-                <p>Осколки (половинка предмета)</p>
-              </button>
-              <button className="main_btn">
-                <p>Кристаллы сотворения</p>
-              </button>
-              <button className="main_btn">
-                <p>Луны</p>
-              </button>
-              <button className="main_btn">
-                <p>Крутки</p>
-              </button>
-              <button className="main_btn">
-                <p>Скины</p>
-              </button>
+              {rarity && rarity.length
+                ? rarity.map((rarity) => (
+                    <button
+                      className={
+                        activeFilter == rarity.rarity_id
+                          ? "main_btn top_active_filter"
+                          : "main_btn"
+                      }
+                      key={rarity.name}
+                      onClick={() => filterItems(rarity.rarity_id)}
+                    >
+                      <p>{rarity.name}</p>
+                    </button>
+                  ))
+                : ""}
             </div>
             <div className="cases_top_actions">
               <button className="main_btn main_btn_template_red">
@@ -155,13 +210,22 @@ function Items() {
                     <td> ID предмета</td>
                     <td>Название</td>
                     <td>Категория</td>
+                    <td>Тип</td>
                     <td className="tac">Цена (руб)</td>
-                    <td className="tac">Цена в кр.</td>
-                    <td className="tac"> API предмета</td>
                     <td className="tac">Дата создания</td>
                     <td>
                       <div className="select_all">
-                        <input type="checkbox" /> Выделить все
+                        <div className="is_selected ">
+                          {selected.length == casesItems.length ? (
+                            <SelectedIcon onClick={toggleAllDataSelected} />
+                          ) : (
+                            <div
+                              className="not_selected_item"
+                              onClick={toggleAllDataSelected}
+                            ></div>
+                          )}
+                        </div>{" "}
+                        Выделить все
                       </div>
                     </td>
                   </tr>
@@ -172,15 +236,12 @@ function Items() {
                         <tr>
                           <td>{item.item_id}</td>
                           <td>{item.name}</td>
-                          <td>{item.category || "-"}</td>
+                          <td>{item.rarity_category.name}</td>
+                          <td>{getItemType(item.type)}</td>
                           <td className="tac">{item.price} ₽</td>
-                          <td className="tac">{item.gem_cost || "-"}</td>
-                          <td className="tac">{item.opens || 0} </td>
+
                           <td className="tac">
-                            {/* {item.created_at.split("T")[0]}
-                            <br />
-                            {item.created_at.split("T")[1]} */}
-                            -
+                            {item.created_at.split("T")[0]}
                           </td>
                           <td>
                             <div className="cases_table_actions">
@@ -290,40 +351,20 @@ function Items() {
                                   </svg>
                                 </div>
                               </div>
-                              <div className="is_selected">
-                                <svg
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g clipPath="url(#clip0_280_5736)">
-                                    <rect
-                                      x="0.5"
-                                      y="0.5"
-                                      width="23"
-                                      height="23"
-                                      rx="2.5"
-                                      fill="#39B54A"
-                                      stroke="#39B54A"
-                                    />
-                                    <path
-                                      d="M9.94286 16.6667L6 12.8673L7.71429 11.2979L9.94286 13.4454L16.2857 7.33334L18 8.98526L9.94286 16.6667Z"
-                                      fill="white"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_280_5736">
-                                      <rect
-                                        width="24"
-                                        height="24"
-                                        rx="3"
-                                        fill="white"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
+                              <div className="is_selected ">
+                                {selected.some(
+                                  (selected) =>
+                                    selected.item_id === item.item_id
+                                ) ? (
+                                  <SelectedIcon
+                                    onClick={() => toggleSelected(item)}
+                                  />
+                                ) : (
+                                  <div
+                                    className="not_selected_item"
+                                    onClick={() => toggleSelected(item)}
+                                  ></div>
+                                )}
                               </div>
                             </div>
                           </td>
@@ -336,15 +377,11 @@ function Items() {
               <p className="empty_error">Предметы отсутствуют</p>
             )}
             <div className="cases_paginations">
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel="Следующая"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="Предыдущая"
-                renderOnZeroPageCount={null}
-              />
+              {casesItems ? (
+                <Pagination allData={casesItems} paginationData={setItems} />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

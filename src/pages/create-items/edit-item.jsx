@@ -172,10 +172,10 @@ function EditItem() {
               />
             </div>
             <div className="case_input_temp">
-              <p>Цена в кристаллах</p>
+              <p>Количество кристаллов</p>
               <input
                 type="text"
-                placeholder="Введите цену в кристаллах"
+                placeholder="Введите количество  кристаллoв"
                 value={itemPriceCrystals}
                 onChange={(e) => setItemPriceCrystals(e.target.value)}
               />

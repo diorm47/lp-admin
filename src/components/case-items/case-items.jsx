@@ -72,8 +72,8 @@ function CaseItems({
             ? casesItems.map((item) => (
                 <div className="case_item case_item_card" key={item.id}>
                   <img src={item.image} alt="" />
-                  <p>{item.name} кр.</p>
-                  <p>{item.price} $</p>
+                  <p>{item.name}</p>
+                  <p>{item.price} р.</p>
                   <input
                     type="checkbox"
                     checked={selectedItems.some(

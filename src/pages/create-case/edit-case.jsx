@@ -17,7 +17,11 @@ function EditCase() {
   const [caseImageRecieved, setCaseImageRecieved] = useState();
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
-  const [caseDescriptions, setCaseDescriptions] = useState("");
+  const [active, setActive] = useState(false);
+  const [price, setPrice] = useState();
+  const [recPrice, setRecPrice] = useState();
+  const [free, setFree] = useState();
+
   const [caseID, setCaseID] = useState();
   const [caseData, setCaseData] = useState();
   const [caseItems, setCaseItems] = useState();
@@ -54,6 +58,10 @@ function EditCase() {
         setCaseImageRecieved(res.image);
         setCaseID(res.case_id);
         setCaseItems(res.items);
+        setActive(res.active);
+        setPrice(res.price);
+        setRecPrice(res.recommendation_price);
+        setFree(res.case_free);
       })
       .catch((error) => {
         console.log("error", error);
@@ -74,14 +82,19 @@ function EditCase() {
   };
   const saveCase = () => {
     mainApi
-      .updateCase({
-        name: caseName,
-        active: true,
-        image: caseImage,
-        category_id: caseCategoryId,
-        item_ids: caseItems.map((item) => item.item_id),
-        condition_ids: [],
-      }, params.case)
+      .updateCase(
+        {
+          name: caseName,
+          active: active,
+          image: caseImage,
+          category_id: caseCategoryId,
+          item_ids: caseItems.map((item) => item.item_id),
+          condition_ids: [],
+          price: price,
+          case_free: free,
+        },
+        params.case
+      )
       .then((res) => {
         snackbarActions("Кейс обновлён!");
       })
@@ -92,6 +105,10 @@ function EditCase() {
 
   const closeModal = () => {
     setModal(false);
+  };
+
+  const delSelectedItem = (data) => {
+    setCaseItems(caseItems.filter((item) => item.item_id !== data.item_id));
   };
 
   return (
@@ -154,6 +171,15 @@ function EditCase() {
                         : ""}
                     </select>
                   </div>
+
+                  <div className="case_input_temp case_input_temp_checkbox">
+                    <input
+                      type="checkbox"
+                      checked={active}
+                      onClick={() => setActive(!active)}
+                    />{" "}
+                    <p>Активность</p>
+                  </div>
                 </div>
                 <div className="case_tab_content_title">
                   <p>Картинка товара</p>
@@ -202,16 +228,7 @@ function EditCase() {
                     Выберите с компьютера или перетащите в эту область
                   </span>
                 </div>
-                <div className="case_tab_content_title">
-                  <p>Описание товара</p>
-                </div>
-                <div className="case_tab_content_text">
-                  <textarea
-                    value={caseDescriptions}
-                    onChange={(e) => setCaseDescriptions(e.target.value)}
-                  ></textarea>
-                </div>
-                <span>Максимальное количество символов - 300</span>
+
                 <div className="admin_actions case_actions">
                   <button className="create_admin_btn" onClick={saveCase}>
                     Сохранить
@@ -227,12 +244,29 @@ function EditCase() {
                 </div>
                 <div className="case_tab_content_inputs">
                   <div className="case_input_temp">
-                    <p>Закупочная цена</p>
-                    <input type="text" />
+                    <p>Цена</p>
+                    <input
+                      type="text"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
                   </div>
                   <div className="case_input_temp">
-                    <p>Цена в рублях </p>
-                    <input type="text" />
+                    <p>Рекомендуемая цена</p>
+                    <input
+                      type="text"
+                      readOnly
+                      value={recPrice}
+                      onChange={(e) => setRecPrice(e.target.value)}
+                    />
+                  </div>
+                  <div className="case_input_temp case_input_temp_checkbox">
+                    <input
+                      type="checkbox"
+                      checked={free}
+                      onClick={() => setFree(!free)}
+                    />{" "}
+                    <p>Бесплатный</p>
                   </div>
                 </div>
               </div>
@@ -284,10 +318,11 @@ function EditCase() {
                           <div
                             className="case_img_item case_items_list_item"
                             key={caseItems.id}
+                            onClick={() => delSelectedItem(item)}
                           >
                             <img src={item.image} alt="" />
-                            <p>{item.name} кр.</p>
-                            <p>{item.price} $</p>
+                            <p>{item.name} </p>
+                            <p>{item.price} р.</p>
                           </div>
                         ))
                       : ""}

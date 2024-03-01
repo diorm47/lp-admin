@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
+import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
+
 import Pagination from "../../components/pagionation/pagination";
 import { mainApi } from "../../components/utils/main-api";
 import "./cases.css";
@@ -41,7 +43,6 @@ function Cases() {
       .getCaseCategoryAction()
       .then((res) => {
         setCategories(res.results);
-        
       })
       .catch((error) => {
         console.log("error", error);
@@ -53,7 +54,6 @@ function Cases() {
   };
 
   const handleDeleteCase = (id) => {
-    
     mainApi
       .deleteCase(id)
       .then((res) => {
@@ -63,21 +63,42 @@ function Cases() {
       .catch((error) => {
         console.log("error", error);
       });
-      handleGetCases()
+    handleGetCases();
   };
 
   const [activeFilter, setActiveFilter] = useState("");
   const filterItems = (type) => {
     setActiveFilter(type);
     if (type !== "all") {
-      const filtered = casesItems.filter((item) => item.category_id == type);
+      const filtered = casesItems.filter(
+        (item) => item.category && item.category.category_id === type
+      );
+      console.log(casesItems);
       setCases(filtered);
     } else {
       setCases(casesItems.slice(0, 10));
     }
   };
-
-  console.log(categories);
+  const [selected, setSelected] = useState([]);
+  const toggleSelected = (data) => {
+    const filteredSelectedItems = selected.some(
+      (selected) => selected.case_id === data.case_id
+    );
+    if (filteredSelectedItems) {
+      setSelected(
+        selected.filter((item) => item.case_id !== data.case_id)
+      );
+    } else {
+      setSelected([...selected, data]);
+    }
+  };
+  const toggleAllDataSelected = () => {
+    if (selected.length == casesItems.length) {
+      setSelected([]);
+    } else {
+      setSelected([...casesItems]);
+    }
+  };
 
   return (
     <>
@@ -91,10 +112,6 @@ function Cases() {
         <div className="template_page_title">
           <h1>Кейсы</h1>
           <div className="top_cases_actions">
-            <button className="main_btn main_btn_template_red">
-              <p>Поднять цены</p>
-              <TopIcon />
-            </button>
             <NavLink to="/create-case">
               <button className="main_btn add_case_btn main_btn_template">
                 <p>Добавить кейс</p>
@@ -129,21 +146,6 @@ function Cases() {
                 </svg>
               </button>
             </NavLink>
-            <button className="main_btn main_btn_template_green">
-              <p>Создать бекап кейсов</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M11.0003 0.666664H3.00033C2.26699 0.666664 1.66699 1.26666 1.66699 2V11.3333H3.00033V2H11.0003V0.666664ZM13.0003 3.33333H5.66699C4.93366 3.33333 4.33366 3.93333 4.33366 4.66666V14C4.33366 14.7333 4.93366 15.3333 5.66699 15.3333H13.0003C13.7337 15.3333 14.3337 14.7333 14.3337 14V4.66666C14.3337 3.93333 13.7337 3.33333 13.0003 3.33333ZM13.0003 14H5.66699V4.66666H13.0003V14Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
           </div>
         </div>
         <div className="template_page_content">
@@ -194,12 +196,21 @@ function Cases() {
                     <td>Название</td>
                     <td>Категория</td>
                     <td className="tac">Цена (руб)</td>
-                    <td className="tac">Цена ($)</td>
-                    <td className="tac">Открытий</td>
+                    <td className="tac">Бесплатный</td>
                     <td className="tac">Дата создания</td>
                     <td>
                       <div className="select_all">
-                        <input type="checkbox" /> Выделить все
+                        <div className="is_selected ">
+                          {selected.length == casesItems.length ? (
+                            <SelectedIcon onClick={toggleAllDataSelected} />
+                          ) : (
+                            <div
+                              className="not_selected_item"
+                              onClick={toggleAllDataSelected}
+                            ></div>
+                          )}
+                        </div>{" "}
+                        Выделить все
                       </div>
                     </td>
                   </tr>
@@ -210,14 +221,26 @@ function Cases() {
                         <tr key={cases.case_id}>
                           <td>{cases.case_id || "-"}</td>
                           <td>{cases.name || "-"}</td>
-                          <td>{cases.category && cases.category.name ? cases.category.name : "-"}</td>
-                          <td className="tac">{cases.cost_rub || 0} ₽</td>
-                          <td className="tac">{cases.cost_usd || 0}$</td>
-                          <td className="tac">{cases.opens || 0}</td>
+                          <td>
+                            {cases.category && cases.category.name
+                              ? cases.category.name
+                              : "-"}
+                          </td>
+                          <td className="tac">{cases.price || 0} ₽</td>
+
                           <td className="tac">
-                            {(cases && cases.created_at && cases.created_at.split("T")[0]) || "-"}
+                            {cases.case_free ? "Да" : "Нет"}
+                          </td>
+                          <td className="tac">
+                            {(cases &&
+                              cases.created_at &&
+                              cases.created_at.split("T")[0]) ||
+                              "-"}
                             <br />
-                            {(cases && cases.created_at && cases.created_at.split("T")[1]) || "-"}
+                            {(cases &&
+                              cases.created_at &&
+                              cases.created_at.split("T")[1]) ||
+                              "-"}
                           </td>
                           <td>
                             <div className="cases_table_actions">
@@ -329,40 +352,20 @@ function Cases() {
                                   </svg>
                                 </div>
                               </div>
-                              <div className="is_selected">
-                                <svg
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g clipPath="url(#clip0_280_5736)">
-                                    <rect
-                                      x="0.5"
-                                      y="0.5"
-                                      width="23"
-                                      height="23"
-                                      rx="2.5"
-                                      fill="#39B54A"
-                                      stroke="#39B54A"
-                                    />
-                                    <path
-                                      d="M9.94286 16.6667L6 12.8673L7.71429 11.2979L9.94286 13.4454L16.2857 7.33334L18 8.98526L9.94286 16.6667Z"
-                                      fill="white"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_280_5736">
-                                      <rect
-                                        width="24"
-                                        height="24"
-                                        rx="3"
-                                        fill="white"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
+                              <div className="is_selected ">
+                                {selected.some(
+                                  (selected) =>
+                                    selected.case_id === cases.case_id
+                                ) ? (
+                                  <SelectedIcon
+                                    onClick={() => toggleSelected(cases)}
+                                  />
+                                ) : (
+                                  <div
+                                    className="not_selected_item"
+                                    onClick={() => toggleSelected(cases)}
+                                  ></div>
+                                )}
                               </div>
                             </div>
                           </td>

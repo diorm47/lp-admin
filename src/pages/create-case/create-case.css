@@ -211,7 +211,12 @@
 .case_img_block_wrapper .case_img_block {
   margin-bottom: 30px;
 }
-
+.case_img_block_wrapper_case_page {
+  margin-bottom: 20px;
+}
+.case_img_block_wrapper_case_page .case_img_block {
+  margin-bottom: 5px;
+}
 .add_item_case_btn {
   max-width: 140px;
 }
@@ -221,4 +226,18 @@
   height: 150px;
   margin-bottom: 10px;
   object-fit: cover;
+}
+
+.case_input_temp_checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.case_input_temp_checkbox p {
+  margin: 0;
+}
+.case_input_temp_checkbox input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }

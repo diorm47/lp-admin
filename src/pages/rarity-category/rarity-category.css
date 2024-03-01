@@ -1,7 +1,4 @@
-.rarity_page .cases_table tbody tr td {
-   width: 17% !important;
-}
-
-.rarity_page .cases_table tbody tr td:nth-child(1) {
-    width: 5% !important;
+.rarity_color {
+  width: 40px;
+  height: 20px;
 }
