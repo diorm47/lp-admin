@@ -372,7 +372,6 @@ class MainApi {
   }
 
   // Users
-
   // Get users
   async getUsersActions() {
     return this._sendRequest({
@@ -388,12 +387,51 @@ class MainApi {
   }
 
   // Rarity
-
   // Get rarity list
   async getRarytyListActions() {
     return this._sendRequest({
       endpoint: `${path}/rarity_category/`,
       method: "GET",
+    });
+  }
+
+  // Conditions
+  // Get conditions
+  async getConditions() {
+    return this._sendRequest({
+      endpoint: `${path}/conditions/`,
+      method: "GET",
+    });
+  }
+  // Get conditions
+  async getConditionAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/conditions/${id}/`,
+      method: "GET",
+    });
+  }
+  // delete conditions
+  async deleteCondition(id) {
+    return this._sendRequest({
+      endpoint: `${path}/conditions/${id}/`,
+      method: "DELETE",
+    });
+  }
+  // create condition
+  async createCondition(data) {
+    return this._sendRequest({
+      endpoint: `${path}/conditions/`,
+      method: "POST",
+      body: data,
+    });
+  }
+
+  // update condition
+  async updateCondition(data, id) {
+    return this._sendRequest({
+      endpoint: `${path}/conditions/${id}/`,
+      method: "PUT",
+      body: data,
     });
   }
 }

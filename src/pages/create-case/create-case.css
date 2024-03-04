@@ -39,6 +39,13 @@
 .react-tabs__tab-list li {
   list-style: none !important;
 }
+.conditions_select_box {
+  width: 600px;
+  margin-bottom: 30px;
+}
+.css-13cymwt-control {
+  height: 50px;
+}
 .react-tabs__tab {
   padding: 8px 16px !important;
   border-radius: 3px 3px 0px 0px;

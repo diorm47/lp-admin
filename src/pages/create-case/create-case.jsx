@@ -6,10 +6,11 @@ import CaseItems from "../../components/case-items/case-items";
 import Snacbar from "../../components/snackbar/snackbar";
 import { mainApi } from "../../components/utils/main-api";
 import "./create-case.css";
+import Select from "react-select";
 
 function CreateCase() {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
@@ -19,6 +20,8 @@ function CreateCase() {
   const [caseName, setCaseName] = useState("");
   const [caseCategoryId, setCaseCategoryId] = useState("");
   const [active, setActive] = useState(false);
+  const [conditionsList, setConditionsList] = useState();
+  const [selectesConditions, setSelectesConditions] = useState([]);
 
   const [caseID, setCaseID] = useState();
   const [caseItems, setCaseItems] = useState([]);
@@ -39,6 +42,20 @@ function CreateCase() {
       .then((res) => {
         setCategories(res.results);
         setCaseCategoryId(res.results[0].category_id);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+
+    mainApi
+      .getConditions()
+      .then((res) => {
+        setConditionsList(
+          res.results.map((condition) => ({
+            value: condition.condition_id,
+            label: condition.name,
+          }))
+        );
       })
       .catch((error) => {
         console.log("error", error);
@@ -65,7 +82,7 @@ function CreateCase() {
         image: caseImage,
         category_id: caseCategoryId,
         item_ids: caseItems.map((item) => item.item_id),
-        condition_ids: [],
+        condition_ids: selectesConditions.map((condition) => (condition.value)),
       })
       .then((res) => {
         snackbarActions("Кейс создан!");
@@ -183,6 +200,19 @@ function CreateCase() {
                 />
               </div>
               <span>Выберите с компьютера или перетащите в эту область</span>
+            </div>
+            <div className="case_tab_content_title">
+              <p>Условие</p>
+            </div>
+            <div className="conditions_select">
+              <Select
+                isMulti
+                options={conditionsList}
+                className="conditions_select_box"
+                onChange={setSelectesConditions}
+                value={selectesConditions}
+                placeholder={<div>Выбор условий</div>}
+              />
             </div>
 
             <div className="case_tab_content_title">

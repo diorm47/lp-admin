@@ -6,6 +6,7 @@ import CaseItems from "../../components/case-items/case-items";
 import Snacbar from "../../components/snackbar/snackbar";
 import { mainApi } from "../../components/utils/main-api";
 import "./create-case.css";
+import Select from "react-select";
 
 function EditCase() {
   const [modal, setModal] = useState(false);
@@ -18,6 +19,8 @@ function EditCase() {
   const [price, setPrice] = useState();
   const [recPrice, setRecPrice] = useState();
   const [free, setFree] = useState();
+  const [conditionsList, setConditionsList] = useState();
+  const [selectesConditions, setSelectesConditions] = useState([]);
 
   const [caseID, setCaseID] = useState();
   const [caseData, setCaseData] = useState();
@@ -35,15 +38,28 @@ function EditCase() {
     }, 2000);
   };
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-  
 
   useEffect(() => {
     mainApi
       .getCaseCategoryAction()
       .then((res) => {
         setCategories(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+
+    mainApi
+      .getConditions()
+      .then((res) => {
+        setConditionsList(
+          res.results.map((condition) => ({
+            value: condition.condition_id,
+            label: condition.name,
+          }))
+        );
       })
       .catch((error) => {
         console.log("error", error);
@@ -55,10 +71,16 @@ function EditCase() {
       .then((res) => {
         setCaseData(res);
         setCaseName(res.name);
-        setCaseCategoryId(res.category.category_id);
+        setCaseCategoryId(res.category ? res.category.category_id : "");
         setCaseImageRecieved(res.image);
         setCaseID(res.case_id);
         setCaseItems(res.items);
+        setSelectesConditions(
+          res.conditions.map((condition) => ({
+            value: condition.condition_id,
+            label: condition.name,
+          }))
+        );
         setActive(res.active);
         setPrice(res.price);
         setRecPrice(res.recommendation_price);
@@ -90,7 +112,7 @@ function EditCase() {
           image: caseImage,
           category_id: caseCategoryId,
           item_ids: caseItems.map((item) => item.item_id),
-          condition_ids: [],
+          condition_ids: selectesConditions.map((condition) => condition.value),
           price: price,
           case_free: free,
         },
@@ -249,7 +271,19 @@ function EditCase() {
                 <p>Бесплатный</p>
               </div>
             </div>
-
+            <div className="case_tab_content_title">
+              <p>Условие</p>
+            </div>
+            <div className="conditions_select">
+              <Select
+                isMulti
+                options={conditionsList}
+                className="conditions_select_box"
+                onChange={setSelectesConditions}
+                value={selectesConditions}
+                placeholder={<div>Выбор условий</div>}
+              />
+            </div>
             <div className="case_tab_content_title">
               <p>Предметы, которые выпадают</p>
             </div>

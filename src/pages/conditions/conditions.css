@@ -1,0 +1,56 @@
+.conditions_wrapper {
+  min-height: 500px;
+  max-width: 1000px;
+  border-radius: 0px 3px 3px 3px;
+  border: 1px solid var(--unnamed, #cfd3de);
+  background: var(--unnamed, #fff);
+  /* border-top: none; */
+  margin-bottom: 50px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.condition_input {
+  margin-bottom: 20px;
+}
+.condition_input p {
+  color: var(--unnamed, #121212);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+.condition_input input {
+  height: 52px;
+  width: 500px;
+  border-radius: 3px;
+  border: 1px solid var(--unnamed, #cfd3de);
+  background: var(--unnamed, #fff);
+  outline: none;
+  padding: 14px 16px;
+  color: #121212;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.condition_input textarea {
+  height: 200px;
+  width: 500px;
+  border-radius: 3px;
+  border: 1px solid var(--unnamed, #cfd3de);
+  background: var(--unnamed, #fff);
+  outline: none;
+  padding: 14px 16px;
+  color: #121212;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}

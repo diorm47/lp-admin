@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
-import { ReactComponent as TopIcon } from "../../assets/icons/top.svg";
 import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
-
 import Pagination from "../../components/pagionation/pagination";
-import { mainApi } from "../../components/utils/main-api";
-import "./cases.css";
 import Snacbar from "../../components/snackbar/snackbar";
+import { mainApi } from "../../components/utils/main-api";
 
-function Cases() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-  const [casesItems, setCasesItems] = useState();
-  const [cases, setCases] = useState();
+function Conditions() {
   const navigate = useNavigate();
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
@@ -26,9 +18,12 @@ function Cases() {
     }, 2000);
   };
 
-  const handleGetCases = () => {
+  const [casesItems, setCasesItems] = useState("");
+  const [items, setItems] = useState("");
+
+  const getConditionsList = () => {
     mainApi
-      .getCase()
+      .getConditions()
       .then((res) => {
         setCasesItems(res.results);
       })
@@ -36,59 +31,39 @@ function Cases() {
         console.log("error", error);
       });
   };
-  useEffect(() => {
-    handleGetCases();
-  }, []);
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    getConditionsList();
+  }, []);
+
+  const deleteItem = (id) => {
     mainApi
-      .getCaseCategoryAction()
+      .deleteCondition(id)
       .then((res) => {
-        setCategories(res.results);
+        snackbarActions("Условия удалёна!");
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }, []);
-
-  const editCase = (id) => {
-    navigate(`/edit-case/${id}`);
+    setTimeout(() => {
+      getConditionsList();
+      snackbarActions("Условия удалёна!");
+    }, 1500);
   };
 
-  const handleDeleteCase = (id) => {
-    mainApi
-      .deleteCase(id)
-      .then((res) => {
-        handleGetCases();
-        snackbarActions("Кейс удалён!");
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-    handleGetCases();
+  const editItem = (id) => {
+    navigate(`/edit-condition/${id}`);
   };
 
-  const [activeFilter, setActiveFilter] = useState("");
-  const filterItems = (type) => {
-    setActiveFilter(type);
-    if (type !== "all") {
-      const filtered = casesItems.filter(
-        (item) => item.category && item.category.category_id === type
-      );
-      console.log(casesItems);
-      setCases(filtered);
-    } else {
-      setCases(casesItems.slice(0, 10));
-    }
-  };
   const [selected, setSelected] = useState([]);
   const toggleSelected = (data) => {
     const filteredSelectedItems = selected.some(
-      (selected) => selected.case_id === data.case_id
+      (selected) => selected.condition_id === data.condition_id
     );
     if (filteredSelectedItems) {
-      setSelected(selected.filter((item) => item.case_id !== data.case_id));
+      setSelected(
+        selected.filter((item) => item.condition_id !== data.condition_id)
+      );
     } else {
       setSelected([...selected, data]);
     }
@@ -108,46 +83,11 @@ function Cases() {
       ) : (
         ""
       )}
-
       <div className="template_page employees_page">
         <div className="template_page_title">
-          <h1>Кейсы</h1>
+          <h1>Условии</h1>
           <div className="top_cases_actions">
-            <NavLink to="/create-case">
-              <button className="main_btn add_case_btn main_btn_template">
-                <p>Добавить кейс</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
-            </NavLink>
-            <NavLink to="/cases-category">
-              <button className="main_btn add_categories_btn main_btn_template_orange">
-                <p>Добавить категорию</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
-            </NavLink>
-            <NavLink to="/conditions">
+            <NavLink to="/create-condition">
               <button className="main_btn main_btn_template_red ">
                 <p>Добавить условие</p>
                 <svg
@@ -164,41 +104,11 @@ function Cases() {
                 </svg>
               </button>
             </NavLink>
-          </div>
+          </div>{" "}
         </div>
         <div className="template_page_content">
           <div className="cases_wrapper">
-            <div className="cases_top_togglers">
-              <button
-                className={
-                  activeFilter == "all"
-                    ? "main_btn top_active_filter"
-                    : "main_btn"
-                }
-                onClick={() => filterItems("all")}
-              >
-                <p>Все кейсы</p>
-              </button>
-              {categories && categories.length
-                ? categories.map((categories) => (
-                    <button
-                      className={
-                        activeFilter == categories.category_id
-                          ? "main_btn top_active_filter"
-                          : "main_btn"
-                      }
-                      key={categories.name}
-                      onClick={() => filterItems(categories.category_id)}
-                    >
-                      <p>{categories.name}</p>
-                    </button>
-                  ))
-                : ""}
-            </div>
             <div className="cases_top_actions">
-              <button className="main_btn main_btn_template_red">
-                <p>Действие над товаром</p>
-              </button>
               <div className="users_search">
                 <SearchIcon />
                 <input type="text" placeholder="Поиск" />
@@ -206,16 +116,18 @@ function Cases() {
             </div>
             <div className="user_line"></div>
 
-            {cases && cases.length ? (
+            {items && items.length ? (
               <table className="cases_table">
                 <thead>
                   <tr>
-                    <td> ID кейса</td>
+                    <td>ID условии</td>
                     <td>Название</td>
-                    <td>Категория</td>
+                    <td>Описание</td>
+                    <td className="tac">Тип</td>
                     <td className="tac">Цена (руб)</td>
-                    <td className="tac">Бесплатный</td>
-                    <td className="tac">Дата создания</td>
+                    <td className="tac">Время</td>
+                    <td className="tac">Время перезагрузки</td>
+
                     <td>
                       <div className="select_all">
                         <div className="is_selected ">
@@ -234,39 +146,28 @@ function Cases() {
                   </tr>
                 </thead>
                 <tbody>
-                  {cases && cases.length
-                    ? cases.map((cases) => (
-                        <tr key={cases.case_id}>
-                          <td>{cases.case_id || "-"}</td>
-                          <td>{cases.name || "-"}</td>
-                          <td>
-                            {cases.category && cases.category.name
-                              ? cases.category.name
-                              : "-"}
+                  {items && items.length
+                    ? items.map((item) => (
+                        <tr>
+                          <td>{item.condition_id}</td>
+                          <td>{item.name}</td>
+                          <td>{item.description}</td>
+                          <td className="tac">
+                            {item.type_condition == "calc"
+                              ? "Начисление"
+                              : "Время"}
                           </td>
-                          <td className="tac">{cases.price || 0} ₽</td>
+                          <td className="tac">{item.price} ₽</td>
+                          <td className="tac">{item.time}</td>
+                          <td className="tac">{item.time_reboot}</td>
 
-                          <td className="tac">
-                            {cases.case_free ? "Да" : "Нет"}
-                          </td>
-                          <td className="tac">
-                            {(cases &&
-                              cases.created_at &&
-                              cases.created_at.split("T")[0]) ||
-                              "-"}
-                            <br />
-                            {(cases &&
-                              cases.created_at &&
-                              cases.created_at.split("T")[1]) ||
-                              "-"}
-                          </td>
                           <td>
                             <div className="cases_table_actions">
                               <div className="cases_table_actions_list">
                                 <div
                                   title="редактировать"
                                   className="cases_table_edit"
-                                  onClick={() => editCase(cases.case_id)}
+                                  onClick={() => editItem(item.condition_id)}
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -285,9 +186,7 @@ function Cases() {
                                 <div
                                   title="удалить"
                                   className="cases_table_delete"
-                                  onClick={() =>
-                                    handleDeleteCase(cases.case_id)
-                                  }
+                                  onClick={() => deleteItem(item.condition_id)}
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -306,15 +205,15 @@ function Cases() {
                               <div className="is_selected ">
                                 {selected.some(
                                   (selected) =>
-                                    selected.case_id === cases.case_id
+                                    selected.condition_id === item.condition_id
                                 ) ? (
                                   <SelectedIcon
-                                    onClick={() => toggleSelected(cases)}
+                                    onClick={() => toggleSelected(item)}
                                   />
                                 ) : (
                                   <div
                                     className="not_selected_item"
-                                    onClick={() => toggleSelected(cases)}
+                                    onClick={() => toggleSelected(item)}
                                   ></div>
                                 )}
                               </div>
@@ -326,12 +225,11 @@ function Cases() {
                 </tbody>
               </table>
             ) : (
-              <p className="empty_error">Кейсы отсутствуют</p>
+              <p className="empty_error">Предметы отсутствуют</p>
             )}
-
             <div className="cases_paginations">
               {casesItems ? (
-                <Pagination allData={casesItems} paginationData={setCases} />
+                <Pagination allData={casesItems} paginationData={setItems} />
               ) : (
                 ""
               )}
@@ -343,4 +241,4 @@ function Cases() {
   );
 }
 
-export default Cases;
+export default Conditions;

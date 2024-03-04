@@ -36,6 +36,9 @@ import UserPage from "./pages/user-page/user-page";
 import Users from "./pages/users/users";
 import { loginUserAction } from "./redux/user-reducer";
 import CreateRarity from "./pages/rarity-category/create-rarity";
+import Conditions from "./pages/conditions/conditions";
+import CreateCondion from "./pages/conditions/create-condition";
+import EditCondion from "./pages/conditions/edit-condition";
 
 function App() {
   const dispatch = useDispatch();
@@ -116,6 +119,9 @@ function App() {
                 <Route path="/edit-case/:case" element={<EditCase />} />
                 <Route path="/cases-category" element={<CaseCategory />} />
                 <Route path="/create-rarity" element={<CreateRarity />} />
+                <Route path="/conditions" element={<Conditions />} />
+                <Route path="/create-condition" element={<CreateCondion />} />
+                <Route path="/edit-condition/:item" element={<EditCondion />} />
               </Routes>
             </Suspense>
           </div>
