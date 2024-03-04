@@ -46,7 +46,7 @@ function CaseCategory() {
         snackbarActions("Категория сохранена!");
         setValue("");
         getCategory();
-        setUpdatingCategory()
+        setUpdatingCategory();
       })
       .catch((error) => {
         console.log("error", error);
@@ -63,10 +63,13 @@ function CaseCategory() {
       .catch((error) => {
         console.log("error", error);
       });
-    
-      snackbarActions("Категория удалена!");
-      setUpdatingCategory();
+
+    snackbarActions("Категория удалена!");
+    setUpdatingCategory();
+
+    setTimeout(() => {
       getCategory();
+    }, 1200);
   };
   const updateCategory = () => {
     mainApi

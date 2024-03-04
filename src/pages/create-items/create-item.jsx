@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import "./create-item.css";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { mainApi } from "../../components/utils/main-api";
 import Snacbar from "../../components/snackbar/snackbar";
 
 function CreateItem() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+  const navigate = useNavigate();
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemPriceCrystals, setItemPriceCrystals] = useState("");
@@ -74,8 +78,8 @@ function CreateItem() {
         rarity_category_id: selectedRarity,
       })
       .then((res) => {
-        console.log(res);
         snackbarActions("Предмет создан!");
+        navigate("/items");
       })
       .catch((error) => {
         console.log("error", error);

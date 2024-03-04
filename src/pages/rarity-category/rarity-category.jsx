@@ -53,7 +53,9 @@ function RarityCategory() {
       });
 
     snackbarActions("Категория удалена!");
-    getRarityList();
+    setTimeout(() => {
+      getRarityList();
+    }, 1200);
   };
   // update-rarity
   const editCategory = (id) => {

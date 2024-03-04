@@ -7,6 +7,9 @@ import { mainApi } from "../../components/utils/main-api";
 import Snacbar from "../../components/snackbar/snackbar";
 
 function EditItem() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemPriceCrystals, setItemPriceCrystals] = useState("");
