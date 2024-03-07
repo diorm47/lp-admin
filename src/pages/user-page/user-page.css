@@ -24,6 +24,22 @@
   height: 80px;
   border-radius: 50px;
   margin-right: 16px;
+  object-fit: cover;
+}
+.empty_block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  padding: 50px 0;
+}
+.empty_block p {
+  position: absolute;
+  left: 50%;
+}
+.user_operations table {
+  position: relative;
 }
 
 .user_image_actions {
@@ -107,6 +123,7 @@
 .user_activities {
   display: flex;
   align-items: start;
+  flex-wrap: wrap;
   gap: 25px;
 }
 .user_winrate_title {
@@ -283,4 +300,52 @@
   font-weight: 600;
   line-height: 40px; /* 125% */
   text-align: center;
+}
+
+.user_checkboxes {
+  margin-top: 20px;
+}
+.user_checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.user_checkbox p {
+  font-size: 18px;
+}
+.user_checkbox input {
+  width: 20px;
+  height: 20px;
+}
+
+.mt_40px {
+  margin-top: 40px;
+}
+.edit_user_page {
+  padding-bottom: 50px;
+}
+.upload_user_img_btn {
+  border-radius: 6px;
+  border: 1px solid #dfdfdf;
+  background: #fff;
+  padding: 12px 16px;
+  cursor: pointer;
+  outline: none;
+  color: #030229;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  height: 48px;
+  line-height: 22px;
+  transition: all 0.4s ease;
+}
+.upload_user_img_btn:hover {
+  transition: all 0.4s ease;
+  background: #dfdfdf;
+}
+
+.user_page .back_btn {
+  margin-bottom: 30px;
 }

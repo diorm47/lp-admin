@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from "react";
-import "./user-page.css";
-import { useParams } from "react-router-dom";
-import { usersData } from "../../components/users";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import { ReactComponent as Google } from "../../assets/icons/socials/google.svg";
-import { ReactComponent as Vk } from "../../assets/icons/socials/vk.svg";
-import { ReactComponent as TG } from "../../assets/icons/socials/tg.svg";
 import { ReactComponent as Mailru } from "../../assets/icons/socials/mailru.svg";
+import { ReactComponent as TG } from "../../assets/icons/socials/tg.svg";
+import { ReactComponent as Vk } from "../../assets/icons/socials/vk.svg";
 import { ReactComponent as Yandex } from "../../assets/icons/socials/yandex.svg";
 import avatar from "../../assets/images/avatar.png";
 import PaginationSecondary from "../../components/pagionation-secondary/pagination-secondary";
 import { mainApi } from "../../components/utils/main-api";
+import "./user-page.css";
+import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 
 function UserPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const navigate = useNavigate();
 
   const params = useParams();
   const [user, setUser] = useState({});
+
+  const [userGamesData, setUserGamesData] = useState([]);
+  const [userGames, setUserGames] = useState([]);
+
+  const [userItemsData, setUserItemsData] = useState([]);
+  const [userItems, setUserItems] = useState([]);
+
+  const [userPaymentsData, setUserPaymentsData] = useState([]);
+  const [userPayments, setUserPayments] = useState([]);
+
+  // get user
   useEffect(() => {
     mainApi
       .getUserAction(params.user)
@@ -28,331 +40,48 @@ function UserPage() {
       .catch((error) => {
         console.log("error", error);
       });
-  }, []);
+  }, [params.user]);
 
-  const openingHistoryData = [
-    {
-      id: 24324,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "got_status",
-    },
-    {
-      id: 45645,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "error_status",
-    },
-    {
-      id: 123432,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "selled_status",
-    },
-    {
-      id: 234543,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "got_status",
-    },
-    {
-      id: 678657,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "error_status",
-    },
-    {
-      id: 65756,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "selled_status",
-    },
-    {
-      id: 4565465,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "got_status",
-    },
-    {
-      id: 34123432,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "error_status",
-    },
-    {
-      id: 56756,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "selled_status",
-    },
-    {
-      id: 353466,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "got_status",
-    },
-    {
-      id: 567547,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "error_status",
-    },
-    {
-      id: 123414,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "selled_status",
-    },
-    {
-      id: 34523,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "got_status",
-    },
-    {
-      id: 65785687,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "error_status",
-    },
-    {
-      id: 345365,
-      case_name: "Кейс от Зепикса",
-      recieved_item: "30 кристаллов",
-      date: "2023-12-03 21:34:21",
-      quantity: 12,
-      case_price: 234,
-      win_price: 122,
-      status: "selled_status",
-    },
-  ];
-  const [openingHistory, setOpeningHistory] = useState([]);
+  // get user game
+  useEffect(() => {
+    mainApi
+      .getUserGamesAction(params.user)
+      .then((res) => {
+        setUserGamesData(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [params.user]);
 
-  const openingHistoryTopupData = [
-    {
-      id: 23456,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "selled_status",
-    },
-    {
-      id: 345,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "got_status",
-    },
-    {
-      id: 12344,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "error_status",
-    },
-    {
-      id: 345,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "got_status",
-    },
-    {
-      id: 678,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "got_status",
-    },
-    {
-      id: 5676,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "error_status",
-    },
-    {
-      id: 4646,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "selled_status",
-    },
-    {
-      id: 2345,
-      name: "Киви карта",
-      date: "2023-12-03 21:34:21",
-      quantity: 34,
-      price: 34,
-      status: "error_status",
-    },
-  ];
-  const [openingHistoryTopup, setOpeningHistoryTopup] = useState([]);
+  // get user items
+  useEffect(() => {
+    mainApi
+      .getUserItemsAction(params.user)
+      .then((res) => {
+        setUserItemsData(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [params.user]);
 
-  const userInventarData = [
-    {
-      id: 234545,
-      item: "Луна ежемесячная",
-      got_type: "Апгрейд",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Доступен",
-    },
-    {
-      id: 456765,
-      item: "Луна ежемесячная",
-      got_type: "Открыл кейс",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Продан",
-    },
-    {
-      id: 45765,
-      item: "Луна ежемесячная",
-      got_type: "Апгрейд",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Доступен",
-    },
-    {
-      id: 4567457,
-      item: "Луна ежемесячная",
-      got_type: "Бесплатный кейс",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Выведен",
-    },
-    {
-      id: 4567,
-      item: "Луна ежемесячная",
-      got_type: "Апгрейд",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Доступен",
-    },
-    {
-      id: 789896,
-      item: "Луна ежемесячная",
-      got_type: "Открыл кейс",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Продан",
-    },
-    {
-      id: 67897689,
-      item: "Луна ежемесячная",
-      got_type: "Апгрейд",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Доступен",
-    },
-    {
-      id: 6789,
-      item: "Луна ежемесячная",
-      got_type: "Бесплатный кейс",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Выведен",
-    },
-    {
-      id: 687678,
-      item: "Луна ежемесячная",
-      got_type: "Апгрейд",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Доступен",
-    },
-    {
-      id: 68678,
-      item: "Луна ежемесячная",
-      got_type: "Открыл кейс",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Продан",
-    },
-    {
-      id: 567653,
-      item: "Луна ежемесячная",
-      got_type: "Апгрейд",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Доступен",
-    },
-    {
-      id: 12434,
-      item: "Луна ежемесячная",
-      got_type: "Бесплатный кейс",
-      date: "2023-12-03 21:34:21",
-      price: "450",
-      status: "Выведен",
-    },
-  ];
-  const [userInventar, setUserInventar] = useState([]);
+  // get user payments
+  useEffect(() => {
+    mainApi
+      .getUserPaymentsAction(params.user)
+      .then((res) => {
+        setUserPaymentsData(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [params.user]);
 
-  console.log(user);
+  const aboutUser = () => {
+    navigate(`/edit-user/${params.user}`);
+  };
+
   return (
     <div className="template_page user_page">
       <div className="template_page_title">
@@ -362,25 +91,29 @@ function UserPage() {
           <input type="text" placeholder="Поиск" />
         </div>
       </div>
+      <div className="user_line"></div>
+      <NavLink to={`/users`}>
+        <div className="back_btn">
+          <ArrowBackIcon /> <p>Назад</p>
+        </div>
+      </NavLink>
       <div className="template_page_content">
-        {user && user.user_id ? (
+        {user ? (
           <div className="user_page_wrapper">
-            <div className="user_line"></div>
             <div className="user_main_data">
               <p>Фото изображение человека</p>
               <div className="user_top_actions_btns">
                 <div className="user_image">
                   <img src={user.image || avatar} alt="" />
-                  <div className="user_image_actions">
-                    <button>Изменить</button>
-                    <button className="delete_user_btn">Удалить</button>
-                  </div>
                 </div>
                 <div className="user_action_btns">
                   <button className="main_btn main_btn_template_red">
-                    Заблокировать юзера
+                    {" "}
+                    Заблокировать{" "}
                   </button>
-                  <button className="main_btn">Разблокировать</button>
+                  <button className="main_btn" onClick={aboutUser}>
+                    Редактировать
+                  </button>
                 </div>
               </div>
             </div>
@@ -492,6 +225,7 @@ function UserPage() {
               </div>
             </div>
             <div className="user_line"></div>
+
             <div className="user_activity">
               <p className="user_block_title">Игровая активность</p>
               <div className="user_activities">
@@ -503,28 +237,6 @@ function UserPage() {
                     value={user.balance}
                     readOnly
                   />
-                  <svg
-                    className="copy_icon"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clipPath="url(#clip0_379_4164)">
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.9968 6.36003C16.2165 6.14036 16.2165 5.7842 15.9968 5.56453L12.2845 1.85222C12.0648 1.63255 11.7086 1.63255 11.489 1.85222L2.16271 11.1785C1.91657 11.4246 1.77828 11.7585 1.77828 12.1066L1.77828 15.5082C1.77828 15.8189 2.03012 16.0707 2.34078 16.0707L5.74243 16.0707C6.09053 16.0707 6.42437 15.9324 6.67051 15.6863L15.9968 6.36003ZM14.8035 5.96228L13.4777 7.28811L10.5609 4.37129L11.8867 3.04546L14.8035 5.96228ZM9.76541 5.16679L12.6822 8.0836L5.87502 14.8908C5.83985 14.926 5.79216 14.9457 5.74243 14.9457L2.90328 14.9457L2.90328 12.1066C2.90328 12.0568 2.92304 12.0092 2.9582 11.974L9.76541 5.16679Z"
-                        fill="black"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_379_4164">
-                        <rect width="18" height="18" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
                 </div>
                 <div className="personal_information_block winrate_edit">
                   <p>Винрейт</p>
@@ -534,39 +246,69 @@ function UserPage() {
                     value={user.winrate}
                     readOnly
                   />
-                  <svg
-                    className="copy_icon"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clipPath="url(#clip0_379_4164)">
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.9968 6.36003C16.2165 6.14036 16.2165 5.7842 15.9968 5.56453L12.2845 1.85222C12.0648 1.63255 11.7086 1.63255 11.489 1.85222L2.16271 11.1785C1.91657 11.4246 1.77828 11.7585 1.77828 12.1066L1.77828 15.5082C1.77828 15.8189 2.03012 16.0707 2.34078 16.0707L5.74243 16.0707C6.09053 16.0707 6.42437 15.9324 6.67051 15.6863L15.9968 6.36003ZM14.8035 5.96228L13.4777 7.28811L10.5609 4.37129L11.8867 3.04546L14.8035 5.96228ZM9.76541 5.16679L12.6822 8.0836L5.87502 14.8908C5.83985 14.926 5.79216 14.9457 5.74243 14.9457L2.90328 14.9457L2.90328 12.1066C2.90328 12.0568 2.92304 12.0092 2.9582 11.974L9.76541 5.16679Z"
-                        fill="black"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_379_4164">
-                        <rect width="18" height="18" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  <p className="user_winrate_title">
-                    {user.winrate > 50 ? "Высокий процент победы!" : ""}{" "}
-                  </p>
-                  <div className="user_winrate">
-                    <button className="user_winrate_btn">
-                      Настроить подкрутку
-                    </button>
-                  </div>
+                </div>
+                <div className="personal_information_block winrate_edit">
+                  <p>Процент накрутки</p>
+                  <input
+                    type="text"
+                    placeholder="0"
+                    value={user.individual_percent}
+                    readOnly
+                  />
+                </div>
+              </div>
+              <p className="user_block_title mt_40px">Реферальная система</p>{" "}
+              <div className="user_activities">
+                <div className="personal_information_block">
+                  <p>Процент от рефералов</p>
+                  <input
+                    type="text"
+                    placeholder="0"
+                    value={user.partner_percent}
+                    readOnly
+                  />
+                </div>
+                <div className="personal_information_block">
+                  <p>Поступления с рефералов</p>
+                  <input
+                    type="text"
+                    placeholder="0"
+                    value={user.partner_income}
+                    readOnly
+                  />
+                </div>
+                <div className="personal_information_block">
+                  <p>Вывел с реферального баланса</p>
+                  <input
+                    type="text"
+                    placeholder="0"
+                    value={user.total_withdrawal}
+                    readOnly
+                  />
+                </div>
+                <div className="personal_information_block">
+                  <p>Доступно для вывода</p>
+                  <input
+                    type="text"
+                    placeholder="0"
+                    value={user.available_withdrawal}
+                    readOnly
+                  />
+                </div>
+              </div>
+              <div className="user_checkboxes">
+                <div className="user_checkbox">
+                  <p>Верифицирован:</p>
+                  <input type="checkbox" checked={user.verified} />
+                </div>
+                <div className="user_checkbox">
+                  <p>Демо:</p>
+                  <input type="checkbox" checked={user.verified} />
                 </div>
               </div>
             </div>
+
+            {/* game */}
             <div className="user_operations">
               <div className="user_operations_title">
                 <p className="user_block_title">История открытий</p>
@@ -590,54 +332,63 @@ function UserPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {openingHistory
-                      ? openingHistory.map((item) => (
-                          <tr>
-                            <td>{item.id}</td>
-                            <td>{item.case_name}</td>
-                            <td>{item.recieved_item}</td>
-                            <td>{item.date}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.case_price} р.</td>
-                            <td>{item.win_price} р.</td>
+                    {userGames && userGames.length ? (
+                      userGames.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.id || "-"}</td>
+                          <td>{item.case}</td>
+                          <td>{item.item}</td>
+                          <td>{item.date || "-"}</td>
+                          <td>{item.quantity || "-"}</td>
+                          <td>{item.case_price || "-"} р.</td>
+                          <td>{item.win_price || "-"} р.</td>
 
-                            <td>
-                              <div className="open_status_box">
-                                {item.status === "got_status" ? (
-                                  <div className="open_status status_succes">
-                                    <p>Получен</p>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-                                {item.status === "selled_status" ? (
-                                  <div className="open_status status_selled">
-                                    <p>Продан</p>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-                                {item.status === "error_status" ? (
-                                  <div className="open_status status_error">
-                                    <p>Ошибка</p>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      : ""}
+                          <td>
+                            <div className="open_status_box">
+                              {item.status === "got_status" ? (
+                                <div className="open_status status_succes">
+                                  <p>Получен</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {item.status === "selled_status" ? (
+                                <div className="open_status status_selled">
+                                  <p>Продан</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {item.status === "error_status" ? (
+                                <div className="open_status status_error">
+                                  <p>Ошибка</p>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <div className="empty_block">
+                        <p>Пусто</p>
+                      </div>
+                    )}
                   </tbody>
                 </table>
               </div>
-              <PaginationSecondary
-                allData={openingHistoryData}
-                paginationData={setOpeningHistory}
-                length={6}
-              />
+              {userGamesData && userGamesData.length ? (
+                <PaginationSecondary
+                  allData={userGamesData}
+                  paginationData={setUserGames}
+                  length={6}
+                />
+              ) : (
+                ""
+              )}
             </div>
+            {/* payments */}
             <div className="user_operations">
               <div className="user_operations_title">
                 <p className="user_block_title">История пополнений</p>
@@ -659,33 +410,42 @@ function UserPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {openingHistoryTopup
-                      ? openingHistoryTopup.map((item) => (
-                          <tr>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.date}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.price} р.</td>
-                            <td>
-                              <div className="open_status_box">
-                                <div className="open_status status_succes">
-                                  <p>Пополнен</p>
-                                </div>
+                    {userPayments && userPayments.length ? (
+                      userPayments.map((item) => (
+                        <tr>
+                          <td>{item.id || "-"}</td>
+                          <td>{item.status || "-"}</td>
+                          <td>{item.created_at}</td>
+                          <td>{item.quantity || "-"}</td>
+                          <td>{item.sum} р.</td>
+                          <td>
+                            <div className="open_status_box">
+                              <div className="open_status status_succes">
+                                <p>-</p>
                               </div>
-                            </td>
-                          </tr>
-                        ))
-                      : ""}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <div className="empty_block">
+                        <p>Пусто</p>
+                      </div>
+                    )}
                   </tbody>
                 </table>
               </div>
-              <PaginationSecondary
-                allData={openingHistoryTopupData}
-                paginationData={setOpeningHistoryTopup}
-                length={6}
-              />
+              {userPaymentsData && userPaymentsData.length ? (
+                <PaginationSecondary
+                  allData={userPaymentsData}
+                  paginationData={setUserPayments}
+                  length={6}
+                />
+              ) : (
+                ""
+              )}
             </div>
+            {/* stats */}
             <div className="user_operations">
               <div className="user_operations_title">
                 <p className="user_block_title">Статистика пользователя</p>
@@ -696,7 +456,7 @@ function UserPage() {
                     <p>Депозитов за все время</p>
                   </div>
                   <div className="user_stats_block_amount">
-                    <p>250 230 ₽</p>
+                    <p>{user.all_debit} ₽</p>
                   </div>
                 </div>
                 <div className="user_stats_block">
@@ -704,7 +464,7 @@ function UserPage() {
                     <p>Выйграл</p>
                   </div>
                   <div className="user_stats_block_amount">
-                    <p>290 230 ₽</p>
+                    <p>- ₽</p>
                   </div>
                 </div>
                 <div className="user_stats_block">
@@ -712,7 +472,7 @@ function UserPage() {
                     <p>Проиграл</p>
                   </div>
                   <div className="user_stats_block_amount">
-                    <p>4 250 230 ₽</p>
+                    <p>- ₽</p>
                   </div>
                 </div>
                 <div className="user_stats_block">
@@ -720,11 +480,12 @@ function UserPage() {
                     <p>Вывел</p>
                   </div>
                   <div className="user_stats_block_amount">
-                    <p>100 050 ₽</p>
+                    <p>{user.all_output} ₽</p>
                   </div>
                 </div>
               </div>
             </div>
+            {/* inventar */}
             <div className="user_operations">
               <div className="user_operations_title">
                 <p className="user_block_title">Инвентарь</p>
@@ -746,32 +507,40 @@ function UserPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {userInventar
-                      ? userInventar.map((item) => (
-                          <tr>
-                            <td>{item.id}</td>
-                            <td>{item.item}</td>
-                            <td>{item.got_type}</td>
-                            <td>{item.date}</td>
-                            <td>{item.price} р.</td>
-                            <td>
-                              <div className="open_status_box">
-                                <div className="open_status status_succes">
-                                  <p>{item.status}</p>
-                                </div>
+                    {userItems && userItems.length ? (
+                      userItems.map((item) => (
+                        <tr>
+                          <td>{item.id}</td>
+                          <td>{item.name}</td>
+                          <td>{item.got_type || "-"}</td>
+                          <td>{item.date || "-"}</td>
+                          <td>{item.price} р.</td>
+                          <td>
+                            <div className="open_status_box">
+                              <div className="open_status status_succes">
+                                <p>{item.status}</p>
                               </div>
-                            </td>
-                          </tr>
-                        ))
-                      : ""}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <div className="empty_block">
+                        <p>Пусто</p>
+                      </div>
+                    )}
                   </tbody>
                 </table>
               </div>
-              <PaginationSecondary
-                allData={userInventarData}
-                paginationData={setUserInventar}
-                length={6}
-              />
+              {userItemsData && userItemsData.length ? (
+                <PaginationSecondary
+                  allData={userItemsData}
+                  paginationData={setUserItems}
+                  length={6}
+                />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         ) : (

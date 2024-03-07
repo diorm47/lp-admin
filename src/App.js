@@ -39,6 +39,7 @@ import CreateRarity from "./pages/rarity-category/create-rarity";
 import Conditions from "./pages/conditions/conditions";
 import CreateCondion from "./pages/conditions/create-condition";
 import EditCondion from "./pages/conditions/edit-condition";
+import EditUserPage from "./pages/user-page/edit-user-page";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,6 +80,8 @@ function App() {
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/user/:user" element={<UserPage />} />
+                <Route path="/edit-user/:user" element={<EditUserPage />} />
+
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/cases" element={<Cases />} />
                 <Route path="/payments" element={<Payments />} />

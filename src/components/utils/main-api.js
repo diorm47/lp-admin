@@ -385,6 +385,31 @@ class MainApi {
       method: "GET",
     });
   }
+  async updateUserAction(data, id) {
+    return this._sendRequest({
+      endpoint: `${path}/user/${id}/`,
+      method: "PUT",
+      body: data,
+    });
+  }
+  async getUserGamesAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/user/${id}/games/`,
+      method: "GET",
+    });
+  }
+  async getUserItemsAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/user/${id}/items/`,
+      method: "GET",
+    });
+  }
+  async getUserPaymentsAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/user/${id}/payments/`,
+      method: "GET",
+    });
+  }
 
   // Rarity
   // Get rarity list

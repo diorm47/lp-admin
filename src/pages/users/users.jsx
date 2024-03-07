@@ -8,281 +8,8 @@ import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon
 import { mainApi } from "../../components/utils/main-api";
 
 function Users() {
-  const usersData = [
-    {
-      id: 345,
-      name: "Дуров",
-      email: "admin567@mail.ru",
-      balance: 999,
-      deposite: 2322,
-      winrate: 47,
-    },
-    {
-      id: 59879,
-      name: "Маленькая",
-      email: "56765admin@mail.ru",
-      balance: 2333,
-      deposite: 656,
-      winrate: 65,
-    },
-    {
-      id: 4356436,
-      name: "Агаб",
-      email: "admin5675@mail.ru",
-      balance: 565,
-      deposite: 4356,
-      winrate: 45,
-    },
-    {
-      id: 4567,
+  const [usersData, setUsersData] = useState([]);
 
-      name: "Лерка",
-      email: "admi56756n@mail.ru",
-      balance: 4566,
-      deposite: 23444,
-      winrate: 24,
-    },
-    {
-      id: 238744,
-
-      name: "Маленькая",
-      email: "admi6466n@mail.ru",
-      balance: 234,
-      deposite: 34223,
-      winrate: 42,
-    },
-    {
-      id: 45666,
-
-      name: "Алексей Фишль",
-      email: "a3455dmin@mail.ru",
-      balance: 3455,
-      deposite: 6577,
-      winrate: 65,
-    },
-    {
-      id: 4394,
-      name: "Дуров",
-      email: "admin567@mail.ru",
-      balance: 999,
-      deposite: 2322,
-      winrate: 47,
-    },
-    {
-      id: 345785,
-      name: "Маленькая",
-      email: "56765admin@mail.ru",
-      balance: 2333,
-      deposite: 656,
-      winrate: 65,
-    },
-    {
-      id: 1568722,
-      name: "Агаб",
-      email: "admin5675@mail.ru",
-      balance: 565,
-      deposite: 4356,
-      winrate: 45,
-    },
-    {
-      id: 6547887,
-
-      name: "Лерка",
-      email: "admi56756n@mail.ru",
-      balance: 4566,
-      deposite: 23444,
-      winrate: 24,
-    },
-    {
-      id: 2345784,
-
-      name: "Маленькая",
-      email: "admi6466n@mail.ru",
-      balance: 234,
-      deposite: 34223,
-      winrate: 42,
-    },
-    {
-      id: 45568766,
-
-      name: "Алексей Фишль",
-      email: "a3455dmin@mail.ru",
-      balance: 3455,
-      deposite: 6577,
-      winrate: 65,
-    },
-    {
-      id: 4356784,
-      name: "Дуров",
-      email: "admin567@mail.ru",
-      balance: 999,
-      deposite: 2322,
-      winrate: 47,
-    },
-    {
-      id: 3423455,
-      name: "Маленькая",
-      email: "56765admin@mail.ru",
-      balance: 2333,
-      deposite: 656,
-      winrate: 65,
-    },
-    {
-      id: 35122,
-      name: "Агаб",
-      email: "admin5675@mail.ru",
-      balance: 565,
-      deposite: 4356,
-      winrate: 45,
-    },
-    {
-      id: 37834,
-
-      name: "Лерка",
-      email: "admi56756n@mail.ru",
-      balance: 4566,
-      deposite: 23444,
-      winrate: 24,
-    },
-    {
-      id: 234478,
-
-      name: "Маленькая",
-      email: "admi6466n@mail.ru",
-      balance: 234,
-      deposite: 34223,
-      winrate: 42,
-    },
-    {
-      id: 456006,
-
-      name: "Алексей Фишль",
-      email: "a3455dmin@mail.ru",
-      balance: 3455,
-      deposite: 6577,
-      winrate: 65,
-    },
-    {
-      id: 234994,
-
-      name: "Маленькая",
-      email: "admi6466n@mail.ru",
-      balance: 234,
-      deposite: 34223,
-      winrate: 42,
-    },
-    {
-      id: 4567896,
-
-      name: "Алексей Фишль",
-      email: "a3455dmin@mail.ru",
-      balance: 3455,
-      deposite: 6577,
-      winrate: 65,
-    },
-    {
-      id: 43904,
-      name: "Дуров",
-      email: "admin567@mail.ru",
-      balance: 999,
-      deposite: 2322,
-      winrate: 47,
-    },
-    {
-      id: 34905,
-      name: "Маленькая",
-      email: "56765admin@mail.ru",
-      balance: 2333,
-      deposite: 656,
-      winrate: 65,
-    },
-    {
-      id: 12902,
-      name: "Агаб",
-      email: "admin5675@mail.ru",
-      balance: 565,
-      deposite: 4356,
-      winrate: 45,
-    },
-    {
-      id: 6500934,
-
-      name: "Лерка",
-      email: "admi56756n@mail.ru",
-      balance: 4566,
-      deposite: 23444,
-      winrate: 24,
-    },
-    {
-      id: 239044,
-
-      name: "Маленькая",
-      email: "admi6466n@mail.ru",
-      balance: 234,
-      deposite: 34223,
-      winrate: 42,
-    },
-    {
-      id: 456906,
-
-      name: "Алексей Фишль",
-      email: "a3455dmin@mail.ru",
-      balance: 3455,
-      deposite: 6577,
-      winrate: 65,
-    },
-    {
-      id: 489034,
-      name: "Дуров",
-      email: "admin567@mail.ru",
-      balance: 999,
-      deposite: 2322,
-      winrate: 47,
-    },
-    {
-      id: 348905,
-      name: "Маленькая",
-      email: "56765admin@mail.ru",
-      balance: 2333,
-      deposite: 656,
-      winrate: 65,
-    },
-    {
-      id: 12002,
-      name: "Агаб",
-      email: "admin5675@mail.ru",
-      balance: 565,
-      deposite: 4356,
-      winrate: 45,
-    },
-    {
-      id: 6540034,
-
-      name: "Лерка",
-      email: "admi56756n@mail.ru",
-      balance: 4566,
-      deposite: 23444,
-      winrate: 24,
-    },
-    {
-      id: 234904,
-
-      name: "Маленькая",
-      email: "admi6466n@mail.ru",
-      balance: 234,
-      deposite: 34223,
-      winrate: 42,
-    },
-    {
-      id: 490566,
-
-      name: "Алексей Фишль",
-      email: "a3455dmin@mail.ru",
-      balance: 3455,
-      deposite: 6577,
-      winrate: 65,
-    },
-  ];
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const aboutUser = (id) => {
@@ -293,10 +20,10 @@ function Users() {
 
   const toggleSelected = (data) => {
     const filteredSelectedItems = selected.some(
-      (selected) => selected.id === data.id
+      (selected) => selected.user_id === data.user_id
     );
     if (filteredSelectedItems) {
-      setSelected(selected.filter((item) => item.id !== data.id));
+      setSelected(selected.filter((item) => item.user_id !== data.user_id));
     } else {
       setSelected([...selected, data]);
     }
@@ -314,7 +41,7 @@ function Users() {
     mainApi
       .getUsersActions()
       .then((res) => {
-        setUsers(res.results);
+        setUsersData(res.results);
       })
       .catch((error) => {
         console.log("error", error);
@@ -377,7 +104,7 @@ function Users() {
                 <th className="table_user_id_title">ID</th>
                 <th className="table_user_avatar_title">Аватар</th>
                 <th className="table_user_name_title">Имя юзера</th>
-                <th className="table_user_email_title">Почта</th>
+              
                 <th className="table_user_balance_title">Баланс</th>
                 <th className="table_user_deposite_title">Депозитов</th>
                 <th className="table_user_winrate_title">Выводы</th>
@@ -402,7 +129,7 @@ function Users() {
             <tbody>
               {users
                 ? users.map((user) => (
-                    <tr key={user.iuser_idd}>
+                    <tr key={user.user_id}>
                       <td className="table_user_id_row">
                         <p>{user.user_id}</p>
                       </td>
@@ -412,9 +139,7 @@ function Users() {
                       <td className="table_user_name_row">
                         <p>{user.username}</p>
                       </td>
-                      <td className="table_user_email_row">
-                        <p>{user.email}</p>
-                      </td>
+            
                       <td className="table_user_balance_row">
                         <p>{user.balance.toFixed(2)} ₽</p>
                       </td>
@@ -466,7 +191,7 @@ function Users() {
                           </div>
                           <div className="is_selected ">
                             {selected.some(
-                              (selected) => selected.id === user.id
+                              (selected) => selected.user_id === user.user_id
                             ) ? (
                               <SelectedIcon
                                 onClick={() => toggleSelected(user)}
@@ -486,9 +211,9 @@ function Users() {
             </tbody>
           </table>
 
-          {/* <div className="cases_paginations">
+          <div className="cases_paginations">
             <Pagination allData={usersData} paginationData={setUsers} />
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
