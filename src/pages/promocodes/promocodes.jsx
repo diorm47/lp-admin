@@ -1,232 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-icon.svg";
 import Pagination from "../../components/pagionation/pagination";
 
 import "./promocodes.css";
 import { ReactComponent as SelectedIcon } from "../../assets/icons/selected-icon.svg";
+import { mainApi } from "../../components/utils/main-api";
+import Snacbar from "../../components/snackbar/snackbar";
 
 function Promocodes() {
-  const promocodesData = [
-    {
-      promocode_id: 12344,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 34555,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 34566,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 23444,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 456546,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 2344455,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 45777,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 345566,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 2345555,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-
-    {
-      promocode_id: 567889,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 23455,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 6666667,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 2345,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 67886,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 34677,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 234234,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-
-    {
-      promocode_id: 657768,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 456546,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 23456,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-    {
-      promocode_id: 456787,
-      name: "Кристаллик",
-      category: "Бонус ₽ к депозиту",
-      bonus: "100",
-      activations: "234",
-      deposits: "345555",
-      time_send: "Одноразовый",
-      date: "2023-09-01 22:34:23",
-    },
-  ];
-  const [promocodes, setPromocodes] = useState();
+  const [promocodesData, setPromocodesData] = useState([]);
+  const [promocodes, setPromocodes] = useState([]);
   const navigate = useNavigate();
   const editPromocode = (id) => {
-    navigate(`/edit-promocode`);
+    navigate(`/edit-promocode/${id}`);
   };
-
   const [selected, setSelected] = useState([]);
+
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
 
   const toggleSelected = (data) => {
     const filteredSelectedItems = selected.some(
-      (selected) => selected.promocode_id === data.promocode_id
+      (selected) => selected.id === data.id
     );
     if (filteredSelectedItems) {
-      setSelected(
-        selected.filter((item) => item.promocode_id !== data.promocode_id)
-      );
+      setSelected(selected.filter((item) => item.id !== data.id));
     } else {
       setSelected([...selected, data]);
     }
@@ -238,6 +44,33 @@ function Promocodes() {
     } else {
       setSelected([...promocodesData]);
     }
+  };
+
+  const getPromocodes = () => {
+    mainApi
+      .getPromos()
+      .then((res) => {
+        setPromocodesData(res.results);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  useEffect(() => {
+    getPromocodes();
+  }, []);
+
+  const deletePromocode = (id) => {
+    mainApi
+      .deletePromo(id)
+      .then((res) => {})
+      .catch((error) => {
+        console.log("error", error);
+      });
+    snackbarActions("Промокод удален!");
+    setTimeout(() => {
+      getPromocodes();
+    }, 1200);
   };
 
   return (
@@ -290,19 +123,14 @@ function Promocodes() {
                 <tr>
                   <td>ID</td>
                   <td>Имя</td>
-                  <td>Категория</td>
-                  <td className="tac">Бонус</td>
-                  <td className="tac">Кол-во активаций</td>
-                  <td className="tac">Сумма депов</td>
-                  <td className="tac">Время действия</td>
-                  <td className="tac">Дата создания</td>
+                  <td>Тип</td>
+                  <td className="tac">Кол</td>
+
                   <td>
                     <div className="select_all">
                       <div className="is_selected ml_55px">
                         {selected.length == promocodesData.length ? (
-                          <SelectedIcon
-                            onClick={toggleAllDataSelected}
-                          />
+                          <SelectedIcon onClick={toggleAllDataSelected} />
                         ) : (
                           <div
                             className="not_selected_item"
@@ -318,27 +146,19 @@ function Promocodes() {
               <tbody>
                 {promocodes && promocodes.length
                   ? promocodes.map((promocode) => (
-                      <tr key={promocode.promocode_id}>
-                        <td>{promocode.promocode_id}</td>
+                      <tr key={promocode.id}>
+                        <td>{promocode.id}</td>
                         <td>{promocode.name}</td>
-                        <td>{promocode.category || "-"}</td>
-                        <td className="tac">+ {promocode.bonus} ₽</td>
-                        <td className="tac">{promocode.activations}</td>
-                        <td className="tac">{promocode.deposits} ₽</td>
-                        <td className="tac">{promocode.time_send}</td>
+                        <td>{promocode.type || "-"}</td>
+                        <td className="tac">{promocode.code_data}</td>
 
-                        <td className="tac">
-                          {promocode.date.split(" ")[0]}
-                          <br />
-                          {promocode.date.split(" ")[1]}
-                        </td>
                         <td>
                           <div className="cases_table_actions">
                             <div className="cases_table_actions_list">
                               <div
                                 title="редактировать"
                                 className="cases_table_edit"
-                                onClick={() => editPromocode()}
+                                onClick={() => editPromocode(promocode.id)}
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -371,6 +191,7 @@ function Promocodes() {
                               <div
                                 title="удалить"
                                 className="cases_table_delete"
+                                onClick={() => deletePromocode(promocode.id)}
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -403,11 +224,9 @@ function Promocodes() {
                                 </svg>
                               </div>
                             </div>
-                            <div className="is_selected ml_55px">
+                            <div className="is_selected ">
                               {selected.some(
-                                (selected) =>
-                                  selected.promocode_id ===
-                                  promocode.promocode_id
+                                (selected) => selected.id === promocode.id
                               ) ? (
                                 <SelectedIcon
                                   onClick={() => toggleSelected(promocode)}
@@ -439,6 +258,12 @@ function Promocodes() {
           </div>
         </div>
       </div>
+
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
     </>
   );
 }

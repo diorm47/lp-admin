@@ -103,7 +103,7 @@ function App() {
                 />
                 <Route path="/promocodes" element={<Promocodes />} />
                 <Route path="/create-promocode" element={<CreatePromocode />} />
-                <Route path="/edit-promocode" element={<EditPromocode />} />
+                <Route path="/edit-promocode/:id" element={<EditPromocode />} />
                 <Route path="/items" element={<Items />} />
                 <Route path="/add-employee" element={<AddEmploye />} />
                 <Route

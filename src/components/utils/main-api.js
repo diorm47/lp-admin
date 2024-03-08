@@ -459,6 +459,46 @@ class MainApi {
       body: data,
     });
   }
+
+  // Promo
+  async getPromos() {
+    return this._sendRequest({
+      endpoint: `${path}/promo/`,
+      method: "GET",
+    });
+  }
+  // create promo
+  async createPromo(data) {
+    return this._sendRequest({
+      endpoint: `${path}/promo/`,
+      method: "POST",
+      body: data,
+    });
+  }
+
+  // Get promo item
+  async getPromoAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/promo/${id}/`,
+      method: "GET",
+    });
+  }
+  // update promo
+  async updatePromo(data, id) {
+    return this._sendRequest({
+      endpoint: `${path}/promo/${id}/`,
+      method: "PUT",
+      body: data,
+    });
+  }
+
+  // delete promo
+  async deletePromo(id) {
+    return this._sendRequest({
+      endpoint: `${path}/promo/${id}/`,
+      method: "DELETE",
+    });
+  }
 }
 
 export const mainApi = new MainApi(mainApiOptions);

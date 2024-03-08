@@ -1,17 +1,85 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
+import Snacbar from "../../components/snackbar/snackbar";
+import { mainApi } from "../../components/utils/main-api";
 import "./create-promocode.css";
 
 function EditPromocode() {
-  const [promoName, setPromoName] = useState("Кристаллик");
-  const [promoCategory, setPromoCategory] = useState("percent");
-  const [depositPercent, setDepositPercent] = useState("40");
-  const [workingAmount, setWorkingAmount] = useState("100");
-  const [promoTime, setPromoTime] = useState("1");
-  const [activationsAmount, setActivationsAmount] = useState("200");
+  const params = useParams();
+  const [promoid, setPromoId] = useState("");
+
+  const [promoName, setPromoName] = useState("");
+  const [promoCategory, setPromoCategory] = useState("bonus");
+  const [depositPercent, setDepositPercent] = useState("");
+  const [workingAmount, setWorkingAmount] = useState("");
+  const [promoTime, setPromoTime] = useState();
+  const [activationsAmount, setActivationsAmount] = useState("");
+
+  const [active, setActive] = useState(true);
+  const [limitUser, setLimitUser] = useState();
+  const [bonusLimit, setBonusLimit] = useState();
+
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
+
+  const getPromoItem = () => {
+    mainApi
+      .getPromoAction(params.id)
+      .then((res) => {
+        setPromoId(res.id);
+        setPromoName(res.name);
+        setPromoCategory(res.type);
+        setDepositPercent(res.percent);
+        setWorkingAmount(res.summ);
+        setPromoTime(res.to_date.split("T")[0]);
+        setActivationsAmount(res.limit_activations);
+        setActive(res.active);
+        setLimitUser(res.limit_for_user);
+        setBonusLimit(res.bonus_limit);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  useEffect(() => {
+    getPromoItem();
+  }, [params.id]);
+
+  const savePromoEdits = () => {
+    mainApi
+      .updatePromo(
+        {
+          name: promoName,
+          type: promoCategory,
+          active: active,
+          summ: workingAmount,
+          percent: depositPercent,
+          limit_activations: activationsAmount,
+          limit_for_user: limitUser,
+          bonus_limit: bonusLimit,
+          to_date: promoTime,
+        },
+        promoid
+      )
+      .then((res) => {
+        snackbarActions("Промокод обновлен");
+      })
+      .catch((error) => {
+        console.log("error", error);
+        snackbarActions("Ошибка обновления промокода");
+      });
+  };
 
   return (
     <>
@@ -64,61 +132,39 @@ function EditPromocode() {
                     />
                   </div>
                 </div>
+
+                <div className="case_input_temp case_input_temp_checkbox">
+                  <input
+                    type="checkbox"
+                    checked={active}
+                    onClick={() => setActive(!active)}
+                  />{" "}
+                  <p>Активность</p>
+                </div>
+
                 <div className="case_input_temp">
                   <p>Категория промокода</p>
 
                   <div className="item_color_wrapper promocode_category">
                     <div
                       className={
-                        promoCategory == "percent"
+                        promoCategory == "bonus"
                           ? "item_color_btn item_color_btn_active"
                           : "item_color_btn"
                       }
-                      onClick={() => setPromoCategory("percent")}
+                      onClick={() => setPromoCategory("bonus")}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <path
-                          d="M7.49805 11.0022C9.42805 11.0022 10.998 9.43217 10.998 7.50217C10.998 5.57217 9.42805 4.00217 7.49805 4.00217C5.56805 4.00217 3.99805 5.57217 3.99805 7.50217C3.99805 9.43217 5.56805 11.0022 7.49805 11.0022ZM7.49805 6.00217C8.32805 6.00217 8.99805 6.67217 8.99805 7.50217C8.99805 8.33217 8.32805 9.00217 7.49805 9.00217C6.66805 9.00217 5.99805 8.33217 5.99805 7.50217C5.99805 6.67217 6.66805 6.00217 7.49805 6.00217Z"
-                          fill="#737373"
-                        />
-                        <path
-                          d="M18.588 3.9978L4.00055 18.5853L5.41475 19.9995L20.0022 5.412L18.588 3.9978Z"
-                          fill="#737373"
-                        />
-                        <path
-                          d="M16.498 13.0022C14.568 13.0022 12.998 14.5722 12.998 16.5022C12.998 18.4322 14.568 20.0022 16.498 20.0022C18.428 20.0022 19.998 18.4322 19.998 16.5022C19.998 14.5722 18.428 13.0022 16.498 13.0022ZM16.498 18.0022C15.668 18.0022 14.998 17.3322 14.998 16.5022C14.998 15.6722 15.668 15.0022 16.498 15.0022C17.328 15.0022 17.998 15.6722 17.998 16.5022C17.998 17.3322 17.328 18.0022 16.498 18.0022Z"
-                          fill="#737373"
-                        />
-                      </svg>
-                      <p>Бонус % к пополнению</p>
+                      <p>Бонус</p>
                     </div>
                     <div
                       className={
-                        promoCategory == "money"
+                        promoCategory == "balance"
                           ? "item_color_btn item_color_btn_active"
                           : "item_color_btn"
                       }
-                      onClick={() => setPromoCategory("money")}
+                      onClick={() => setPromoCategory("balance")}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <path
-                          d="M13.5 3H7V12H5V14H7V16H5V18H7V21H9V18H13V16H9V14H13.5C16.54 14 19 11.54 19 8.5C19 5.46 16.54 3 13.5 3ZM13.5 12H9V5H13.5C15.43 5 17 6.57 17 8.5C17 10.43 15.43 12 13.5 12Z"
-                          fill="#737373"
-                        />
-                      </svg>
-                      <p>Бонус ₽ к пополнению</p>
+                      <p>Баланс</p>
                     </div>
                   </div>
                 </div>
@@ -179,51 +225,13 @@ function EditPromocode() {
                 <div className="case_tab_content_title">
                   <p>Ограничения</p>
                 </div>
-                <div className="case_input_temp promocodes_time">
+                <div className="case_input_temp ">
                   <p>Время действия</p>
-
-                  <div className="item_color_wrapper">
-                    <div
-                      className={
-                        promoTime == "1"
-                          ? "item_color_btn item_color_btn_active"
-                          : "item_color_btn"
-                      }
-                      onClick={() => setPromoTime("1")}
-                    >
-                      <p>Кол-во активаций</p>
-                    </div>
-                    <div
-                      className={
-                        promoTime == "2"
-                          ? "item_color_btn item_color_btn_active"
-                          : "item_color_btn"
-                      }
-                      onClick={() => setPromoTime("2")}
-                    >
-                      <p>До даты</p>
-                    </div>
-                    <div
-                      className={
-                        promoTime == "3"
-                          ? "item_color_btn item_color_btn_active"
-                          : "item_color_btn"
-                      }
-                      onClick={() => setPromoTime("3")}
-                    >
-                      <p>Одноразовый</p>
-                    </div>
-                    <div
-                      className={
-                        promoTime == "4"
-                          ? "item_color_btn item_color_btn_active"
-                          : "item_color_btn"
-                      }
-                      onClick={() => setPromoTime("4")}
-                    >
-                      <p>Многоразовый до удаления</p>
-                    </div>
-                  </div>
+                  <input
+                    type="date"
+                    value={promoTime}
+                    onChange={(e) => setPromoTime(e.target.value)}
+                  />
                 </div>
                 <div className="case_input_temp">
                   <p>Введите количество активаций купона</p>
@@ -233,10 +241,30 @@ function EditPromocode() {
                     onChange={(e) => setActivationsAmount(e.target.value)}
                   />
                 </div>
+                <div className="case_input_temp">
+                  <p>Лимит для пользователя</p>
+                  <input
+                    type="text"
+                    value={limitUser}
+                    onChange={(e) => setLimitUser(e.target.value)}
+                  />
+                </div>
+                <div className="case_input_temp">
+                  <p>Лимит бонуса</p>
+                  <input
+                    type="text"
+                    value={bonusLimit}
+                    onChange={(e) => setBonusLimit(e.target.value)}
+                  />
+                </div>
 
                 <div className="admin_actions case_actions">
-                  <button className="create_admin_btn">Сохранить</button>
-                  <button className="undo_create">Отменить</button>
+                  <button className="create_admin_btn" onClick={savePromoEdits}>
+                    Сохранить
+                  </button>
+                  <NavLink to="/promocodes">
+                    <button className="undo_create">Отменить</button>
+                  </NavLink>
                 </div>
               </div>
             </TabPanel>
@@ -303,6 +331,11 @@ function EditPromocode() {
           </Tabs>
         </div>
       </div>
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
     </>
   );
 }
