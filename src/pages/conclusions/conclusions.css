@@ -17,3 +17,9 @@
 .conclisions_item_list svg {
   cursor: pointer;
 }
+.output_ended {
+  cursor: default;
+}
+.output_ended:hover {
+  background: #fb8a01 !important;
+}

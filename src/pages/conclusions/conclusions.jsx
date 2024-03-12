@@ -72,6 +72,28 @@ function Conclusions() {
         console.log("error", error);
       });
   };
+  const approveOutput = (id) => {
+    mainApi
+      .approveOutputAction(id)
+      .then((res) => {
+        snackbarActions("Вывод одобрен");
+      })
+      .catch((error) => {
+        console.log(error);
+        snackbarActions("Ошибка одобрения вывода");
+      });
+  };
+
+  const [activeFilter, setActiveFilter] = useState("all");
+  const filterItems = (type) => {
+    setActiveFilter(type);
+    if (type !== "all") {
+      const filtered = conclusionsData.filter((item) => item.status === type);
+      setConclusions(filtered);
+    } else {
+      setConclusions(conclusionsData.slice(0, 10));
+    }
+  };
 
   return (
     <>
@@ -85,35 +107,52 @@ function Conclusions() {
         <div className="template_page_title">
           <h1>Выводы</h1>
 
-          <div className="top_cases_actions">
-            <NavLink to="/create-conclusion">
-              <button className="main_btn add_case_btn main_btn_template">
-                <p>Добавить вывод</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
-            </NavLink>
-          </div>
-        </div>
-
-        <div className="cases_top_actions">
-          <div></div>
-
           <div className="users_search">
             <SearchIcon />
             <input type="text" placeholder="Поиск" />
           </div>
         </div>
+        <div className="cases_top_togglers">
+          <button
+            className={
+              activeFilter == "all" ? "main_btn top_active_filter" : "main_btn"
+            }
+            onClick={() => filterItems("all")}
+          >
+            <p>Все выводы</p>
+          </button>
+          <button
+            className={
+              activeFilter == "proccess"
+                ? "main_btn top_active_filter"
+                : "main_btn"
+            }
+            onClick={() => filterItems("proccess")}
+          >
+            <p>В процессе</p>
+          </button>
+          <button
+            className={
+              activeFilter == "completed"
+                ? "main_btn top_active_filter"
+                : "main_btn"
+            }
+            onClick={() => filterItems("completed")}
+          >
+            <p>Завершён</p>
+          </button>
+          <button
+            className={
+              activeFilter == "technical-error"
+                ? "main_btn top_active_filter"
+                : "main_btn"
+            }
+            onClick={() => filterItems("technical-error")}
+          >
+            <p>Техническая ошибка</p>
+          </button>
+        </div>
+
         <div className="payments_table">
           <table className="users_table">
             <thead>
@@ -151,21 +190,26 @@ function Conclusions() {
                         <p>${conclusion.output_id}</p>
                       </td>
                       <td className="">
-                        <p>{conclusion.type == 'moogold' ? 'Moogold' : ''}</p>
+                        <p>{conclusion.type == "moogold" ? "Moogold" : ""}</p>
                       </td>
                       <td>
                         <div className="cases_table_actions_list">
                           {conclusion.status == "completed" ? (
-                            <button className="main_btn main_btn_template_green">
-                              <p>Завершенный</p>
+                            <button className="main_btn main_btn_template_orange output_ended">
+                              <p>Завершён</p>
                             </button>
                           ) : (
                             ""
                           )}
 
                           {conclusion.status == "proccess" ? (
-                            <button className="main_btn main_btn_template_orange">
-                              <p>В процессе</p>
+                            <button
+                              className="main_btn main_btn_template_green"
+                              onClick={() =>
+                                approveOutput(conclusion.output_id)
+                              }
+                            >
+                              <p>Одобрить</p>
                             </button>
                           ) : (
                             ""
@@ -186,7 +230,9 @@ function Conclusions() {
                           <div
                             title="редактировать"
                             className="cases_table_edit"
-                            onClick={() => aboutConclusion(conclusion.id)}
+                            onClick={() =>
+                              aboutConclusion(conclusion.output_id)
+                            }
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

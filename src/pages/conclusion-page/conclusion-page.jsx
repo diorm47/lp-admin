@@ -1,237 +1,311 @@
 import React, { useEffect, useState } from "react";
-import "./conclusion-page.css";
-import avatar from "../../assets/images/avatar.png";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
+
+import Snacbar from "../../components/snackbar/snackbar";
 import { mainApi } from "../../components/utils/main-api";
+import CaseItems from "../../components/case-items/case-items";
 
 function ConclusionPage() {
-  const user = {
-    id: 345,
-    name: "Дуров",
-    email: "admin567@mail.ru",
-    balance: 999,
-    deposite: 2322,
-    winrate: 47,
-  };
-
-  const [conclusion, setConclusion] = useState({});
-  const [order, setOrder] = useState({});
-  const [conclusionItem, setConclusionItem] = useState({});
   const params = useParams();
 
-  useEffect(() => {
+  const [modal, setModal] = useState(false);
+  const [id, setId] = useState("");
+
+  const [outputItems, setOutputItems] = useState([]);
+  const [purchaseCIOutputs, setPurchaseCIOutputs] = useState([]);
+  const [costWithdrawalItems, setCostWithdrawalItems] = useState("");
+  const [costWithdrawalItemsRub, setCostWithdrawalItemsRub] = useState("");
+  const [type, setType] = useState("moogold");
+  const [status, setStatus] = useState("completed");
+  const [playerId, setPlayerId] = useState("");
+  const [comment, setComment] = useState("");
+  const [removed, setRemoved] = useState(true);
+  const [withdrawalPrice, setWithdrawalPrice] = useState("");
+  const [active, setActive] = useState(true);
+  const [user, setUser] = useState("");
+  const [approvalUser, setApprovalUser] = useState("");
+  const [removeUser, setRemoveUser] = useState("");
+
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
+  const snackbarActions = (snackText) => {
+    setSnackbarVisible(true);
+    setSnackbarText(snackText);
+    setTimeout(() => {
+      setSnackbarVisible(false);
+    }, 2000);
+  };
+
+  const getOutput = () => {
     mainApi
-      .getConclusion(params.conclusion)
+      .getOutput(params.conclusion)
       .then((res) => {
-        setConclusion(res);
-        getItemName(res.item_id || "");
+        setCostWithdrawalItems(res.cost_withdrawal_of_items);
+        setCostWithdrawalItemsRub(res.cost_withdrawal_of_items_in_rub);
+        setStatus(res.status);
+        setPlayerId(res.player_id);
+        setComment(res.comment);
+        setRemoved(res.removed);
+        setWithdrawalPrice(res.withdrawal_price);
+        setActive(res.active);
+        setUser(res.user);
+        setApprovalUser(res.approval_user);
+        setRemoveUser(res.remove_user);
+        setOutputItems(res.output_items);
+        setId(res.id);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log(error);
       });
-  }, [params.conclusion]);
-
-  const navigate = useNavigate();
-  const aboutUser = (id) => {
-    navigate(`/user/${id}`);
-  };
-
-  const getItemName = async (id) => {
-    let headersList = {
-      Accept: "*/*",
-    };
-    let response = await fetch(`https://legadrop.org/admin/items/${id}`, {
-      method: "GET",
-      headers: headersList,
-    });
-    let data = await response.json();
-
-    setConclusionItem(data);
   };
   useEffect(() => {
-    if (conclusion && conclusion.item_id) {
-      getItemName(conclusion.item_id);
-    }
-  }, [conclusion]);
+    getOutput();
+  }, []);
+  const saveOutput = () => {
+    mainApi
+      .createOutput({
+        output_items: outputItems,
 
-  useEffect(() => {
-    if (conclusion.status == "MOOGOLD") {
-      mainApi
-        .getOrderID(conclusion.itemfs_id)
-        .then((res) => {
-          setOrder(res[0]);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }
-  }, [conclusion]);
+        cost_withdrawal_of_items: costWithdrawalItems,
+        cost_withdrawal_of_items_in_rub: costWithdrawalItemsRub,
+        type: type,
+        status: status,
+        player_id: playerId,
+        comment: comment,
+        removed: removed,
+        withdrawal_price: withdrawalPrice,
+        active: active,
+        user: user,
+        approval_user: approvalUser,
+        remove_user: removeUser,
+      })
+      .then((res) => {
+        snackbarActions("Вывод обновлен");
+      })
+      .catch((error) => {
+        snackbarActions("Ошибка обновления вывода");
+      });
+  };
 
+  const delSelectedItem = (data) => {
+    setOutputItems(outputItems.filter((item) => item.item_id !== data.item_id));
+  };
+
+  const getStatus = (status) => {
+    if (status == "completed") {
+      return "Завершенный";
+    } else if (status == "proccess") {
+      return "В процессе";
+    } else if (status == "technical-error") {
+      return "Техническая ошибка";
+    }
+  };
+
+  const approveOutput = () => {
+    mainApi
+      .approveOutputAction(params.conclusion)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
-    <div className="template_page ">
-      <div className="template_page_title">
-        <h1>
-          Просмотр вывода{" "}
-          {order && order.order_id ? (
-            <a
-              href={`https://moogold.com/ru/account/view-order/${order.order_id}/`}
-              target="_blank"
-            >
-             #{order.order_id || ""}
-            </a>
-          ) : (
-            ""
-          )}
-        </h1>
-      </div>
-      <div className="user_line"></div>
-      <NavLink to="/conclusions">
-        <div className="back_btn">
-          <ArrowBackIcon /> <p>Назад</p>
+    <>
+      {modal ? (
+        <div className="modal_overlay" onClick={() => setModal(false)}></div>
+      ) : (
+        ""
+      )}
+
+      {modal ? (
+        <CaseItems
+          setModal={setModal}
+          setCaseItems={setOutputItems}
+          caseItems={outputItems}
+        />
+      ) : (
+        ""
+      )}
+
+      <div className="template_page promocode_page_crud">
+        <div className="template_page_title">
+          <h1>Вывод: {id}</h1>
         </div>
-      </NavLink>
-      <div className="review_page_content conclusion_content about_content_tamplate">
-        <table className="users_table">
-          <thead>
-            <tr>
-              <th className="tal">ID вывода</th>
-              <th className="tal">ID юзера</th>
-              <th className="tal">Номер заказа</th>
-              <th className="tal">Стоимость предмета (Moogold)</th>
-              <th className="tal">Предмет вывода</th>
-              <th className="tal">UID победителя</th>
-              <th className="tac">Дата заказа вывода</th>
-              <th className="tac">Статус системы</th>
-            </tr>
-          </thead>
-          <tbody>
-            {conclusion && conclusion.itemfs_id ? (
-              <tr>
-                <td className="">
-                  <p>{conclusion.itemfs_id || ""}</p>
-                </td>
-                <td className="">
-                  <p>{conclusion.user_id || ""}</p>
-                </td>
-                <td className="">
-                  {order && order.order_id ? (
-                    <a
-                      href={`https://moogold.com/ru/account/view-order/${order.order_id}/`}
-                      target="_blank"
-                    >
-                      <p>{order.order_id || ""}</p>
-                    </a>
-                  ) : (
-                    <p>-</p>
-                  )}
-                </td>
-                <td className="">
-                  <p>{conclusion.total || "-"} USD</p>
-                </td>
-                <td className="">
-                  <p>{conclusionItem ? conclusionItem.name : ""}</p>
-                </td>
-                <td className="">
-                  <p>{conclusion.genshin_user_id}</p>
-                </td>
+        <div className="user_line"></div>
+        <NavLink to="/conclusions">
+          <div className="back_btn">
+            <ArrowBackIcon /> <p>Назад</p>
+          </div>
+        </NavLink>
+        <div className="cases_actions_wrapper">
+          <div className="case_tab_content">
+            <div className="case_tab_content_title">
+              <p>Информация о выводе</p>
+            </div>
 
-                <td className="tac">
-                  {/* {conclusion && conclusion.payment_date.split(" ")[0]}
-                <br />
-                {conclusion && conclusion.payment_date.split(" ")[1]} */}
-                  -
-                </td>
-
-                <td className="tac rev_status">
-                  <p>
-                    {conclusion.status == "EXPECT" ? "Ожидание" : ""}
-                    {conclusion.status == "SUCCESSFULLY" ? "Успешно" : ""}
-                    {conclusion.status == "CANCELLED" ? "Отменено" : ""}
-                    {conclusion.status == "MOOGOLD"
-                      ? "Ожидание вывода с Moogold"
+            <div
+              className="case_img_block_wrapper add_output_items"
+              style={{ margin: 0 }}
+            >
+              {outputItems && outputItems.length ? (
+                <>
+                  <div className="case_input_temp_title">
+                    <p>Выбранные предметы</p>
+                  </div>
+                  <div className="case_items_list">
+                    {outputItems && outputItems.length
+                      ? outputItems.map((item) => (
+                          <div
+                            className="case_img_item case_items_list_item"
+                            key={item.id}
+                            // onClick={() => delSelectedItem(item)}
+                          >
+                            <img src={item.image} alt="" />
+                            <p>{item.name}</p>
+                            <p>{item.price} р.</p>
+                          </div>
+                        ))
                       : ""}
-                  </p>
-                </td>
-              </tr>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Стоимость вывода предметов</p>
+              </div>
+              <input
+                type="text"
+                readOnly
+                value={costWithdrawalItems}
+                onChange={(e) => setCostWithdrawalItems(e.target.value)}
+              />
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Стоимость вывода предметов (руб)</p>
+              </div>
+              <input
+                readOnly
+                type="text"
+                value={costWithdrawalItemsRub}
+                onChange={(e) => setCostWithdrawalItemsRub(e.target.value)}
+              />
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Стоимость вывода</p>
+              </div>
+              <input
+                readOnly
+                type="text"
+                value={withdrawalPrice}
+                onChange={(e) => setWithdrawalPrice(e.target.value)}
+              />
+            </div>
+            <div className="case_input_temp">
+              <p>Статус</p>
+
+              <input readOnly type="text" value={getStatus(status)} />
+            </div>
+            {/*  */}
+            {/*  */}
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>ID игрока</p>
+              </div>
+              <input
+                type="text"
+                value={playerId}
+                readOnly
+                onChange={(e) => setPlayerId(e.target.value)}
+              />
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Комментарии</p>
+              </div>
+              <input
+                type="text"
+                readOnly
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+
+            {/*  */}
+            <div className="case_input_temp case_input_temp_checkbox">
+              <input
+                type="checkbox"
+                checked={active}
+                // onClick={() => setActive(!active)}
+              />{" "}
+              <p>Активный</p>
+            </div>
+            <div className="case_input_temp case_input_temp_checkbox">
+              <input
+                type="checkbox"
+                checked={removed}
+                // onClick={() => setRemoved(!active)}
+              />{" "}
+              <p>Удален</p>
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Пользователь</p>
+              </div>
+              <input
+                type="text"
+                value={user}
+                readOnly
+                // onChange={(e) => setUser(e.target.value)}
+              />
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Одобренные пользователи</p>
+              </div>
+              <input
+                type="text"
+                value={approvalUser}
+                readOnly
+                onChange={(e) => setApprovalUser(e.target.value)}
+              />
+            </div>
+            <div className="case_input_temp">
+              <div className="case_input_temp_title">
+                <p>Удаленные пользователи</p>
+              </div>
+              <input
+                type="text"
+                readOnly
+                value={removeUser}
+                onChange={(e) => setRemoveUser(e.target.value)}
+              />
+            </div>
+            {status == "proccess" ? (
+              <div className="admin_actions case_actions">
+                <button className="create_admin_btn" onClick={approveOutput}>
+                  Одобрить
+                </button>
+              </div>
             ) : (
               ""
             )}
-          </tbody>
-        </table>
-        <div className="about_page_secondary_block">
-          <div className="template_page_title">
-            <h1>Данные юзера</h1>
-          </div>
-          <table className="users_table">
-            <thead>
-              <tr>
-                <th className="table_user_id_title">ID</th>
-                <th className="table_user_avatar_title">Аватар</th>
-                <th className="table_user_name_title">Имя юзера</th>
-                <th className="table_user_email_title">Контакт</th>
-                <th className="tal">Баланс</th>
-                <th className="table_user_balance_title">Сумма выводов</th>
-                <th className="table_user_deposite_title">Сумма депозитов</th>
-                <th className="table_user_winrate_title">Винрейт</th>
-                <th className="table_user_winrate_title">Диалоги</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="table_user_id_row">
-                  <p>{user.id}</p>
-                </td>
-                <td className="table_user_avatar_row">
-                  <img src={avatar} alt="" />
-                </td>
-                <td className="table_user_name_row">
-                  <p>{user.name}</p>
-                </td>
-                <td className="table_user_email_row">
-                  <p>{user.email}</p>
-                </td>
-                <td className="">
-                  <p>{user.balance} ₽</p>
-                </td>
-                <td className="table_user_balance_row">
-                  <p>{user.balance} ₽</p>
-                </td>
-                <td className="table_user_deposite_row">
-                  <p>{user.deposite} ₽</p>
-                </td>
-                <td className="table_user_winrate_row">
-                  <p>{user.winrate}%</p>
-                </td>
-
-                <td>
-                  <button className="main_btn about_secondary_btn main_btn_template">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                    >
-                      <path
-                        d="M13.332 2.66669H2.66536C1.93203 2.66669 1.3387 3.26669 1.3387 4.00002L1.33203 12C1.33203 12.7334 1.93203 13.3334 2.66536 13.3334H13.332C14.0654 13.3334 14.6654 12.7334 14.6654 12V4.00002C14.6654 3.26669 14.0654 2.66669 13.332 2.66669ZM13.332 12H2.66536V5.33335L7.9987 8.66669L13.332 5.33335V12ZM7.9987 7.33335L2.66536 4.00002H13.332L7.9987 7.33335Z"
-                        fill="white"
-                      />
-                    </svg>
-                    <p>Перейти в диалог</p>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="about_page_actions">
-            <button className="main_btn_template_green">
-              Посмотреть все платежи юзера{" "}
-            </button>
           </div>
         </div>
       </div>
-    </div>
+      {isSnackbarVisible ? (
+        <Snacbar visible={isSnackbarVisible} text={snackbarText} />
+      ) : (
+        ""
+      )}
+    </>
   );
 }
 

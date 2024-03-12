@@ -500,9 +500,16 @@ class MainApi {
       body: data,
     });
   }
-  async getConclusion(data) {
+  async approveOutputAction(id) {
     return this._sendRequest({
-      endpoint: `/api/v1/output/${data}`,
+      endpoint: `${path}/output/${id}/approval/`,
+      method: "POST",
+
+    });
+  }
+  async getOutput(id) {
+    return this._sendRequest({
+      endpoint: `${path}/output/${id}/`,
       method: "GET",
     });
   }
