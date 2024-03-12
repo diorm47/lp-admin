@@ -14,6 +14,7 @@ function CreatePromocode() {
   const [workingAmount, setWorkingAmount] = useState("");
   const [promoTime, setPromoTime] = useState("1");
   const [activationsAmount, setActivationsAmount] = useState("");
+  const [codeData, setCodeData] = useState("");
 
   const [active, setActive] = useState(true);
   const [limitUser, setLimitUser] = useState();
@@ -34,7 +35,7 @@ function CreatePromocode() {
       .createPromo({
         name: promoName,
         type: promoCategory,
-
+        code_data: codeData,
         active: active,
         summ: workingAmount,
         percent: depositPercent,
@@ -100,6 +101,22 @@ function CreatePromocode() {
                       type="text"
                       value={promoName}
                       onChange={(e) => setPromoName(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="case_tab_content_inputs">
+                  <div className="case_input_temp">
+                    <div
+                      className="case_input_temp_title"
+                      title="Его необходимо вводить, чтобы получить бонус"
+                    >
+                      <p>Код промокода</p>
+                    </div>
+                    <input
+                      type="text"
+                      value={codeData}
+                      onChange={(e) => setCodeData(e.target.value)}
                     />
                   </div>
                 </div>

@@ -14,6 +14,7 @@ function Pagination({ allData, paginationData, length, activeFilter }) {
     const newOffset = event.selected * itemsPerPage;
     setItemOffset(newOffset);
   };
+
   useEffect(() => {
     paginationData(allData.slice(itemOffset, endOffset));
   }, [itemOffset, endOffset, paginationData]);

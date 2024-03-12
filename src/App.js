@@ -40,6 +40,7 @@ import Conditions from "./pages/conditions/conditions";
 import CreateCondion from "./pages/conditions/create-condition";
 import EditCondion from "./pages/conditions/edit-condition";
 import EditUserPage from "./pages/user-page/edit-user-page";
+import CreateOutput from "./pages/conclusion-page/create-conclusion";
 
 function App() {
   const dispatch = useDispatch();
@@ -97,6 +98,8 @@ function App() {
                 <Route path="/support" element={<Support />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/conclusions" element={<Conclusions />} />
+                <Route path="/create-conclusion" element={<CreateOutput />} />
+
                 <Route
                   path="/conclusion/:conclusion"
                   element={<ConclusionPage />}

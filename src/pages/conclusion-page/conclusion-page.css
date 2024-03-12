@@ -15,3 +15,7 @@
   transition: all 0.4s ease;
   opacity: 0.7;
 }
+
+.add_output_items {
+  margin: 0 !important;
+}

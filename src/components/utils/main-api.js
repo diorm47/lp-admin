@@ -320,21 +320,6 @@ class MainApi {
     });
   }
 
-  // get conclusions
-  async getConclusions(data) {
-    return this._sendRequest({
-      endpoint: `/api/v1/output`,
-      method: "GET",
-      // body: data,
-    });
-  }
-  async getConclusion(data) {
-    return this._sendRequest({
-      endpoint: `/api/v1/output/${data}`,
-      method: "GET",
-    });
-  }
-
   // Moogold
   async purcgaseItem(data) {
     return this._sendRequest({
@@ -496,6 +481,36 @@ class MainApi {
   async deletePromo(id) {
     return this._sendRequest({
       endpoint: `${path}/promo/${id}/`,
+      method: "DELETE",
+    });
+  }
+
+  // Outputs
+  // Get outputs
+  async getOutputsAction() {
+    return this._sendRequest({
+      endpoint: `${path}/output/`,
+      method: "GET",
+    });
+  }
+  async createOutput(data) {
+    return this._sendRequest({
+      endpoint: `${path}/output/`,
+      method: "POST",
+      body: data,
+    });
+  }
+  async getConclusion(data) {
+    return this._sendRequest({
+      endpoint: `/api/v1/output/${data}`,
+      method: "GET",
+    });
+  }
+
+  // delete output
+  async deleteOutputAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/output/${id}/`,
       method: "DELETE",
     });
   }

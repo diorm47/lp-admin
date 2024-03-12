@@ -13,3 +13,7 @@
   cursor: default;
   opacity: 0.5;
 }
+
+.conclisions_item_list svg {
+  cursor: pointer;
+}

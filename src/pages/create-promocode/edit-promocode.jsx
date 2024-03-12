@@ -17,7 +17,7 @@ function EditPromocode() {
   const [workingAmount, setWorkingAmount] = useState("");
   const [promoTime, setPromoTime] = useState();
   const [activationsAmount, setActivationsAmount] = useState("");
-
+  const [codeData, setCodeData] = useState("");
   const [active, setActive] = useState(true);
   const [limitUser, setLimitUser] = useState();
   const [bonusLimit, setBonusLimit] = useState();
@@ -39,6 +39,7 @@ function EditPromocode() {
         setPromoId(res.id);
         setPromoName(res.name);
         setPromoCategory(res.type);
+        setCodeData(res.code_data)
         setDepositPercent(res.percent);
         setWorkingAmount(res.summ);
         setPromoTime(res.to_date.split("T")[0]);
@@ -63,6 +64,7 @@ function EditPromocode() {
           name: promoName,
           type: promoCategory,
           active: active,
+          code_data: codeData,
           summ: workingAmount,
           percent: depositPercent,
           limit_activations: activationsAmount,
@@ -131,6 +133,22 @@ function EditPromocode() {
                       onChange={(e) => setPromoName(e.target.value)}
                     />
                   </div>
+
+                  <div className="case_tab_content_inputs">
+                  <div className="case_input_temp">
+                    <div
+                      className="case_input_temp_title"
+                      title="Его необходимо вводить, чтобы получить бонус"
+                    >
+                      <p>Код промокода</p>
+                    </div>
+                    <input
+                      type="text"
+                      value={codeData}
+                      onChange={(e) => setCodeData(e.target.value)}
+                    />
+                  </div>
+                </div>
                 </div>
 
                 <div className="case_input_temp case_input_temp_checkbox">
