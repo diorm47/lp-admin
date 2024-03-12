@@ -504,7 +504,6 @@ class MainApi {
     return this._sendRequest({
       endpoint: `${path}/output/${id}/approval/`,
       method: "POST",
-
     });
   }
   async getOutput(id) {
@@ -519,6 +518,45 @@ class MainApi {
     return this._sendRequest({
       endpoint: `${path}/output/${id}/`,
       method: "DELETE",
+    });
+  }
+
+  // Contests
+  // Get contests
+  async getContestsAction() {
+    return this._sendRequest({
+      endpoint: `${path}/contest/`,
+      method: "GET",
+    });
+  }
+  // create contest
+  async createContestAction(data) {
+    return this._sendRequest({
+      endpoint: `${path}/contest/`,
+      method: "POST",
+      body: data,
+    });
+  }
+  // delete contest
+  async deleteContestAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/contest/${id}/`,
+      method: "DELETE",
+    });
+  }
+  // get contest
+  async getContestAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/contest/${id}/`,
+      method: "GET",
+    });
+  }
+  // update contest
+  async updateContestAction(data, id) {
+    return this._sendRequest({
+      endpoint: `${path}/contest/${id}/`,
+      method: "PUT",
+      body: data,
     });
   }
 }

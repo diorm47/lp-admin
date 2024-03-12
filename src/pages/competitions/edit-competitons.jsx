@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow-back.svg";
 
 import "react-calendar/dist/Calendar.css";
@@ -8,7 +8,8 @@ import CaseItems from "../../components/case-items/case-items";
 import Snacbar from "../../components/snackbar/snackbar";
 import { mainApi } from "../../components/utils/main-api";
 
-function CreateCompetitons() {
+function EditCompetitons() {
+  const params = useParams();
   const [modal, setModal] = useState(false);
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
@@ -31,23 +32,26 @@ function CreateCompetitons() {
   const [active, setActive] = useState(true);
   const [oneTime, setOneTime] = useState(true);
 
-  const createContest = () => {
+  const updateContest = () => {
     mainApi
-      .createContestAction({
-        name: name,
-        timer: time,
-        active: active,
-        one_time: oneTime,
-        item_ids: items.map((item) => item.item_id),
-        current_award_id: priceID,
-        condition_ids: selectesConditions.map((item) => item.value),
-      })
+      .updateContestAction(
+        {
+          name: name,
+          timer: time,
+          active: active,
+          one_time: oneTime,
+          item_ids: items.map((item) => item.item_id),
+          current_award_id: priceID,
+          condition_ids: selectesConditions.map((item) => item.value),
+        },
+        params.id
+      )
       .then((res) => {
-        snackbarActions("Конкурс создан");
+        snackbarActions("Конкурс обновлён");
       })
       .catch((error) => {
         console.log("error", error);
-        snackbarActions("Ошибка создания конкурса");
+        snackbarActions("Ошибка обновления конкурса");
       });
   };
 
@@ -66,9 +70,32 @@ function CreateCompetitons() {
         console.log("error", error);
       });
   };
+  const getContest = () => {
+    mainApi
+      .getContestAction(params.id)
+      .then((res) => {
+        setItems(res.items);
+        setSelectesConditions(
+          res.conditions.map((condition) => ({
+            value: condition.condition_id,
+            label: condition.name,
+          }))
+        );
+        setTime(res.timer);
+        setName(res.name);
+        setPriceID(res.current_award.item_id);
+        setActive(res.active);
+        setOneTime(res.one_time);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   useEffect(() => {
     getConditons();
-  }, []);
+    getContest();
+  }, [params.id]);
   const delSelectedItem = (data) => {
     setItems(items.filter((item) => item.item_id !== data.item_id));
   };
@@ -81,7 +108,7 @@ function CreateCompetitons() {
       )}
       <div className="template_page create_item_page">
         <div className="template_page_title">
-          <h1>Создать конкурс</h1>
+          <h1>Редактировать конкурс</h1>
         </div>
         <div className="user_line"></div>
 
@@ -231,9 +258,9 @@ function CreateCompetitons() {
           <div className="admin_actions case_actions">
             <button
               className="create_admin_btn main_btn_template_green"
-              onClick={createContest}
+              onClick={updateContest}
             >
-              Создать
+              Сохранить
             </button>
             <NavLink to="/competitons">
               <button className="undo_create main_btn_template_border">
@@ -258,4 +285,4 @@ function CreateCompetitons() {
   );
 }
 
-export default CreateCompetitons;
+export default EditCompetitons;

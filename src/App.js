@@ -40,6 +40,7 @@ import Conditions from "./pages/conditions/conditions";
 import CreateCondion from "./pages/conditions/create-condition";
 import EditCondion from "./pages/conditions/edit-condition";
 import EditUserPage from "./pages/user-page/edit-user-page";
+import EditCompetitons from "./pages/competitions/edit-competitons";
 
 
 function App() {
@@ -117,6 +118,8 @@ function App() {
                   path="/create-competiton"
                   element={<CreateCompetitons />}
                 />
+                <Route path="/competitons/:id" element={<EditCompetitons />} />
+
 
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-case" element={<CreateCase />} />

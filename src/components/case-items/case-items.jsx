@@ -20,6 +20,7 @@ function CaseItems({
       .getItemsAction()
       .then((res) => {
         setCasesItems(res.results);
+        console.log(res);
       })
       .catch((error) => {
         console.log("error", error);
@@ -46,6 +47,8 @@ function CaseItems({
     setCaseItems(filteredSelectedItems);
     setModal(false);
   };
+
+  console.log(casesItems, 'asdfasdf');
 
   return (
     <div className="modal_template case_items_modal">
