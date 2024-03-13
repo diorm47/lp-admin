@@ -559,6 +559,29 @@ class MainApi {
       body: data,
     });
   }
+
+  // Payments
+  // Get payments
+  async getPaymentsAction() {
+    return this._sendRequest({
+      endpoint: `${path}/payments/`,
+      method: "GET",
+    });
+  }
+  // get payment
+  async getPaymentAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/payments/${id}/`,
+      method: "GET",
+    });
+  }
+
+  async approvePaymentAction(id) {
+    return this._sendRequest({
+      endpoint: `${path}/payments/${id}/approval/`,
+      method: "POST",
+    });
+  }
 }
 
 export const mainApi = new MainApi(mainApiOptions);

@@ -22,7 +22,6 @@ import EditPromocode from "./pages/create-promocode/edit-promocode";
 import Employees from "./pages/employees/employees";
 import Items from "./pages/items/items";
 import LoginPage from "./pages/login/login";
-import PaymentPage from "./pages/payment-page/payment-page";
 import Payments from "./pages/payments/payments";
 import Positions from "./pages/positions/positions";
 import Promocodes from "./pages/promocodes/promocodes";
@@ -41,6 +40,7 @@ import CreateCondion from "./pages/conditions/create-condition";
 import EditCondion from "./pages/conditions/edit-condition";
 import EditUserPage from "./pages/user-page/edit-user-page";
 import EditCompetitons from "./pages/competitions/edit-competitons";
+import PaymentPage from "./pages/payments/payment-page";
 
 
 function App() {
@@ -87,7 +87,8 @@ function App() {
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/cases" element={<Cases />} />
                 <Route path="/payments" element={<Payments />} />
-                <Route path="/payment/:payment" element={<PaymentPage />} />
+                <Route path="/payment/:id" element={<PaymentPage />} />
+               
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/review/:review" element={<ReviewPage />} />
                 <Route path="/positions" element={<Positions />} />

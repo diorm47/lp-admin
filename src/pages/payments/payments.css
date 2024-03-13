@@ -7,3 +7,9 @@
 .tal {
     text-align: left;
 }
+.payment_link_input {
+    width: auto;
+}
+.payment_link a {
+    color: blue;
+}

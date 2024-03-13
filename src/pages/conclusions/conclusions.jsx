@@ -114,9 +114,7 @@ function Conclusions() {
         </div>
         <div className="cases_top_togglers">
           <button
-            className={
-              activeFilter == "all" ? "main_btn top_active_filter" : "main_btn"
-            }
+            className="main_btn"
             onClick={() => filterItems("all")}
           >
             <p>Все выводы</p>
@@ -152,6 +150,7 @@ function Conclusions() {
             <p>Техническая ошибка</p>
           </button>
         </div>
+        
 
         <div className="payments_table">
           <table className="users_table">
@@ -228,7 +227,7 @@ function Conclusions() {
                       <td>
                         <div className="cases_table_actions conclisions_item_list">
                           <div
-                            title="редактировать"
+                            title="посмотреть"
                             className="cases_table_edit"
                             onClick={() =>
                               aboutConclusion(conclusion.output_id)
@@ -242,7 +241,7 @@ function Conclusions() {
                               fill="none"
                             >
                               <path
-                                d="M2.99902 17.2512V21.0012H6.74902L17.809 9.94125L14.059 6.19125L2.99902 17.2512ZM20.709 7.04125C21.099 6.65125 21.099 6.02125 20.709 5.63125L18.369 3.29125C17.979 2.90125 17.349 2.90125 16.959 3.29125L15.129 5.12125L18.879 8.87125L20.709 7.04125Z"
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z"
                                 fill="black"
                               />
                             </svg>
