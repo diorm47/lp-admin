@@ -107,10 +107,10 @@ function UserPage() {
                   <img src={user.image || avatar} alt="" />
                 </div>
                 <div className="user_action_btns">
-                  <button className="main_btn main_btn_template_red">
+                  {/* <button className="main_btn main_btn_template_red">
                     {" "}
                     Заблокировать{" "}
-                  </button>
+                  </button> */}
                   <button className="main_btn" onClick={aboutUser}>
                     Редактировать
                   </button>
@@ -464,7 +464,7 @@ function UserPage() {
                     <p>Выйграл</p>
                   </div>
                   <div className="user_stats_block_amount">
-                    <p>- ₽</p>
+                    <p>0 ₽</p>
                   </div>
                 </div>
                 <div className="user_stats_block">
@@ -472,7 +472,7 @@ function UserPage() {
                     <p>Проиграл</p>
                   </div>
                   <div className="user_stats_block_amount">
-                    <p>- ₽</p>
+                    <p>0 ₽</p>
                   </div>
                 </div>
                 <div className="user_stats_block">

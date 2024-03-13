@@ -55,29 +55,14 @@ function Users() {
     <div className="template_page users_page">
       <div className="template_page_title">
         <h1>Пользователи</h1>
-        <div className="top_cases_actions">
-          <NavLink to="/">
-            <button className="main_btn add_case_btn main_btn_template">
-              <p>Добавить категорию пользователей</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M12.6663 8.66667H8.66634V12.6667H7.33301V8.66667H3.33301V7.33334H7.33301V3.33334H8.66634V7.33334H12.6663V8.66667Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-          </NavLink>
+        <div className="users_search">
+          <SearchIcon />
+          <input type="text" placeholder="Поиск" />
         </div>
       </div>
       <div className="template_page_content ">
         <div className="users_page_wrapper">
-          <div className="cases_top_togglers">
+          {/* <div className="cases_top_togglers">
             <button className="main_btn">
               <p>Все предметы</p>
             </button>
@@ -87,16 +72,8 @@ function Users() {
             <button className="main_btn">
               <p>Сотрудники</p>
             </button>
-          </div>
-          <div className="cases_top_actions users_top_actions">
-            <button className="main_btn main_btn_template_red">
-              <p>Действие над пользователями</p>
-            </button>
-            <div className="users_search">
-              <SearchIcon />
-              <input type="text" placeholder="Поиск" />
-            </div>
-          </div>
+          </div> */}
+
           <div className="user_line"></div>
           <table className="users_table">
             <thead>
@@ -104,7 +81,7 @@ function Users() {
                 <th className="table_user_id_title">ID</th>
                 <th className="table_user_avatar_title">Аватар</th>
                 <th className="table_user_name_title">Имя юзера</th>
-              
+
                 <th className="table_user_balance_title">Баланс</th>
                 <th className="table_user_deposite_title">Депозитов</th>
                 <th className="table_user_winrate_title">Выводы</th>
@@ -139,7 +116,7 @@ function Users() {
                       <td className="table_user_name_row">
                         <p>{user.username}</p>
                       </td>
-            
+
                       <td className="table_user_balance_row">
                         <p>{user.balance.toFixed(2)} ₽</p>
                       </td>

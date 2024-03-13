@@ -249,16 +249,12 @@ function Cases() {
                           <td className="tac">
                             {cases.case_free ? "Да" : "Нет"}
                           </td>
+
                           <td className="tac">
-                            {(cases &&
-                              cases.created_at &&
-                              cases.created_at.split("T")[0]) ||
-                              "-"}
+                            {cases && cases.created_at.split("T")[0]}
                             <br />
-                            {(cases &&
-                              cases.created_at &&
-                              cases.created_at.split("T")[1]) ||
-                              "-"}
+                            {cases &&
+                              cases.created_at.split("T")[1].split(".")[0]}
                           </td>
                           <td>
                             <div className="cases_table_actions">
