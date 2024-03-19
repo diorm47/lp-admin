@@ -81,11 +81,12 @@ function UserPage() {
   const aboutUser = () => {
     navigate(`/edit-user/${params.user}`);
   };
+  console.log(userGames);
 
   return (
     <div className="template_page user_page">
       <div className="template_page_title">
-        <h1>Профиль пользователя</h1>
+        <h1>Профиль пользователя: {user.username}</h1>
         <div className="users_search">
           <SearchIcon />
           <input type="text" placeholder="Поиск" />
@@ -127,7 +128,7 @@ function UserPage() {
                     <input
                       type="text"
                       placeholder="-"
-                      value={user.username || ""}
+                      value={`${user.first_name || ''} ${user.last_name || ''}`}
                       readOnly
                     />
                   </div>
@@ -136,7 +137,7 @@ function UserPage() {
                     <input
                       type="text"
                       placeholder="-"
-                      value="https://t.me/admin12"
+                      value={user.link_tg}
                       readOnly
                     />
                     <svg
@@ -167,7 +168,7 @@ function UserPage() {
                     <input
                       type="text"
                       placeholder="-"
-                      value="admin@mail.ru"
+                      value={user.email}
                       readOnly
                     />
                   </div>
@@ -176,7 +177,7 @@ function UserPage() {
                     <input
                       type="text"
                       placeholder="-"
-                      value="https://vk.com/admin"
+                      value={user.link_vk}
                       readOnly
                     />
                     <svg
@@ -217,7 +218,7 @@ function UserPage() {
                     <input
                       type="text"
                       placeholder="-"
-                      value="17.07.2023 17:34"
+                      value={`${user.date_joined.split("T")[0]} в ${user.date_joined.split("T")[1].split("Z")[0]}` }
                       readOnly
                     />
                   </div>
@@ -336,36 +337,18 @@ function UserPage() {
                       userGames.map((item, index) => (
                         <tr key={index}>
                           <td>{item.id || "-"}</td>
-                          <td>{item.case}</td>
-                          <td>{item.item}</td>
+                          <td>{item.case.name}</td>
+                          <td>{item.item.name}</td>
                           <td>{item.date || "-"}</td>
-                          <td>{item.quantity || "-"}</td>
-                          <td>{item.case_price || "-"} р.</td>
-                          <td>{item.win_price || "-"} р.</td>
+                          <td>{item.quantity || "1"}</td>
+                          <td>{item.case.price || "-"} р.</td>
+                          <td>{item.item.price || "-"} р.</td>
 
                           <td>
                             <div className="open_status_box">
-                              {item.status === "got_status" ? (
-                                <div className="open_status status_succes">
-                                  <p>Получен</p>
-                                </div>
-                              ) : (
-                                ""
-                              )}
-                              {item.status === "selled_status" ? (
-                                <div className="open_status status_selled">
-                                  <p>Продан</p>
-                                </div>
-                              ) : (
-                                ""
-                              )}
-                              {item.status === "error_status" ? (
-                                <div className="open_status status_error">
-                                  <p>Ошибка</p>
-                                </div>
-                              ) : (
-                                ""
-                              )}
+                              <div className="open_status status_succes">
+                                <p>{item.status}</p>
+                              </div>
                             </div>
                           </td>
                         </tr>

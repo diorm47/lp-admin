@@ -124,7 +124,7 @@ function Promocodes() {
                   <td>ID</td>
                   <td>Имя</td>
                   <td>Тип</td>
-                  <td className="tac">Кол</td>
+                  <td className="tac">Код</td>
 
                   <td>
                     <div className="select_all">

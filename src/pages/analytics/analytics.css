@@ -47,7 +47,7 @@
   border: 1px solid var(--grey-20, #d6d6d6);
   background: #fff;
   padding: 18px;
-  width: 25%;
+  width: 100%;
 }
 
 .analytic_card_title {
@@ -113,6 +113,8 @@
 .analytic_cards {
   display: flex;
   align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 .analytics_bottom_cards {
@@ -157,4 +159,71 @@
 .analytic_card_title div:hover {
   background: rgba(128, 128, 128, 0.118);
   transition: all 0.4s ease;
+}
+
+.analytics_bottom_right .analytic_card:nth-child(1) {
+  margin-bottom: 20px;
+}
+.analytics_bottom_cards {
+  margin-bottom: 50px;
+}
+.analytics_bottom_left {
+  height: 434px;
+}
+.apexcharts-toolbar {
+  display: none !important;
+}
+.analytics_bottom_left {
+  padding-left: 0;
+  padding-right: 0;
+}
+.apexcharts-legend-series {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.apexcharts-legend {
+  justify-content: flex-end !important;
+  padding-bottom: 20px !important;
+}
+
+.analytics_bottom_left_top h3 {
+  color: rgb(51, 51, 51);
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0%;
+  text-align: left;
+  padding-left: 19px;
+}
+.analytics_bottom_left_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.analytics_bottom_left_top_togglers {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 18px;
+}
+.analytics_bottom_left_top_togglers p {
+  color: rgb(173, 173, 173);
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0%;
+  text-align: left;
+  cursor: pointer;
+}
+.analytics_graph tspan {
+  color: #adadad !important;
+  font-family: Inter !important;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 0% !important;
 }

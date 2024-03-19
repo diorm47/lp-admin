@@ -13,3 +13,8 @@
 .payment_link a {
     color: blue;
 }
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

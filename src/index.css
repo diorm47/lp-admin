@@ -7,11 +7,12 @@
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "Nunito", sans-serif !important;
+ 
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 button {
   cursor: pointer;
@@ -134,4 +135,8 @@ select {
   background: #fff;
   border: 1px solid #a6a6a6;
   border-radius: 4px;
+}
+
+p + p {
+  margin-top: 0px !important;
 }

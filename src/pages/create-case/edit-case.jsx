@@ -327,6 +327,7 @@ function EditCase() {
                         <img src={item.image} alt="" />
                         <p>{item.name} </p>
                         <p>{item.price} р.</p>
+                        <p>Шанс: {Math.round(item.percent * 100) / 100} %</p>
                       </div>
                     ))
                   : ""}

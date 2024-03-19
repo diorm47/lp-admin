@@ -48,7 +48,7 @@ function CaseItems({
     setModal(false);
   };
 
-  console.log(casesItems, 'asdfasdf');
+  console.log(casesItems, "asdfasdf");
 
   return (
     <div className="modal_template case_items_modal">
