@@ -576,12 +576,50 @@ class MainApi {
     });
   }
 
-  async approvePaymentAction(id) {
+  // Analytics
+  // Get analytics
+  async getAnalyticsAction(from, to) {
     return this._sendRequest({
-      endpoint: `${path}/payments/${id}/approval/`,
-      method: "POST",
+      endpoint: `${path}/analytics?from_date=${from}&to_date=${to}`,
+      method: "GET",
     });
   }
+  // Get analytics common
+  async getAnalyticsCommonAction() {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/common_data`,
+      method: "GET",
+    });
+  }
+  // Get analytics moogold balance
+  async getAnalyticsMoogoldAction() {
+    return this._sendRequest({
+      endpoint: `${path}/moogold/balance/`,
+      method: "GET",
+    });
+  }
+  // graphs
+  // graphs income
+  async getGraphsIncomeAction(from, to) {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/graphics/income/${from}/${to}`,
+      method: "GET",
+    });
+  }
+  // graphs outlay
+  async getGraphsOutlayAction(from, to) {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/graphics/outlay/${from}/${to}`,
+      method: "GET",
+    });
+  }
+    // graphs cases
+    async getGraphsCasesAction(from, to) {
+      return this._sendRequest({
+        endpoint: `${path}/analytics/graphics/count_open_cases/${from}/${to}`,
+        method: "GET",
+      });
+    }
 }
 
 export const mainApi = new MainApi(mainApiOptions);

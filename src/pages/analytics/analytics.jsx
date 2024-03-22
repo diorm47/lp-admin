@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./analytics.css";
 
 import { ReactComponent as Menu } from "../../assets/icons/analytic-card-menu.svg";
@@ -13,13 +13,19 @@ import DatePicker from "../../components/date-picker/date-picker";
 import { ReactComponent as ArrowTop } from "../../assets/icons/analytics/arrow-top.svg";
 import AnalyticsChart from "../../components/chart/chart";
 import subDays from "date-fns/subDays";
+import { mainApi } from "../../components/utils/main-api";
 
 function Analytics() {
   const [selectedTime, setSelectedTime] = useState([
     subDays(new Date(), 6),
     new Date(),
   ]);
-
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
   const convert = (date_data) => {
     var date = new Date(date_data);
     var formattedDate = date.toLocaleDateString("ru-RU", {
@@ -30,6 +36,61 @@ function Analytics() {
 
     return formattedDate.split("г")[0];
   };
+  const balanceConverter = (dateString) => {
+    if (dateString) {
+      const date = new Date(dateString);
+      const currentDate = new Date();
+
+      const differenceInMilliseconds = currentDate - date;
+      const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
+
+      return Math.floor(differenceInHours);
+    }
+  };
+  const [analytics, setAnalytics] = useState({});
+  const [analyticsCommon, setAnalyticsCommon] = useState({});
+  const [moogold, setMoogold] = useState({});
+
+  const getAnalytics = () => {
+    mainApi
+      .getAnalyticsAction(
+        formatDate(selectedTime[0]),
+        formatDate(selectedTime[1])
+      )
+      .then((res) => {
+        setAnalytics(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  const getAnalyticsCommon = () => {
+    mainApi
+      .getAnalyticsCommonAction()
+      .then((res) => {
+        setAnalyticsCommon(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  const getMoogold = () => {
+    mainApi
+      .getAnalyticsMoogoldAction()
+      .then((res) => {
+        setMoogold(res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  useEffect(() => {
+    getAnalytics();
+    getAnalyticsCommon();
+    getMoogold();
+  }, [selectedTime]);
+
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
@@ -50,7 +111,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card1Icon />
-                <p>156 568 ₽</p>
+                <p>{analytics.total_income} ₽</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -74,7 +135,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card2Icon />
-                <p>132 082 ₽</p>
+                <p>{analytics.total_expense} ₽</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -98,7 +159,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card3Icon />
-                <p>23 460 ₽</p>
+                <p>{analytics.profit} ₽</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -122,7 +183,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card4Icon />
-                <p>210</p>
+                <p>{analyticsCommon.total_open}</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -146,7 +207,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card5Icon />
-                <p>90</p>
+                <p>{analytics.count_users}</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -170,7 +231,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card6Icon />
-                <p>90</p>
+                <p>{analyticsCommon.online}</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -192,7 +253,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card7Icon />
-                <p>$5,600</p>
+                <p>${moogold.balance}</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -200,7 +261,11 @@ function Analytics() {
               </div>
             </div>
             <div className="analytic_descr">
-              <p>-$700 за час</p>
+              {balanceConverter(moogold.date) > 1 ? (
+                <p>{balanceConverter(moogold.date)} часов ранее</p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="analytic_card">
@@ -216,7 +281,7 @@ function Analytics() {
             <div className="analytic_card_data">
               <div className="analytic_card_left_data">
                 <Card1Icon />
-                <p>156 568 ₽</p>
+                <p>{Math.round(analyticsCommon.ggr * 100) / 100} ₽</p>
               </div>
               <div className="analytic_card_right_data">
                 <ArrowTop />
@@ -224,9 +289,7 @@ function Analytics() {
               </div>
             </div>
             <div className="analytic_descr">
-              <p>
-                В сравнении с {convert(selectedTime[0].toLocaleDateString())}
-              </p>
+              <p></p>
             </div>
           </div>
         </div>
@@ -256,18 +319,18 @@ function Analytics() {
               <div className="analytic_card_data">
                 <div className="analytic_card_left_data">
                   <Card1Icon />
-                  <p>156 568 ₽</p>
+                  <p>
+                    {" "}
+                    {Math.round(analyticsCommon.average_income * 100) /
+                      100} ₽{" "}
+                  </p>
                 </div>
                 <div className="analytic_card_right_data">
                   <ArrowTop />
                   <p>34.6%</p>
                 </div>
               </div>
-              <div className="analytic_descr">
-                <p>
-                  В сравнении с {convert(selectedTime[0].toLocaleDateString())}{" "}
-                </p>
-              </div>
+      
             </div>
             <div className="analytic_card">
               <div className="analytic_card_title">

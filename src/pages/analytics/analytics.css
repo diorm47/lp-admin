@@ -44,6 +44,7 @@
 
 .analytic_card {
   border-radius: 12px;
+  height: 162px;
   border: 1px solid var(--grey-20, #d6d6d6);
   background: #fff;
   padding: 18px;
