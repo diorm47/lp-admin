@@ -613,13 +613,34 @@ class MainApi {
       method: "GET",
     });
   }
-    // graphs cases
-    async getGraphsCasesAction(from, to) {
+  // graphs cases
+  async getGraphsCasesAction(from, to) {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/graphics/count_open_cases/${from}/${to}`,
+      method: "GET",
+    });
+  }
+  // graphs cases income
+  async getGraphsCasesIncomeAction(from, to) {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/graphics/income_by_cases/${from}/`,
+      method: "GET",
+    });
+  }
+    // graphs total income
+    async getGraphsTotalIncomeAction(from, to) {
       return this._sendRequest({
-        endpoint: `${path}/analytics/graphics/count_open_cases/${from}/${to}`,
+        endpoint: `${path}/analytics/graphics/clear_profit/${from}/${to}`,
         method: "GET",
       });
     }
+        // graphs reg users
+        async getGraphsRegusersAction(from, to) {
+          return this._sendRequest({
+            endpoint: `${path}/analytics/graphics/count_reg_users/${from}/${to}`,
+            method: "GET",
+          });
+        }
 }
 
 export const mainApi = new MainApi(mainApiOptions);

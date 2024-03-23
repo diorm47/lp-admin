@@ -3,11 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import { mainApi } from "../utils/main-api";
 import { subDays } from "date-fns";
 
-function AnalyticsChart() {
-  const [selectedTime, setSelectedTime] = useState([
-    subDays(new Date(), 6),
-    new Date(),
-  ]);
+function AnalyticsChart({selectedTime, setSelectedTimeChart}) {
+
   function formatDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -18,18 +15,33 @@ function AnalyticsChart() {
     series: [
       {
         name: "Доходы",
-        data: [44, 55, 57, 56, 61, 58, 63],
+        data: [0, 0, 0, 0, 0, 0, 0],
         color: "rgb(57, 181, 74)",
       },
       {
         name: "Расходы",
-        data: [76, 85, 101, 98, 87, 105, 91],
+        data: [0, 0, 0, 0, 0, 0, 0],
         color: "rgb(235, 30, 35)",
       },
       {
         name: "Открыто кейсов",
-        data: [35, 41, 36, 26, 45, 48, 52],
+        data: [0, 0, 0, 0, 0, 0, 0],
         color: "rgb(243, 172, 14)",
+      },
+      {
+        name: "Доходы от кейсов",
+        data: [0, 0, 0, 0, 0, 0, 0],
+        color: "rgb(166, 0, 255)",
+      },
+      {
+        name: "Чистая прибыль",
+        data: [0, 0, 0, 0, 0, 0, 0],
+        color: "#358ed7",
+      },
+      {
+        name: "Новые пользователи",
+        data: [0, 0, 0, 0, 0, 0, 0],
+        color: "#fb8a01",
       },
     ],
     options: {
@@ -48,7 +60,7 @@ function AnalyticsChart() {
               },
             ],
           },
-          columnWidth: "20%",
+          columnWidth: "10px",
         },
       },
       dataLabels: {
@@ -72,14 +84,7 @@ function AnalyticsChart() {
       xaxis: {
         type: "datetime",
         categories: [
-          "03/03",
-          "03/04",
-          "03/05",
-          "03/06",
-          "03/07",
-          "03/08",
-          "03/09",
-          "03/10",
+
         ],
         labels: {
           format: "MM/dd",
@@ -91,7 +96,8 @@ function AnalyticsChart() {
       tooltip: {
         y: {
           formatter: function (value) {
-            return `${Number(value).toFixed(2)} USD`;
+            return `${Number(value)}`;
+            // return `${Number(value).toFixed(2)}`;
           },
         },
       },
@@ -110,10 +116,13 @@ function AnalyticsChart() {
       },
     },
   });
-  const updateChartData = (newIncomeData, newOutlayData, newCasesData) => {
+  const updateChartData = (newIncomeData, newOutlayData, newCasesData, casesIncome, total, users) => {
     const updatedIncomeData = newIncomeData.map((entry) => entry.income);
     const updatedOutlayData = newOutlayData.map((entry) => entry.outlay);
-    const updatedCasesData = newCasesData.map((entry) => entry.cases);
+    const updatedCasesData = newCasesData.map((entry) => entry.count);
+    const updatedCasesIncomeData = casesIncome.map((entry) => entry.income);
+    const updatedTotalIncomeData = total.map((entry) => entry.profit);
+    const updatedUsersData = users.map((entry) => entry.count);
 
     // Обновляем данные графика
     setChartData({
@@ -122,6 +131,9 @@ function AnalyticsChart() {
         { ...chartData.series[0], data: updatedIncomeData },
         { ...chartData.series[1], data: updatedOutlayData },
         { ...chartData.series[2], data: updatedCasesData },
+        { ...chartData.series[3], data: updatedCasesIncomeData },
+        { ...chartData.series[4], data: updatedTotalIncomeData },
+        { ...chartData.series[5], data: updatedUsersData },
       ],
       options: {
         ...chartData.options,
@@ -147,10 +159,23 @@ function AnalyticsChart() {
         formatDate(selectedTime[0]),
         formatDate(selectedTime[1])
       ),
+      mainApi.getGraphsCasesIncomeAction(
+        formatDate(selectedTime[0]),
+        formatDate(selectedTime[1])
+      ),
+      mainApi.getGraphsTotalIncomeAction(
+        formatDate(selectedTime[0]),
+        formatDate(selectedTime[1])
+      ),
+      mainApi.getGraphsRegusersAction(
+        formatDate(selectedTime[0]),
+        formatDate(selectedTime[1])
+      ),
+      
     ])
-      .then(([incomeRes, outlayRes, casesRes]) => {
+      .then(([incomeRes, outlayRes, casesRes, casesIncome, total, users]) => {
         // Обновляем данные графика и ось x
-        updateChartData(incomeRes, outlayRes, casesRes);
+        updateChartData(incomeRes, outlayRes, casesRes, casesIncome, total, users);
 
         // Обновляем дату, если необходимо
         const startDate = new Date(selectedTime[0]);
@@ -159,7 +184,7 @@ function AnalyticsChart() {
           formatDate(startDate) !== incomeRes[0].date ||
           formatDate(endDate) !== incomeRes[incomeRes.length - 1].date
         ) {
-          setSelectedTime([
+          setSelectedTimeChart([
             new Date(incomeRes[0].date),
             new Date(incomeRes[incomeRes.length - 1].date),
           ]);

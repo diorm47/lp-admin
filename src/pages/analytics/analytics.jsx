@@ -14,9 +14,11 @@ import { ReactComponent as ArrowTop } from "../../assets/icons/analytics/arrow-t
 import AnalyticsChart from "../../components/chart/chart";
 import subDays from "date-fns/subDays";
 import { mainApi } from "../../components/utils/main-api";
+import { subYears } from "date-fns";
 
 function Analytics() {
-  const [selectedTime, setSelectedTime] = useState([
+  const [selectedTime, setSelectedTime] = useState([new Date(), new Date()]);
+  const [selectedTimeChart, setSelectedTimeChart] = useState([
     subDays(new Date(), 6),
     new Date(),
   ]);
@@ -90,7 +92,18 @@ function Analytics() {
     getAnalyticsCommon();
     getMoogold();
   }, [selectedTime]);
+  const [filter, setFilter] = useState("d7");
 
+  const filterChart = (value) => {
+    setFilter(value);
+    if (value == "d7") {
+      setSelectedTimeChart([subDays(new Date(), 7), new Date()]);
+    } else if (value == "d30") {
+      setSelectedTimeChart([subDays(new Date(), 30), new Date()]);
+    } else if (value == "y1") {
+      setSelectedTimeChart([subYears(new Date(), 1), new Date()]);
+    }
+  };
   return (
     <div className="template_page analytics_page">
       <div className="template_page_title">
@@ -298,13 +311,31 @@ function Analytics() {
             <div className="analytics_bottom_left_top">
               <h3>График доходов и расходов</h3>
               <div className="analytics_bottom_left_top_togglers">
-                <p>Текущая неделя</p>
-                <p>Месяц</p>
-                <p>Год</p>
+                <p
+                  onClick={() => filterChart("d7")}
+                  className={filter == "d7" ? "active_chart_filter" : ""}
+                >
+                  Текущая неделя
+                </p>
+                <p
+                  onClick={() => filterChart("d30")}
+                  className={filter == "d30" ? "active_chart_filter" : ""}
+                >
+                  Месяц
+                </p>
+                <p
+                  onClick={() => filterChart("y1")}
+                  className={filter == "y1" ? "active_chart_filter" : ""}
+                >
+                  Год
+                </p>
               </div>
             </div>
             <div className="analytics_graph">
-              <AnalyticsChart />
+              <AnalyticsChart
+                selectedTime={selectedTimeChart}
+                setSelectedTimeChart={setSelectedTimeChart}
+              />
             </div>
           </div>
           <div className="analytics_bottom_right ">
@@ -330,7 +361,6 @@ function Analytics() {
                   <p>34.6%</p>
                 </div>
               </div>
-      
             </div>
             <div className="analytic_card">
               <div className="analytic_card_title">

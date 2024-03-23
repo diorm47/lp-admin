@@ -50,6 +50,9 @@
   padding: 18px;
   width: 100%;
 }
+.active_chart_filter {
+  color: rgb(92, 92, 92) !important;
+}
 
 .analytic_card_title {
   display: flex;

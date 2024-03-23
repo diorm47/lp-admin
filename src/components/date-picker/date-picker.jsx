@@ -40,10 +40,7 @@ function DatePicker({ setSelectedTime }) {
     december: "Декабрь",
   };
 
-  const [selectedRange, setSelectedRange] = useState([
-    subDays(new Date(), 6),
-    new Date(),
-  ]);
+  const [selectedRange, setSelectedRange] = useState([new Date(), new Date()]);
 
   const handleDateRangeChange = (value) => {
     setSelectedRange(value);
@@ -66,6 +63,7 @@ function DatePicker({ setSelectedTime }) {
     return formattedDate.split("г")[0];
   };
 
+
   return (
     <div className="date_picker">
       <DateRangePicker
@@ -85,8 +83,16 @@ function DatePicker({ setSelectedTime }) {
         </div>
         <div className="analytic_date_toggler_data" onClick={openCalendar}>
           <img src={date_to_show_icon} alt="" />
-          <p>{convert(selectedRange[0].toLocaleDateString())}</p>
-            -
+          {selectedRange[0].toLocaleDateString() !=
+          selectedRange[1].toLocaleDateString() ? (
+            <>
+              {" "}
+              <p>{convert(selectedRange[0].toLocaleDateString())}</p>-
+            </>
+          ) : (
+            ""
+          )}
+
           <p>{convert(selectedRange[1].toLocaleDateString())}</p>
         </div>
         <div className="analytic_date_toggler_btn analytic_date_toggler_right">
