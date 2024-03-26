@@ -9,7 +9,6 @@ import { mainApi } from "../../components/utils/main-api";
 import Snacbar from "../../components/snackbar/snackbar";
 
 function Promocodes() {
-  const [promocodesData, setPromocodesData] = useState([]);
   const [promocodes, setPromocodes] = useState([]);
   const navigate = useNavigate();
   const editPromocode = (id) => {
@@ -39,26 +38,31 @@ function Promocodes() {
   };
 
   const toggleAllDataSelected = () => {
-    if (selected.length == promocodesData.length) {
+    if (selected.length == promocodes.length) {
       setSelected([]);
     } else {
-      setSelected([...promocodesData]);
+      setSelected([...promocodes]);
     }
   };
 
-  const getPromocodes = () => {
+  const [dataLength, setDataLength] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+  useEffect(() => {
+    getPromocodes(currentPage * 10);
+  }, [currentPage]);
+
+  const getPromocodes = (offset = 0) => {
     mainApi
-      .getPromos()
+      .getPromos(offset)
       .then((res) => {
-        setPromocodesData(res.results);
+        setPromocodes(res.results);
+        setDataLength(res.count);
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
-  useEffect(() => {
-    getPromocodes();
-  }, []);
+
 
   const deletePromocode = (id) => {
     mainApi
@@ -117,115 +121,116 @@ function Promocodes() {
                 <input type="text" placeholder="Поиск промокода" />
               </div>
             </div>
+            {promocodes && promocodes.length ? (
+              <>
+                <table className="cases_table ">
+                  <thead>
+                    <tr>
+                      <td>ID</td>
+                      <td>Имя</td>
+                      <td>Тип</td>
+                      <td className="tac">Код</td>
 
-            <table className="cases_table ">
-              <thead>
-                <tr>
-                  <td>ID</td>
-                  <td>Имя</td>
-                  <td>Тип</td>
-                  <td className="tac">Код</td>
-
-                  <td>
-                    <div className="select_all">
-                      <div className="is_selected ml_55px">
-                        {selected.length == promocodesData.length ? (
-                          <SelectedIcon onClick={toggleAllDataSelected} />
-                        ) : (
-                          <div
-                            className="not_selected_item"
-                            onClick={toggleAllDataSelected}
-                          ></div>
-                        )}
-                      </div>{" "}
-                      Выделить все
-                    </div>
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                {promocodes && promocodes.length
-                  ? promocodes.map((promocode) => (
-                      <tr key={promocode.id}>
-                        <td>{promocode.id}</td>
-                        <td>{promocode.name}</td>
-                        <td>{promocode.type || "-"}</td>
-                        <td className="tac">{promocode.code_data}</td>
-
-                        <td>
-                          <div className="cases_table_actions">
-                            <div className="cases_table_actions_list">
+                      <td>
+                        <div className="select_all">
+                          <div className="is_selected ml_55px">
+                            {selected.length == promocodes.length ? (
+                              <SelectedIcon onClick={toggleAllDataSelected} />
+                            ) : (
                               <div
-                                title="редактировать"
-                                className="cases_table_edit"
-                                onClick={() => editPromocode(promocode.id)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M2.99902 17.2512V21.0012H6.74902L17.809 9.94125L14.059 6.19125L2.99902 17.2512ZM20.709 7.04125C21.099 6.65125 21.099 6.02125 20.709 5.63125L18.369 3.29125C17.979 2.90125 17.349 2.90125 16.959 3.29125L15.129 5.12125L18.879 8.87125L20.709 7.04125Z"
-                                    fill="black"
-                                  />
-                                </svg>
-                              </div>
+                                className="not_selected_item"
+                                onClick={toggleAllDataSelected}
+                              ></div>
+                            )}
+                          </div>{" "}
+                          Выделить все
+                        </div>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {promocodes && promocodes.length
+                      ? promocodes.map((promocode) => (
+                          <tr key={promocode.id}>
+                            <td>{promocode.id}</td>
+                            <td>{promocode.name}</td>
+                            <td>{promocode.type || "-"}</td>
+                            <td className="tac">{promocode.code_data}</td>
 
-                          
-                              <div
-                                title="удалить"
-                                className="cases_table_delete"
-                                onClick={() => deletePromocode(promocode.id)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
-                                    fill="black"
-                                  />
-                                </svg>
+                            <td>
+                              <div className="cases_table_actions">
+                                <div className="cases_table_actions_list">
+                                  <div
+                                    title="редактировать"
+                                    className="cases_table_edit"
+                                    onClick={() => editPromocode(promocode.id)}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M2.99902 17.2512V21.0012H6.74902L17.809 9.94125L14.059 6.19125L2.99902 17.2512ZM20.709 7.04125C21.099 6.65125 21.099 6.02125 20.709 5.63125L18.369 3.29125C17.979 2.90125 17.349 2.90125 16.959 3.29125L15.129 5.12125L18.879 8.87125L20.709 7.04125Z"
+                                        fill="black"
+                                      />
+                                    </svg>
+                                  </div>
+
+                                  <div
+                                    title="удалить"
+                                    className="cases_table_delete"
+                                    onClick={() =>
+                                      deletePromocode(promocode.id)
+                                    }
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
+                                        fill="black"
+                                      />
+                                    </svg>
+                                  </div>
+                                </div>
+                                <div className="is_selected ">
+                                  {selected.some(
+                                    (selected) => selected.id === promocode.id
+                                  ) ? (
+                                    <SelectedIcon
+                                      onClick={() => toggleSelected(promocode)}
+                                    />
+                                  ) : (
+                                    <div
+                                      className="not_selected_item"
+                                      onClick={() => toggleSelected(promocode)}
+                                    ></div>
+                                  )}
+                                </div>
                               </div>
-                          
-                            </div>
-                            <div className="is_selected ">
-                              {selected.some(
-                                (selected) => selected.id === promocode.id
-                              ) ? (
-                                <SelectedIcon
-                                  onClick={() => toggleSelected(promocode)}
-                                />
-                              ) : (
-                                <div
-                                  className="not_selected_item"
-                                  onClick={() => toggleSelected(promocode)}
-                                ></div>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  : ""}
-              </tbody>
-            </table>
-            <div className="cases_paginations">
-              {promocodesData ? (
-                <Pagination
-                  allData={promocodesData}
-                  paginationData={setPromocodes}
-                />
-              ) : (
-                ""
-              )}
-            </div>
+                            </td>
+                          </tr>
+                        ))
+                      : ""}
+                  </tbody>
+                </table>
+                <div className="cases_paginations">
+                  <Pagination
+                    pageCount={Math.ceil(dataLength / 10)}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>{" "}
+              </>
+            ) : (
+              <p className="empty_error">Пусто</p>
+            )}
           </div>
         </div>
       </div>

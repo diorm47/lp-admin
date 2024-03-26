@@ -21,13 +21,8 @@ function UserPage() {
   const params = useParams();
   const [user, setUser] = useState({});
 
-  const [userGamesData, setUserGamesData] = useState([]);
   const [userGames, setUserGames] = useState([]);
-
-  const [userItemsData, setUserItemsData] = useState([]);
   const [userItems, setUserItems] = useState([]);
-
-  const [userPaymentsData, setUserPaymentsData] = useState([]);
   const [userPayments, setUserPayments] = useState([]);
 
   // get user
@@ -43,45 +38,65 @@ function UserPage() {
   }, [params.user]);
 
   // get user game
+  const [dataLengthG, setDataLengthG] = useState();
+  const [currentPageG, setCurrentPageG] = useState(0);
   useEffect(() => {
+    getUserGames(currentPageG * 10);
+  }, [currentPageG]);
+
+  const getUserGames = (offset = 0) => {
     mainApi
-      .getUserGamesAction(params.user)
+      .getUserGamesAction(params.user, offset)
       .then((res) => {
-        setUserGamesData(res.results);
+        setUserGames(res.results);
+        setDataLengthG(res.count);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }, [params.user]);
+  };
 
   // get user items
+  const [dataLengthI, setDataLengthI] = useState();
+  const [currentPageI, setCurrentPageI] = useState(0);
   useEffect(() => {
+    getUserItems(currentPageI * 10);
+  }, [currentPageI]);
+
+  const getUserItems = (offset = 0) => {
     mainApi
-      .getUserItemsAction(params.user)
+      .getUserItemsAction(params.user, offset)
       .then((res) => {
-        setUserItemsData(res.results);
+        setUserItems(res.results);
+        setDataLengthI(res.count);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }, [params.user]);
+  };
 
   // get user payments
+  const [dataLength, setDataLength] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
+    getUserPayments(currentPage * 10);
+  }, [currentPage]);
+
+  const getUserPayments = (offset = 0) => {
     mainApi
-      .getUserPaymentsAction(params.user)
+      .getUserPaymentsAction(params.user, offset)
       .then((res) => {
-        setUserPaymentsData(res.results);
+        setUserPayments(res.results);
+        setDataLength(res.count);
       })
       .catch((error) => {
         console.log("error", error);
       });
-  }, [params.user]);
+  };
 
   const aboutUser = () => {
     navigate(`/edit-user/${params.user}`);
   };
-  console.log(userGames);
 
   return (
     <div className="template_page user_page">
@@ -128,7 +143,7 @@ function UserPage() {
                     <input
                       type="text"
                       placeholder="-"
-                      value={`${user.first_name || ''} ${user.last_name || ''}`}
+                      value={`${user.first_name || ""} ${user.last_name || ""}`}
                       readOnly
                     />
                   </div>
@@ -213,15 +228,21 @@ function UserPage() {
                       <Yandex />
                     </div>
                   </div>
-                  <div className="personal_information_block">
-                    <p>Дата регистрации пользователя</p>
-                    <input
-                      type="text"
-                      placeholder="-"
-                      value={`${user.date_joined.split("T")[0]} в ${user.date_joined.split("T")[1].split("Z")[0]}` }
-                      readOnly
-                    />
-                  </div>
+                  {user.date_joined ? (
+                    <div className="personal_information_block">
+                      <p>Дата регистрации пользователя</p>
+                      <input
+                        type="text"
+                        placeholder="-"
+                        value={`${user.date_joined.split("T")[0]} в ${
+                          user.date_joined.split("T")[1].split("Z")[0]
+                        }`}
+                        readOnly
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -361,15 +382,10 @@ function UserPage() {
                   </tbody>
                 </table>
               </div>
-              {userGamesData && userGamesData.length ? (
-                <PaginationSecondary
-                  allData={userGamesData}
-                  paginationData={setUserGames}
-                  length={6}
-                />
-              ) : (
-                ""
-              )}
+              <PaginationSecondary
+                pageCount={Math.ceil(dataLengthG / 10)}
+                onPageChange={setCurrentPageG}
+              />
             </div>
             {/* payments */}
             <div className="user_operations">
@@ -418,15 +434,10 @@ function UserPage() {
                   </tbody>
                 </table>
               </div>
-              {userPaymentsData && userPaymentsData.length ? (
-                <PaginationSecondary
-                  allData={userPaymentsData}
-                  paginationData={setUserPayments}
-                  length={6}
-                />
-              ) : (
-                ""
-              )}
+              <PaginationSecondary
+                pageCount={Math.ceil(dataLength / 10)}
+                onPageChange={setCurrentPage}
+              />
             </div>
             {/* stats */}
             <div className="user_operations">
@@ -515,15 +526,10 @@ function UserPage() {
                   </tbody>
                 </table>
               </div>
-              {userItemsData && userItemsData.length ? (
-                <PaginationSecondary
-                  allData={userItemsData}
-                  paginationData={setUserItems}
-                  length={6}
-                />
-              ) : (
-                ""
-              )}
+              <PaginationSecondary
+                pageCount={Math.ceil(dataLengthI / 10)}
+                onPageChange={setCurrentPageI}
+              />
             </div>
           </div>
         ) : (

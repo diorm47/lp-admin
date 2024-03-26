@@ -13,7 +13,7 @@ function Cases() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-  const [casesItems, setCasesItems] = useState();
+
   const [cases, setCases] = useState();
   const navigate = useNavigate();
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
@@ -25,20 +25,24 @@ function Cases() {
       setSnackbarVisible(false);
     }, 2000);
   };
+  const [dataLength, setDataLength] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+  useEffect(() => {
+    handleGetCases(currentPage * 10);
+  }, [currentPage]);
 
-  const handleGetCases = () => {
+  const handleGetCases = (offset = 0) => {
     mainApi
-      .getCase()
+      .getCase(offset)
       .then((res) => {
-        setCasesItems(res.results);
+        setCases(res.results);
+        setDataLength(res.count);
       })
       .catch((error) => {
         console.log("error", error);
       });
   };
-  useEffect(() => {
-    handleGetCases();
-  }, []);
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -73,13 +77,13 @@ function Cases() {
   const filterItems = (type) => {
     setActiveFilter(type);
     if (type !== "all") {
-      const filtered = casesItems.filter(
+      const filtered = cases.filter(
         (item) => item.category && item.category.category_id === type
       );
-      console.log(casesItems);
+
       setCases(filtered);
     } else {
-      setCases(casesItems.slice(0, 10));
+      setCases(cases.slice(0, 10));
     }
   };
   const [selected, setSelected] = useState([]);
@@ -94,10 +98,10 @@ function Cases() {
     }
   };
   const toggleAllDataSelected = () => {
-    if (selected.length == casesItems.length) {
+    if (selected.length == cases.length) {
       setSelected([]);
     } else {
-      setSelected([...casesItems]);
+      setSelected([...cases]);
     }
   };
 
@@ -207,131 +211,131 @@ function Cases() {
             <div className="user_line"></div>
 
             {cases && cases.length ? (
-              <table className="cases_table">
-                <thead>
-                  <tr>
-                    <td> ID кейса</td>
-                    <td>Название</td>
-                    <td>Категория</td>
-                    <td className="tac">Цена (руб)</td>
-                    <td className="tac">Бесплатный</td>
-                    <td className="tac">Дата создания</td>
-                    <td>
-                      <div className="select_all">
-                        <div className="is_selected ">
-                          {selected.length == casesItems.length ? (
-                            <SelectedIcon onClick={toggleAllDataSelected} />
-                          ) : (
-                            <div
-                              className="not_selected_item"
-                              onClick={toggleAllDataSelected}
-                            ></div>
-                          )}
-                        </div>{" "}
-                        Выделить все
-                      </div>
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cases && cases.length
-                    ? cases.map((cases) => (
-                        <tr key={cases.case_id}>
-                          <td>{cases.case_id || "-"}</td>
-                          <td>{cases.name || "-"}</td>
-                          <td>
-                            {cases.category && cases.category.name
-                              ? cases.category.name
-                              : "-"}
-                          </td>
-                          <td className="tac">{cases.price || 0} ₽</td>
+              <>
+                <table className="cases_table">
+                  <thead>
+                    <tr>
+                      <td> ID кейса</td>
+                      <td>Название</td>
+                      <td>Категория</td>
+                      <td className="tac">Цена (руб)</td>
+                      <td className="tac">Бесплатный</td>
+                      <td className="tac">Дата создания</td>
+                      <td>
+                        <div className="select_all">
+                          <div className="is_selected ">
+                            {selected.length == cases.length ? (
+                              <SelectedIcon onClick={toggleAllDataSelected} />
+                            ) : (
+                              <div
+                                className="not_selected_item"
+                                onClick={toggleAllDataSelected}
+                              ></div>
+                            )}
+                          </div>{" "}
+                          Выделить все
+                        </div>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cases && cases.length
+                      ? cases.map((cases) => (
+                          <tr key={cases.case_id}>
+                            <td>{cases.case_id || "-"}</td>
+                            <td>{cases.name || "-"}</td>
+                            <td>
+                              {cases.category && cases.category.name
+                                ? cases.category.name
+                                : "-"}
+                            </td>
+                            <td className="tac">{cases.price || 0} ₽</td>
 
-                          <td className="tac">
-                            {cases.case_free ? "Да" : "Нет"}
-                          </td>
+                            <td className="tac">
+                              {cases.case_free ? "Да" : "Нет"}
+                            </td>
 
-                          <td className="tac">
-                            {cases && cases.created_at.split("T")[0]}
-                            <br />
-                            {cases &&
-                              cases.created_at.split("T")[1].split(".")[0]}
-                          </td>
-                          <td>
-                            <div className="cases_table_actions">
-                              <div className="cases_table_actions_list">
-                                <div
-                                  title="редактировать"
-                                  className="cases_table_edit"
-                                  onClick={() => editCase(cases.case_id)}
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                  >
-                                    <path
-                                      d="M2.99902 17.2512V21.0012H6.74902L17.809 9.94125L14.059 6.19125L2.99902 17.2512ZM20.709 7.04125C21.099 6.65125 21.099 6.02125 20.709 5.63125L18.369 3.29125C17.979 2.90125 17.349 2.90125 16.959 3.29125L15.129 5.12125L18.879 8.87125L20.709 7.04125Z"
-                                      fill="black"
-                                    />
-                                  </svg>
-                                </div>
-
-                                <div
-                                  title="удалить"
-                                  className="cases_table_delete"
-                                  onClick={() =>
-                                    handleDeleteCase(cases.case_id)
-                                  }
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                  >
-                                    <path
-                                      d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
-                                      fill="black"
-                                    />
-                                  </svg>
-                                </div>
-                              </div>
-                              <div className="is_selected ">
-                                {selected.some(
-                                  (selected) =>
-                                    selected.case_id === cases.case_id
-                                ) ? (
-                                  <SelectedIcon
-                                    onClick={() => toggleSelected(cases)}
-                                  />
-                                ) : (
+                            <td className="tac">
+                              {cases && cases.created_at.split("T")[0]}
+                              <br />
+                              {cases &&
+                                cases.created_at.split("T")[1].split(".")[0]}
+                            </td>
+                            <td>
+                              <div className="cases_table_actions">
+                                <div className="cases_table_actions_list">
                                   <div
-                                    className="not_selected_item"
-                                    onClick={() => toggleSelected(cases)}
-                                  ></div>
-                                )}
+                                    title="редактировать"
+                                    className="cases_table_edit"
+                                    onClick={() => editCase(cases.case_id)}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M2.99902 17.2512V21.0012H6.74902L17.809 9.94125L14.059 6.19125L2.99902 17.2512ZM20.709 7.04125C21.099 6.65125 21.099 6.02125 20.709 5.63125L18.369 3.29125C17.979 2.90125 17.349 2.90125 16.959 3.29125L15.129 5.12125L18.879 8.87125L20.709 7.04125Z"
+                                        fill="black"
+                                      />
+                                    </svg>
+                                  </div>
+
+                                  <div
+                                    title="удалить"
+                                    className="cases_table_delete"
+                                    onClick={() =>
+                                      handleDeleteCase(cases.case_id)
+                                    }
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
+                                        fill="black"
+                                      />
+                                    </svg>
+                                  </div>
+                                </div>
+                                <div className="is_selected ">
+                                  {selected.some(
+                                    (selected) =>
+                                      selected.case_id === cases.case_id
+                                  ) ? (
+                                    <SelectedIcon
+                                      onClick={() => toggleSelected(cases)}
+                                    />
+                                  ) : (
+                                    <div
+                                      className="not_selected_item"
+                                      onClick={() => toggleSelected(cases)}
+                                    ></div>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    : ""}
-                </tbody>
-              </table>
+                            </td>
+                          </tr>
+                        ))
+                      : ""}
+                  </tbody>
+                </table>
+                <div className="cases_paginations">
+                  <Pagination
+                    pageCount={Math.ceil(dataLength / 10)}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              </>
             ) : (
               <p className="empty_error">Кейсы отсутствуют</p>
             )}
-
-            <div className="cases_paginations">
-              {casesItems ? (
-                <Pagination allData={casesItems} paginationData={setCases} />
-              ) : (
-                ""
-              )}
-            </div>
           </div>
         </div>
       </div>

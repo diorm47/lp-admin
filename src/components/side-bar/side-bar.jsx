@@ -99,14 +99,14 @@ function SideBar() {
               <p>Поддержка</p>
             </div>
           </NavLink> */}
-          <NavLink to="/employees">
+          {/* <NavLink to="/employees">
             <div className="sidebar_menu_item">
               <div className="sidenar_menu_icon">
                 <Icon11 />
               </div>
               <p>Сотрудники</p>
             </div>
-          </NavLink>
+          </NavLink> */}
 
           <NavLink to="/settings">
             <div className="sidebar_menu_item">

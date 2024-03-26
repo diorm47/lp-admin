@@ -114,6 +114,8 @@ class MainApi {
       method: "GET",
     });
   }
+
+  // Case categories
   // set case category
   async setCaseCategoryAction(userData) {
     return this._sendRequest({
@@ -125,7 +127,7 @@ class MainApi {
   // get case category
   async getCaseCategoryAction(userData) {
     return this._sendRequest({
-      endpoint: `${path}/category/`,
+      endpoint: `${path}/category/?limit=30`,
       method: "GET",
       body: userData,
     });
@@ -154,9 +156,9 @@ class MainApi {
     });
   }
   // get case
-  async getCase() {
+  async getCase(offset) {
     return this._sendRequest({
-      endpoint: `${path}/cases/`,
+      endpoint: `${path}/cases/?limit=10&offset=${offset}`,
       method: "GET",
       requiresToken: true,
     });
@@ -183,11 +185,10 @@ class MainApi {
     });
   }
   // get items
-  async getItemsAction(userData) {
+  async getItemsAction(offset) {
     return this._sendRequest({
-      endpoint: `${path}/items/`,
+      endpoint: `${path}/items/?limit=10&offset=${offset}`,
       method: "GET",
-      body: userData,
     });
   }
   async createItem(userData) {
@@ -262,7 +263,7 @@ class MainApi {
   }
   async getRarity() {
     return this._sendRequest({
-      endpoint: `${path}/rarity_category/`,
+      endpoint: `${path}/rarity_category/?limit=30`,
       method: "GET",
     });
   }
@@ -358,9 +359,9 @@ class MainApi {
 
   // Users
   // Get users
-  async getUsersActions() {
+  async getUsersActions(offset) {
     return this._sendRequest({
-      endpoint: `${path}/users/`,
+      endpoint: `${path}/users/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
@@ -377,39 +378,39 @@ class MainApi {
       body: data,
     });
   }
-  async getUserGamesAction(id) {
+  async getUserGamesAction(id, offset) {
     return this._sendRequest({
-      endpoint: `${path}/user/${id}/games/`,
+      endpoint: `${path}/user/${id}/games/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
-  async getUserItemsAction(id) {
+  async getUserItemsAction(id, offset) {
     return this._sendRequest({
-      endpoint: `${path}/user/${id}/items/`,
+      endpoint: `${path}/user/${id}/items/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
-  async getUserPaymentsAction(id) {
+  async getUserPaymentsAction(id, offset) {
     return this._sendRequest({
-      endpoint: `${path}/user/${id}/payments/`,
+      endpoint: `${path}/user/${id}/payments/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
 
   // Rarity
   // Get rarity list
-  async getRarytyListActions() {
+  async getRarytyListActions(offset = 0) {
     return this._sendRequest({
-      endpoint: `${path}/rarity_category/`,
+      endpoint: `${path}/rarity_category/?limit=20&offset=${offset}`,
       method: "GET",
     });
   }
 
   // Conditions
   // Get conditions
-  async getConditions() {
+  async getConditions(offset) {
     return this._sendRequest({
-      endpoint: `${path}/conditions/`,
+      endpoint: `${path}/conditions/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
@@ -446,9 +447,9 @@ class MainApi {
   }
 
   // Promo
-  async getPromos() {
+  async getPromos(offset) {
     return this._sendRequest({
-      endpoint: `${path}/promo/`,
+      endpoint: `${path}/promo/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
@@ -476,7 +477,6 @@ class MainApi {
       body: data,
     });
   }
-
   // delete promo
   async deletePromo(id) {
     return this._sendRequest({
@@ -487,9 +487,9 @@ class MainApi {
 
   // Outputs
   // Get outputs
-  async getOutputsAction() {
+  async getOutputsAction(offset) {
     return this._sendRequest({
-      endpoint: `${path}/output/`,
+      endpoint: `${path}/output/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
@@ -523,9 +523,9 @@ class MainApi {
 
   // Contests
   // Get contests
-  async getContestsAction() {
+  async getContestsAction(offset) {
     return this._sendRequest({
-      endpoint: `${path}/contest/`,
+      endpoint: `${path}/contest/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
@@ -562,9 +562,9 @@ class MainApi {
 
   // Payments
   // Get payments
-  async getPaymentsAction() {
+  async getPaymentsAction(offset) {
     return this._sendRequest({
-      endpoint: `${path}/payments/`,
+      endpoint: `${path}/payments/?limit=10&offset=${offset}`,
       method: "GET",
     });
   }
@@ -627,20 +627,20 @@ class MainApi {
       method: "GET",
     });
   }
-    // graphs total income
-    async getGraphsTotalIncomeAction(from, to) {
-      return this._sendRequest({
-        endpoint: `${path}/analytics/graphics/clear_profit/${from}/${to}`,
-        method: "GET",
-      });
-    }
-        // graphs reg users
-        async getGraphsRegusersAction(from, to) {
-          return this._sendRequest({
-            endpoint: `${path}/analytics/graphics/count_reg_users/${from}/${to}`,
-            method: "GET",
-          });
-        }
+  // graphs total income
+  async getGraphsTotalIncomeAction(from, to) {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/graphics/clear_profit/${from}/${to}`,
+      method: "GET",
+    });
+  }
+  // graphs reg users
+  async getGraphsRegusersAction(from, to) {
+    return this._sendRequest({
+      endpoint: `${path}/analytics/graphics/count_reg_users/${from}/${to}`,
+      method: "GET",
+    });
+  }
 }
 
 export const mainApi = new MainApi(mainApiOptions);

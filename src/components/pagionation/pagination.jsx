@@ -1,32 +1,13 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import "./pagination.css";
 
-function Pagination({ allData, paginationData, length, activeFilter }) {
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = length || 10;
-  const endOffset = itemOffset + itemsPerPage;
-
-  const pageCount = Math.ceil(allData.length / itemsPerPage);
+function Pagination({ onPageChange, pageCount }) {
   const handlePageClick = (event) => {
-    const newOffset = event.selected * itemsPerPage;
-    setItemOffset(newOffset);
+    const selectedPage = event.selected;
+    onPageChange(selectedPage);
   };
 
-  useEffect(() => {
-    paginationData(allData.slice(itemOffset, endOffset));
-  }, [itemOffset, endOffset, paginationData]);
-
-  useEffect(() => {
-    const filteredData =
-      activeFilter === "all"
-        ? allData
-        : allData.filter((item) => item.status === activeFilter);
-
-    paginationData(filteredData.slice(itemOffset, endOffset));
-  }, [itemOffset, endOffset, paginationData, allData, activeFilter]);
   return (
     <ReactPaginate
       breakLabel="..."

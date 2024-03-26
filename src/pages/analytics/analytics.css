@@ -164,6 +164,9 @@
   background: rgba(128, 128, 128, 0.118);
   transition: all 0.4s ease;
 }
+.analytic_card_right_data {
+  display: none;
+}
 
 .analytics_bottom_right .analytic_card:nth-child(1) {
   margin-bottom: 20px;

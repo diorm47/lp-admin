@@ -99,6 +99,11 @@ function EditCompetitons() {
   const delSelectedItem = (data) => {
     setItems(items.filter((item) => item.item_id !== data.item_id));
   };
+  useEffect(() => {
+    if (items[0]) {
+      setPriceID(items[0].item_id);
+    }
+  }, [items]);
   return (
     <>
       {isSnackbarVisible ? (
